@@ -1,0 +1,60 @@
+.nav-container {
+    overflow: hidden;
+    position: fixed;
+    z-index: 4;
+    height: 40px;
+}
+.nav-filler {
+    height: 40px;
+    width: 100%;
+}
+.nav, .about-nav {
+    width: 100%;
+    left: 0;
+    align-items: center;
+    height: 40px;
+    display: grid;
+    grid-template-columns: 0 repeat(9, minmax(0, 1fr)) 0;
+    grid-auto-flow: column;
+    grid-gap: 3.3vw;
+    animation: fade-in 300ms;
+
+    .column {
+        // background: var(--column-background);
+        text-align: center;
+
+        a {
+            font-weight: 500;
+            font-size: 16px;
+        }
+    }
+
+    .title {
+        text-align: left;
+        text-transform: uppercase;
+        a {
+            margin-left: 1vw;
+        }
+    }
+
+    a {
+        transition: opacity 0.75s color 0.75s;
+        display: block;
+        opacity: 1;
+    }
+
+    &.about-revealed {
+
+        a {
+            color: var(--about-background-text);
+        }
+        .main-link a {
+            opacity: 0;
+            
+            &:hover {
+                cursor: default;
+            }
+        }
+    }
+
+}

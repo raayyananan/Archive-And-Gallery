@@ -1,0 +1,18 @@
+<main>
+
+    <div *ngFor="let image of collection" class="cell">
+            <img *ngIf="image.url" src="{{image.url}}" (mouseenter)="changeHeading('in', image.name)" (mouseleave)="changeHeading('out')">
+    </div>
+
+</main>
+
+<!-- <section class="heading">
+    <div class="text-container">
+        <h1 class="right" #rightHeading>{{ currentTitle }}</h1>
+    </div>
+    <div class="text-container">
+        <h1 class="left" #leftHeading>{{ currentTitle }}</h1>
+    </div>
+</section>
+
+<input #inputElement value="Angular Wiki"> -->

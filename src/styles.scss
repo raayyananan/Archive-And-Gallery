@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --background: rgb(250,250,250);
+    --background-text: black;
+    --column-background: var(--background);
+    --about-background: var(--background);
+    --about-background-text: var(--background-text);
+}
+
+html, body {
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 16px;
+    background: var(--background);
+    color: var(--background-text);
+    overflow: hidden;
+    user-select: none; /* Standard */
+}
+
+a {
+    text-decoration: none;
+    color: var(--background-text);
+}
+
+::-moz-selection { background: black; color: white; }
+::selection { background: black; color: white; }
