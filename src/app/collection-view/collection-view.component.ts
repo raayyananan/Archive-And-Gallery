@@ -35,14 +35,12 @@ export class CollectionViewComponent implements OnInit {
             duration: 0.7,
             y: +headingHeight + 0,
             ease: "power2.out",
-            // ease: Power1.easeInOut
         })
     htl.to('.heading .right',
         {
             duration: 0.7,
             y: -headingHeight - 0,
             ease: "power2.out",
-            // ease: Power1.easeInOut
         },
         "<")
     

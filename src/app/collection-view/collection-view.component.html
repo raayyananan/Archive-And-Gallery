@@ -1,12 +1,13 @@
 <main>
 
     <div *ngFor="let image of collection" class="cell">
-            <img *ngIf="image.url" src="{{image.url}}" (mouseenter)="changeHeading('in', image.name)" (mouseleave)="changeHeading('out')">
+            <img *ngIf="image.url" src="{{image.url}}" (mouseenter)="changeHeading('in', image.name)" 
+            (mouseleave)="changeHeading('out')">
     </div>
 
 </main>
 
-<!-- <section class="heading">
+<section class="heading">
     <div class="text-container">
         <h1 class="right" #rightHeading>{{ currentTitle }}</h1>
     </div>
@@ -15,4 +16,4 @@
     </div>
 </section>
 
-<input #inputElement value="Angular Wiki"> -->
+<input #inputElement value="Angular Wiki">
