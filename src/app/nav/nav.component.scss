@@ -3,58 +3,130 @@
     position: fixed;
     z-index: 4;
     height: 40px;
+
+    nav {
+        width: 100%;
+        left: 0;
+        align-items: center;
+        height: 40px;
+        display: grid;
+        grid-template-columns: 0 repeat(9, 1fr) 0;
+        grid-auto-flow: column;
+        grid-gap: 2.7vw;
+        animation: fade-in 300ms;
+    
+        .column {
+            // background: rgb(220, 220, 220);
+            text-align: left;
+    
+            a {
+                font-weight: 600;
+                font-size: 15px;
+                &:hover {cursor: pointer}
+            }
+        }
+    
+        .title {
+            text-align: left;
+            text-transform: uppercase;
+        }
+    
+        a {
+            transition: opacity 0.75s color 0.75s;
+            display: block;
+            opacity: 1;
+
+            &:active {background: transparent;}
+        }
+    
+        &.about-revealed {
+    
+            a {
+                color: var(--about-background-text);
+            }
+            .main-link a {
+                opacity: 0;
+                
+                &:hover {
+                    cursor: default;
+                }
+            }
+        }
+    
+    }
+
+    .collection-nav {
+        transform: translateY(-40px)
+    }
 }
 .nav-filler {
     height: 40px;
     width: 100%;
 }
-.nav, .about-nav {
+
+.nav-area {
     width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
     left: 0;
-    align-items: center;
-    height: 40px;
-    display: grid;
-    grid-template-columns: 0 repeat(9, minmax(0, 1fr)) 0;
-    grid-auto-flow: column;
-    grid-gap: 3.3vw;
-    animation: fade-in 300ms;
+    z-index: 3;
+    background: black;
+    display: none;
+    opacity: 0;
 
-    .column {
-        // background: var(--column-background);
-        text-align: center;
+    a {color: white}
 
-        a {
-            font-weight: 500;
-            font-size: 16px;
+    .grid {
+        display: grid;
+        color: white;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-flow: column;
+        grid-gap: 2.7vw;
+        height: 100%;
+        padding: calc(40px + 1.3rem) 2vw 2rem;
+        box-sizing: border-box; // makes the browser include border, margin and padding within width
+
+        .column-text-outer {
+            overflow: hidden;
         }
     }
+    
+    .content-container {
+        display: flex;
+        flex-flow: column nowrap;
+        height: 100%;
 
-    .title {
-        text-align: left;
-        text-transform: uppercase;
-        a {
-            margin-left: 1vw;
+
+        .filler {
+            flex: auto;
         }
-    }
 
-    a {
-        transition: opacity 0.75s color 0.75s;
-        display: block;
-        opacity: 1;
-    }
+        .column-text-outer {
+            overflow: hidden;
 
-    &.about-revealed {
+            a {
+                font-size: 3rem;
+                // margin-top: 0.75rem;
+                font-family: 'Bigilla';
+                transition: padding 250ms;
+                transform: translateY(3.5rem);
 
-        a {
-            color: var(--about-background-text);
-        }
-        .main-link a {
-            opacity: 0;
-            
-            &:hover {
-                cursor: default;
+                &.credit {
+                    font-size: 2.25rem;
+                    white-space: nowrap;
+                }
             }
         }
     }
+}
 
+@media only screen and (max-width: 1250px) {
+    .nav-container nav {grid-gap: 1.7vw;}
+}
+@media only screen and (max-width: 1100px) {
+    .nav-container nav {grid-gap: 1vw}
+}
+@media only screen and (max-width: 950px) {
+    .nav-container nav {grid-gap: 0.6vw}
 }

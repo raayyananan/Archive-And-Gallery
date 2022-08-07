@@ -1,25 +1,27 @@
 main {
     width: 100%;
-    height: calc(100% - 40px);
-    // padding-top: 5px;
+    height: calc(100%);
     display: grid;
     grid-template-columns: 0 repeat(9, 1fr) 0;
     grid-template-rows: repeat(4, 1fr) 0;
-    grid-gap: 2vw;
+    grid-gap: 2.7vw; 
     background: var(--background);
+    box-sizing: border-box;
+    // padding-top: 5px;
+
 
     .cell {
         min-height: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2%;
+        // display: flex;
+        // flex-direction: column;
+        // align-items: center;
+        // justify-content: center;
+        // padding: 3%;
 
         img {
-            max-width: 96%;
-            max-height: 96%;
-            transition: 0.7s;
+            max-width: 100%;
+            max-height: 100%;
+            transition: filter 0.7s;
             transition-timing-function: cubic-bezier(.28,.67,.32,.99);
 
             &:hover {
@@ -62,3 +64,15 @@ main {
 }
 
 img {background-color: white;}
+
+
+
+@media only screen and (max-width: 1250px) {
+    main {grid-gap: 1.7vw;}
+}
+@media only screen and (max-width: 1100px) {
+    main {grid-gap: 1vw}
+}
+@media only screen and (max-width: 950px) {
+    main {grid-gap: 0.6vw}
+}

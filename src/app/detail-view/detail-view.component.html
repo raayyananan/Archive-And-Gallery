@@ -1,0 +1,11 @@
+<main>
+    <section class="images">
+        <!-- <div>        
+            <img src="../../assets/images/Insectified/1.jpg">
+        </div> -->
+
+        <div *ngFor="let src of collection.sources" (load)="loaded()">
+            <img src="{{src}}">
+        </div>
+    </section>
+</main>

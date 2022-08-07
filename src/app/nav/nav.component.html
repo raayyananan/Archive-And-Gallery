@@ -4,31 +4,92 @@
 <nav class="nav-container">
     <nav class="nav">
         <div class="edge-margin"></div>
-        <div class="column title"><a href="#">Rayyan's&nbsp;Archive&nbsp;and&nbsp;Gallery</a></div>
+        <div class="column title"><a routerLink="">Rayyan's&nbsp;Archive&nbsp;and&nbsp;Gallery</a></div>
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"><a class="main-link">01</a></div>
         <div class="column"></div>
         <div class="column"><a class="main-link">02</a></div>
         <div class="column"></div>
-        <div class="column"><a href="#" (click)="openMenu()">Menu</a></div>
-        <div class="column"><a href="#" id="col-icon">||||</a></div>
+        <div class="column"><a (click)="openRouteMenu(true)">Menu</a></div>
+        <div class="column"><a id="col-icon">||||</a></div>
         <div class="edge-margin">
         </div>
     </nav>
     <nav class="about-nav">
         <div class="edge-margin"></div>
-        <div class="column title"><a href="#">Rayyan's&nbsp;Archive&nbsp;and&nbsp;Gallery</a></div>
+        <div class="column title"><a routerLink="">Rayyan's&nbsp;Archive&nbsp;and&nbsp;Gallery</a></div>
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
-        <div class="column"><a href="#" id="close-link" (click)="closeMenu()">Close</a></div>
+        <div class="column"><a id="close-link" routerLink="" (click)="closeRouteMenu()">Close</a></div>
         <div class="column"></div>
         <div class="edge-margin">
         </div>
     </nav>
 </nav>
 <div class="nav-filler"></div>
+
+<section class="nav-area">
+    <div class="grid">
+        <div class="column">
+            <div class="content-container">
+                <div class="column-text-outer">
+                    <div class="column-text-inner">
+                        <a routerLink="" (click)="closeRouteMenu()">Collections</a>
+                    </div>
+                </div>
+                <div class="column-text-outer">
+                    <div class="column-text-inner">
+                        <a>About</a>
+                    </div>
+                </div>
+                <div class="column-text-outer filler"></div>
+                <div class="column-text-outer">
+                    <div class="column-text-inner">
+                        <a class="credit">Archive & Gallery by Rayyan Tariq</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column"></div>
+        <div class="column">
+            <div class="column-text-outer">
+                <div class="column-text-inner">
+                    <a>Collections: </a>
+                </div>
+            </div>
+            <div class="column-text-outer" *ngFor="let name of names">
+                <div class="column-text-inner">
+                    <a> {{name}} </a>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="column-text-outer">
+                <div class="column-text-inner">
+                    <a>Contact: </a>
+                </div>
+            </div>
+            <div class="column-text-outer">
+                <div class="column-text-inner">
+                    <a href="mailto:raytariq93@gmail.com">Email: raytariq93@gmail.com</a>
+                </div>
+            </div>
+            <div class="column-text-outer">
+                <div class="column-text-inner">
+                    <a href="https://www.instagram.com/raayyananan/" target="_blank">Instagram: @rayyananan</a>
+                </div>
+            </div>
+            <div class="column-text-outer">
+                <div class="column-text-inner">
+                    <a>+92 3219944952</a>
+                </div>
+            </div>
+        </div>
+        <div class="column"></div>
+    </div>
+</section>

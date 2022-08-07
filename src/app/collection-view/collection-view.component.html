@@ -1,19 +1,17 @@
 <main>
 
-    <div *ngFor="let image of collection" class="cell">
-            <img *ngIf="image.url" src="{{image.url}}" (mouseenter)="changeHeading('in', image.name)" 
-            (mouseleave)="changeHeading('out')">
+    <div *ngFor="let image of collection" class="cell" #images>
+            <img *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
+            (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, image.id)" [attr.data-srno]="image.id">
     </div>
 
 </main>
 
 <section class="heading">
     <div class="text-container">
-        <h1 class="right" #rightHeading>{{ currentTitle }}</h1>
+        <h1 class="right" #rightHeading (click)="view02()">{{ currentTitle }}</h1>
     </div>
     <div class="text-container">
-        <h1 class="left" #leftHeading>{{ currentTitle }}</h1>
+        <h1 class="left" #leftHeading (click)="view01()">{{ currentTitle }}</h1>
     </div>
 </section>
-
-<input #inputElement value="Angular Wiki">
