@@ -5,36 +5,32 @@
             (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, image.id)" [attr.data-srno]="image.id">
     </div>
 
-    <div class="collectionList">
-        <div class="flex-container left">
-            <ul>
-                <div *ngFor="let name of names; let i = index" class="column-text-outer">
-                    <li class="column-text-inner"><a routerLink="collection/{{URLify(name)}}" [class.tab]="i % 2 === 1 && i !== 0">{{name}}</a></li>
-                </div>
-                <div *ngFor="let name of names; let i = index" class="column-text-outer">
-                    <li class="column-text-inner"><a routerLink="collection/{{URLify(name)}}" [class.tab]="i % 2 === 1 && i !== 0">{{name}}</a></li>
-                </div>
-            </ul>
+    <section class="view02-container">
+        <div class="collectionList">
+            <div class="flex-container left">
+                <ul *ngFor="let i of [1,2]">
+                    <div *ngFor="let name of names; let i = index" class="column-text-outer">
+                        <li class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0">{{name}}</a></li>
+                    </div>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="collectionList right" style="right: 0!important; text-align: right;">
-        <div class="flex-container">
-            <ul>
-                <div *ngFor="let name of names; let i = index" class="column-text-outer">
-                    <li class="column-text-inner"><a routerLink="collection/{{URLify(name)}}" [class.tab]="i % 2 === 1 && i !== 0">{{name}}</a></li>
-                </div>
-                <div *ngFor="let name of names; let i = index" class="column-text-outer">
-                    <li class="column-text-inner"><a routerLink="collection/{{URLify(name)}}" [class.tab]="i % 2 === 1 && i !== 0">{{name}}</a></li>
-                </div>
-            </ul>
+        <div class="collectionList right" style="right: 0!important; text-align: right;">
+            <div class="flex-container">
+                <ul *ngFor="let i of [1,2]">
+                    <div *ngFor="let name of names; let i = index" class="column-text-outer">
+                        <li class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0">{{name}}</a></li>
+                    </div>
+                </ul>
+            </div>
         </div>
-    </div>
+    </section>
     <section class="heading">
         <div class="text-container">
-            <h1 class="right" #rightHeading (click)="switchView(2)">{{ currentTitle }}</h1>
+            <h1 class="right" #rightHeading>{{ currentTitle }}</h1>
         </div>
         <div class="text-container">
-            <h1 class="left" #leftHeading (click)="switchView(1)">{{ currentTitle }}</h1>
+            <h1 class="left" #leftHeading>{{ currentTitle }}</h1>
         </div>
     </section>
 </main>

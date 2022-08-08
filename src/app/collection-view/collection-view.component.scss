@@ -27,62 +27,66 @@
 
             &:hover {
                 cursor: pointer;
-                filter: grayscale(1) contrast(1.1);
+                filter: grayscale(1) contrast(1.1) !important;
             }
         }
     }
 
     &.grayscale .cell img {
-        filter: grayscale(1) invert(0);
+        filter: grayscale(1) invert(0) !important;
 
         &:hover {
-            filter: grayscale(1) invert(1);
+            filter: grayscale(1) invert(1) !important;
         }
     }
 
-    .collectionList{
+    .view02-container {
         position: absolute;
         height: 100%;
+        width: 100%;
         top: 0;
-        padding: 0 2.7vw;
         box-sizing: border-box;
         display: none;
+        // background: rgba(250,250,250,0.6);
 
-        .right {right: 0; text-align: right;}
-        .left {left: 0; text-align: left;}
-
-        .flex-container {
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: center;
+        
+        .collectionList{
+            position: absolute;
+            top: 0;
+            box-sizing: border-box;
+            padding: 0 2.7vw;
             height: 100%;
-        }
 
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
+            .right {right: 0; text-align: right;}
+            .left {left: 0; text-align: left;}
 
-
-            .column-text-inner {
-                transform: translateY(2rem); // ***** GSAP ANIMATION FROM PROPERTY *****
+            .flex-container {
+                display: flex;
+                flex-flow: column nowrap;
+                justify-content: center;
+                height: 100%;
             }
 
-            li {
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
 
-                a {
-                    font-size: 1.2rem;
-                    text-transform: uppercase;
-                    font-weight: 600;
-                    &:hover {font-style: italic;}
+
+                .column-text-inner {
+                    transform: translateY(2rem); // ***** GSAP ANIMATION FROM PROPERTY *****
+                }
+
+                li {
+
+                    a {
+                        font-size: 1.2rem;
+                        text-transform: uppercase;
+                        font-weight: 600;
+                        &:hover {font-style: italic;}
+                    }
                 }
             }
-        }
-    }
-
-    &.view02 {
-        .collectionList {
-            display: block;
         }
     }
 }
@@ -137,7 +141,7 @@ img {background-color: white;}
     main.collection {
         grid-gap: 1vw;
 
-        .collectionList {
+        .view02-container .collectionList {
             padding: 0 1vw;
         }
     }
@@ -146,7 +150,7 @@ img {background-color: white;}
     main.collection {
         grid-gap: 0.6vw;
 
-        .collectionList {
+        .view02-container .collectionList {
             padding: 0 0.6vw;
         }
     }

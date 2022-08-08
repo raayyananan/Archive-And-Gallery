@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { gsap, Power2 } from 'gsap';
 import { Observable, filter } from 'rxjs';
-import { names } from '../collectionOrder'
+import { names } from '../collectionOrder';
+import { ViewSwitcherService } from '../view-switcher.service';
 
 @Component({
   selector: 'app-nav',
@@ -22,8 +23,9 @@ export class NavComponent implements OnInit {
 
   names = names;
   greyscale: boolean = false;
+  viewState: number = 1;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private viewSwitcherService: ViewSwitcherService) {
     // Create a new Observable that publishes only the NavigationStart event
     this.navStart = router.events.pipe(
       filter(evt => evt instanceof NavigationStart)
@@ -32,7 +34,6 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.navStart.subscribe((event) => {
-      console.log(event.url)
       if (event.url == '/') {
         this.routeMenu('close')
       } 
@@ -124,6 +125,12 @@ export class NavComponent implements OnInit {
         this.menuState = 'closed';
       }
     }
+  }
+
+  switchView(viewNumber: number): void {
+    this.viewSwitcherService.switchView(viewNumber, this.viewState);
+    // this.viewSwitcherService.setViewState(viewNumber); // not needed for now as viewState is checked within switchView()
+    // viewState MUST be set after calling switchView() as switchView() checks for viewState before running
   }
 
   toggleGrayscale() {
