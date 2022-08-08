@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList, NgZone } from '@angular/core';
-import { collectionOrder } from '../collectionOrder';
+import { collectionOrder, names, URLify } from '../collectionOrder';
 import { gsap } from 'gsap';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,11 @@ import { Router } from '@angular/router';
 export class CollectionViewComponent implements OnInit {
 
   collection = collectionOrder;
+  URLify = URLify;
+  names = names;
   currentTitle: string = 'Archive & Gallery';
+
+  viewState: number = 1;
 
   constructor(private router: Router, private ngZone: NgZone) { }
 
@@ -30,7 +34,8 @@ export class CollectionViewComponent implements OnInit {
   @ViewChildren('images') images!: QueryList<any>;
 
   ngAfterViewInit(): void {
-    this.initialAnimations();
+    setTimeout(() => {this.initialAnimations()}, 200)
+    // setTimeout(() => {this.switchView(1)}, 10000)
   }
 
   navigate(url: string, id: number) {
@@ -104,7 +109,9 @@ export class CollectionViewComponent implements OnInit {
     let itl = gsap.timeline(); // initial animations timeline
     let headingHeight = this.rightHeading.nativeElement.clientHeight;    
 
-    itl.from('main img', {
+    itl.set('.collection', {opacity: 1})
+    itl.set('.heading', {opacity: 1})
+    itl.from('.collection img', {
       duration: 1.75,
       stagger: {
           from: 0,
@@ -118,7 +125,7 @@ export class CollectionViewComponent implements OnInit {
     })
 
         // heading animation
-        itl.from('.heading .left', {
+      itl.from('.heading .left', {
           duration: 1.1,
           y: -headingHeight - 0,
           ease: "power4.out"
@@ -192,52 +199,143 @@ export class CollectionViewComponent implements OnInit {
         },"<")
   }
 
+  switchView(viewNumber: number): void {
+    let headingHeight = this.rightHeading.nativeElement.clientHeight;    
+    
+    if (viewNumber == 1) {
+      this.viewState = 1;
+      let ls = gsap.timeline();
 
-  view02(): void {
-    let ls = gsap.timeline();
-    this.images.forEach((img, index) => {
-      if (img.nativeElement.children.length !== 0) {
-        // console.log(img.nativeElement.firstChild)
+      ls.to('.column-text-inner', {
+        duration: 1.4,
+        y: "2rem",
+        stagger: 0.04,
+        ease: "power3.out",
+      })
 
-        let margin = 0
-        let b = img.nativeElement.firstChild.offsetTop;
-        let horizontalMovement = window.innerWidth - (img.nativeElement.firstChild.offsetLeft + img.nativeElement.firstChild.offsetWidth/2) - margin - (window.innerWidth/4);
-        let verticalMovement = (b + img.nativeElement.clientHeight/2 - margin) - (window.innerHeight/2);
-        
-        let duration = 1.5;
-        ls.to(img.nativeElement.firstChild, {
-            duration: duration,
-            y: -verticalMovement,
-            x : horizontalMovement,
-            scale: 2.5,
-            filter: 'grayscale(1)',
-            ease: "power2.inOut",
-        }, "<")
-      }
-    })
-  }
-  view01(): void {
-    let ls = gsap.timeline();
-    this.images.forEach((img, index) => {
-      if (img.nativeElement.children.length !== 0) {
-        // console.log(img.nativeElement.firstChild)
+      this.images.forEach((img, index) => {
+        if (img.nativeElement.children.length !== 0) {
+          // console.log(img.nativeElement.firstChild)
+  
+          let margin = 0
+          let b = img.nativeElement.firstChild.offsetTop;
+          let horizontalMovement = window.innerWidth - (img.nativeElement.firstChild.offsetLeft + img.nativeElement.firstChild.offsetWidth/2) - margin - (window.innerWidth/4);
+          let verticalMovement = (b + img.nativeElement.clientHeight/2 - margin) - (window.innerHeight/2);
+          
+          let duration = 1.5;
+          ls.to(img.nativeElement.firstChild, {
+              duration: duration*1.5,
+              y: 0,
+              x : 0,
+              scale: 1,
+              filter: 'none',
+              ease: "power2.out",
+          }, "<")
+          
+        }
+      })
+      ls.set('.heading .right, .heading .left', {opacity: 1});
+      ls.set('.collectionList', {display: 'none'});
 
-        let margin = 0
-        let b = img.nativeElement.firstChild.offsetTop;
-        let horizontalMovement = window.innerWidth - (img.nativeElement.firstChild.offsetLeft + img.nativeElement.firstChild.offsetWidth/2) - margin - (window.innerWidth/4);
-        let verticalMovement = (b + img.nativeElement.clientHeight/2 - margin) - (window.innerHeight/2);
-        
-        let duration = 1.5;
-        ls.to(img.nativeElement.firstChild, {
-            duration: duration,
+      // make heading reappear
+      ls.to('.heading .left',
+        {
+            duration: 0.7,
+            y: +0 + 0,
+            ease: "power2.out",
+        })
+      ls.to('.heading .right',
+        {
+            duration: 0.7,
+            y: -0 - 0,
+            ease: "power2.out",
+        },
+      "<")
+    }
+    else if (viewNumber == 2) {
+      this.viewState = 2;
+      let ls = gsap.timeline();
+      let duration = 1.5;
+
+      // make heading disappear
+      ls.to('.heading .left',
+        {
+            duration: 0.7,
+            y: +headingHeight + 0,
+            ease: "power2.out",
+        })
+      ls.to('.heading .right',
+        {
+            duration: 0.7,
+            y: -headingHeight - 0,
+            ease: "power2.out",
+        },
+      "<")
+      
+      // calculate the translation needed for each image to go to desired position, then translate it 
+      this.images.forEach((img, index) => {
+        if (img.nativeElement.children.length !== 0) {
+  
+          let margin = 0
+          let b = img.nativeElement.firstChild.offsetTop;
+          let horizontalMovement = window.innerWidth - (img.nativeElement.firstChild.offsetLeft + img.nativeElement.firstChild.offsetWidth/2) - margin - (window.innerWidth/2);
+          let verticalMovement = (b + img.nativeElement.clientHeight/2 - margin) - (window.innerHeight/2);
+
+          ls.to(img.nativeElement.firstChild, {
+              duration: duration*1.5,
+              y: -verticalMovement,
+              x : horizontalMovement,
+              scale: 2.5,
+              filter: 'grayscale(1)',
+              ease: "power2.inOut",
+          }, "<")
+        }
+      })
+      ls.set('.heading .right, .heading .left', {opacity: 0});
+      ls.set('.collectionList', {display: 'block'}, 0);
+      ls.to('.column-text-inner', {
+        duration: 1.4,
+        y: 0,
+        stagger: 0.04,
+        ease: "power3.out",
+      }, 0)
+
+      window.addEventListener('resize', () => {
+              // calculate the translation needed for each image to go to desired position, then translate it 
+      this.images.forEach((img, index) => {
+        if (img.nativeElement.children.length !== 0) {
+
+          gsap.set(img.nativeElement.firstChild, {
             y: 0,
             x : 0,
             scale: 1,
-            filter: 'none',
-            ease: "power2.inOut",
-        }, "<")
-      }
-    })
+          })
+  
+          let margin = 0
+          let b = img.nativeElement.firstChild.offsetTop;
+          let horizontalMovement = window.innerWidth - (img.nativeElement.firstChild.offsetLeft + img.nativeElement.firstChild.offsetWidth/2) - margin - (window.innerWidth/2);
+          let verticalMovement = (b + img.nativeElement.clientHeight/2 - margin) - (window.innerHeight/2);
+
+          gsap.set(img.nativeElement.firstChild, {
+              // duration: duration*1.5,
+              y: -verticalMovement,
+              x : horizontalMovement,
+              scale: 2.5,
+              filter: 'grayscale(1)',
+              // ease: "power2.inOut",
+          })
+        }
+      })
+      })
+
+
+    }
+  }
+  view02(): void {
+    
+  }
+  view01(): void {
+
   }
 
 }

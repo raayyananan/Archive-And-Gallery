@@ -71,51 +71,65 @@
     top: 0;
     left: 0;
     z-index: 3;
-    background: black;
+    background: var(--about-background);
+    color: var(--about-background-text);
     display: none;
     opacity: 0;
 
-    a {color: white}
+    h1, a {color: white}
 
     .grid {
         display: grid;
-        color: white;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-flow: column;
-        grid-gap: 2.7vw;
+        grid-template-columns: repeat(5, 1fr) auto;
+        grid-gap: 1vw;
+        padding: calc(40px + 2.7em) 2.7vw 2.7em;
         height: 100%;
-        padding: calc(40px + 1.3rem) 2vw 2rem;
-        box-sizing: border-box; // makes the browser include border, margin and padding within width
+        box-sizing: border-box;
 
         .column-text-outer {
             overflow: hidden;
         }
-    }
-    
-    .content-container {
-        display: flex;
-        flex-flow: column nowrap;
-        height: 100%;
 
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
 
-        .filler {
-            flex: auto;
+            .title {
+                font-weight: 600;
+            }
         }
 
-        .column-text-outer {
-            overflow: hidden;
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            width: 23vw;
+            height: 100%;
+            
+            img {
+                max-width: 100%;
+                animation: fade-in 0.5s 1.2s forwards;
+                opacity: 0;
 
-            a {
-                font-size: 3rem;
-                // margin-top: 0.75rem;
-                font-family: 'Bigilla';
-                transition: padding 250ms;
-                transform: translateY(3.5rem);
-
-                &.credit {
-                    font-size: 2.25rem;
-                    white-space: nowrap;
+                @keyframes fade-in {
+                    0% {opacity: 0}
+                    100% {opacity: 1}
                 }
+            }
+            .filler {
+                flex: auto;
+            }
+        }
+
+        .column-text-outer.credit {
+            position: fixed;
+            bottom: 2.7vw;
+            left: 2.7vw;
+            h1 {
+                margin: 0;
+                padding: 0;
+                font-size: 3rem;
+                text-transform: uppercase;
             }
         }
     }

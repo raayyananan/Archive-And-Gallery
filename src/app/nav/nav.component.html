@@ -11,8 +11,8 @@
         <div class="column"></div>
         <div class="column"><a class="main-link">02</a></div>
         <div class="column"></div>
-        <div class="column"><a (click)="openRouteMenu(true)">Menu</a></div>
-        <div class="column"><a id="col-icon">||||</a></div>
+        <div class="column"><a (click)="routeMenu('open', true)">About</a></div>
+        <div class="column"><a (click)="toggleGrayscale()">||||</a></div>
         <div class="edge-margin">
         </div>
     </nav>
@@ -25,7 +25,7 @@
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
-        <div class="column"><a id="close-link" routerLink="" (click)="closeRouteMenu()">Close</a></div>
+        <div class="column"><a id="close-link" routerLink="" (click)="routeMenu('close')">Close</a></div>
         <div class="column"></div>
         <div class="edge-margin">
         </div>
@@ -33,63 +33,177 @@
 </nav>
 <div class="nav-filler"></div>
 
+
 <section class="nav-area">
     <div class="grid">
         <div class="column">
-            <div class="content-container">
-                <div class="column-text-outer">
-                    <div class="column-text-inner">
-                        <a routerLink="" (click)="closeRouteMenu()">Collections</a>
+            <ul>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a class="title">About</a>
+                        </div>
                     </div>
-                </div>
-                <div class="column-text-outer">
-                    <div class="column-text-inner">
-                        <a>About</a>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner"  style="padding-right: 1.5vw; box-sizing: border-box;">
+                            <span>I created Archive & Gallery as a collection of some of the best pictures that I have taken / have been taken of me in the past few years.</span>
+                        </div>
                     </div>
-                </div>
-                <div class="column-text-outer filler"></div>
-                <div class="column-text-outer">
-                    <div class="column-text-inner">
-                        <a class="credit">Archive & Gallery by Rayyan Tariq</a>
+                </li>
+            </ul>
+        </div>
+        <div class="column">
+            <ul>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a class="title">Tools</a>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a>Development:</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a >HTML, CSS, JS</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a >Typescript</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a >Angular</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a >GSAP</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a ><br></a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a >Design: </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a >Figma</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a  target="_blank" href="https://fonts.google.com/specimen/Urbanist?vfquery=urbani">Urbanist font</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a  target="_blank" href="https://www.behance.net/gallery/93242287/BIGILLA-FREE-DISPLAY-SERIF-TYPEFACE">Bigilla font</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="column">
+            <ul>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a class="title">Collections</a>
+                        </div>
+                    </div>
+                </li>
+                <li *ngFor="let name of names">
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a>{{name}}</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="column">
+            <ul>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a class="title">Contact</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a href="mailto:raytariq93@gmail.com">Email: raytariq93@gmail.com</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a href="https://www.instagram.com/rayyananan" target="_blank">Instagram: @rayyananan</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a href="https://twitter.com/raayyananan" target="_blank">Twitter: @rayyananan</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a>+92 3219944952</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
         <div class="column"></div>
         <div class="column">
-            <div class="column-text-outer">
-                <div class="column-text-inner">
-                    <a>Collections: </a>
-                </div>
+            <div class="image-container">
+                <div class="filler"></div>
+                <div class="column-text-outer"><div class="column-text-inner">
+                    <img src="../../assets/images/Overwhelmed/5.png" title="Rayyan Tariq" alt="Picture of Rayyan Tariq">
+                </div></div>
+
             </div>
-            <div class="column-text-outer" *ngFor="let name of names">
-                <div class="column-text-inner">
-                    <a> {{name}} </a>
-                </div>
-            </div>
+            <div class="column-text-outer credit"><div class="column-text-inner">
+                <h1 class="credit">Created by Rayyan Tariq</h1>
+            </div></div>
         </div>
-        <div class="column">
-            <div class="column-text-outer">
-                <div class="column-text-inner">
-                    <a>Contact: </a>
-                </div>
-            </div>
-            <div class="column-text-outer">
-                <div class="column-text-inner">
-                    <a href="mailto:raytariq93@gmail.com">Email: raytariq93@gmail.com</a>
-                </div>
-            </div>
-            <div class="column-text-outer">
-                <div class="column-text-inner">
-                    <a href="https://www.instagram.com/raayyananan/" target="_blank">Instagram: @rayyananan</a>
-                </div>
-            </div>
-            <div class="column-text-outer">
-                <div class="column-text-inner">
-                    <a>+92 3219944952</a>
-                </div>
-            </div>
-        </div>
-        <div class="column"></div>
     </div>
 </section>

@@ -13,7 +13,7 @@ import { DetailViewComponent } from './detail-view/detail-view.component';
     AppComponent,
     NavComponent,
     CollectionViewComponent,
-    DetailViewComponent
+    DetailViewComponent,
   ],
   imports: [
     BrowserModule,

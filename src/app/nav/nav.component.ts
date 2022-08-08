@@ -21,6 +21,7 @@ export class NavComponent implements OnInit {
   // menuClosed is initial state, menuOpen is menuOpen, routeOpen is when application has routed
 
   names = names;
+  greyscale: boolean = false;
 
   constructor(private router: Router) {
     // Create a new Observable that publishes only the NavigationStart event
@@ -33,10 +34,10 @@ export class NavComponent implements OnInit {
     this.navStart.subscribe((event) => {
       console.log(event.url)
       if (event.url == '/') {
-        this.closeRouteMenu()
+        this.routeMenu('close')
       } 
       else if (event.url.includes('collection') || event.url.includes('about')) {
-        this.openRouteMenu()
+        this.routeMenu('open')
       }
     })
 
@@ -46,84 +47,92 @@ export class NavComponent implements OnInit {
   abtl = gsap.timeline();
   duration = 0.7;
 
-  openRouteMenu(openMenu?: boolean): void {
+  routeMenu(menuAction: 'open' | 'close', openMenu?: boolean): void {
+    if (menuAction == 'open') {
+        
+      this.abtl.clear();
+      this.abtl.play();
+      this.abtl.set('app-nav .column-text-inner', {
+          y: 0,
+      })
+      // this.abtl.set('.image-container img', {opacity: 1})
+      this.abtl.to('.nav', {
+          duration: this.duration,
+          y: -40,
+          ease: Power2.easeOut
+      }, "<")
+      this.abtl.to('.about-nav', {
+          duration: this.duration,
+          y: -40,
+          ease: Power2.easeOut
+      }, "<")
 
-
-    this.abtl.clear();
-    this.abtl.play();
-    this.abtl.set('.column-text-inner', {
+      if (openMenu) {
+        // open menu
+        this.menuState = 'open';
+        this.abtl.set('.nav-area', {display: 'block'}, "<");
+        this.abtl.to('.nav-area', {
+          duration: this.duration,
+          opacity: 1,
+        }, "<")
+        this.abtl.to('.about-nav a', {
+          color: 'white',
+          duration: this.duration
+        }, '<')
+        
+        this.abtl.from('app-nav .column-text-inner', {
+            duration: this.duration + 0.5,
+            y: '3rem',
+            stagger: 0.03,
+            ease: "power3.out",
+        }, "<+=0")
+      }
+    }
+    else if (menuAction == 'close') {
+      this.abtl.clear();
+      this.abtl.play();
+      this.abtl.to('.nav', {
+        duration: this.duration,
         y: 0,
-    })
-    this.abtl.to('.nav', {
-        duration: this.duration,
-        y: -40,
         ease: Power2.easeOut
-    }, "<")
-    this.abtl.to('.about-nav', {
-        duration: this.duration,
-        y: -40,
-        ease: Power2.easeOut
-    }, "<")
-
-    if (openMenu) {
-      // open menu
-      this.menuState = 'open';
-      this.abtl.set('.nav-area', {display: 'block'}, "<");
-      this.abtl.to('.nav-area', {
-        duration: this.duration,
-        opacity: 1,
-      }, "<")
-      this.abtl.to('.about-nav a', {
-        color: 'white',
-        duration: this.duration
       }, '<')
-      
-      this.abtl.from('.column-text-inner', {
-          duration: this.duration + 0.5,
-          y: '3rem',
-          stagger: 0.03,
-          ease: "power3.out",
-      }, "<+=0")
+      this.abtl.to('.about-nav', {
+        duration: this.duration,
+        y: 0,
+        ease: Power2.easeOut
+      }, '<')
+  
+      if (this.menuState == 'open') {
+        // close menu
+        this.abtl.to('app-nav .column-text-inner', {
+          duration: this.duration + 0.4,
+          y: "3rem",
+          ease: Power2.easeOut,
+        }, "<")
+  
+        this.abtl.to('.nav-area', {
+          duration: this.duration,
+          opacity: 0
+        }, "<")
+        this.abtl.to('.about-nav a', {
+          color: 'black',
+          duration: this.duration
+        }, '<')
+  
+        this.abtl.set('.nav-area', {display: 'none'});
+        this.abtl.set('app-nav .column-text-inner', {y: 0});
+        this.menuState = 'closed';
+      }
     }
   }
 
-  closeRouteMenu(): void {
-    this.abtl.clear();
-    this.abtl.play();
-    this.abtl.to('.nav', {
-      duration: this.duration,
-      y: 0,
-      ease: Power2.easeOut
-    }, '<')
-    this.abtl.to('.about-nav', {
-      duration: this.duration,
-      y: 0,
-      ease: Power2.easeOut
-    }, '<')
+  toggleGrayscale() {
+    this.greyscale = !this.greyscale;
 
-    if (this.menuState == 'open') {
-      // close menu
-      this.abtl.to('.column-text-inner', {
-        duration: this.duration + 0.4,
-        y: "3rem",
-        ease: Power2.easeOut,
-      }, "<")
-
-      this.abtl.to('.nav-area', {
-        duration: this.duration,
-        opacity: 0
-      }, "<")
-      this.abtl.to('.about-nav a', {
-        color: 'black',
-        duration: this.duration
-      }, '<')
-      
-      this.abtl.set('.nav-area', {display: 'none'});
-      this.abtl.set('.column-text-inner', {y: 0});
-      this.menuState = 'closed';
-    }
+    if (this.greyscale) {
+      document.querySelector('.collection')?.classList.add('grayscale')
+    } else {document.querySelector('.collection')?.classList.remove('grayscale')}
   }
-
   
 
 }
