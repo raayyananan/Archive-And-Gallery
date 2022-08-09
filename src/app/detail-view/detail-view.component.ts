@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { collections, Collection } from '../collectionOrder';
 import { gsap } from 'gsap';
+import { LoaderService } from '../loader.service';
 
 @Component({
   selector: 'app-detail-view',
@@ -12,7 +13,7 @@ export class DetailViewComponent implements AfterViewInit {
 
   collection!: Collection;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private loaderService: LoaderService) {
     this.getImages(); // generally its not recommended to put initialization logic in the constructor for optimization purposes
   }
 

@@ -93,7 +93,7 @@
 
 .heading {
     mask-position: right;
-    font-size: 2.7rem;
+    font-size: 2.7em;
     position: fixed;
     z-index: 2;
     top: 50%;
@@ -109,7 +109,7 @@
     h1 {
         margin: 0;
         padding: 0;
-        font-family: 'Bigilla';
+        font-family: 'Bigilla', 'Urbanist';
         font-weight: normal;
         user-select: none; /* Standard */
         overflow: hidden;
@@ -136,6 +136,9 @@ img {background-color: white;}
             padding: 0 1.7vw;
         }
     }
+    .heading {
+        font-size: 2.6em;
+    }
 }
 @media only screen and (max-width: 1100px) {
     main.collection {
@@ -145,6 +148,9 @@ img {background-color: white;}
             padding: 0 1vw;
         }
     }
+    .heading {
+        font-size: 2.4em;
+    }
 }
 @media only screen and (max-width: 950px) {
     main.collection {
@@ -153,5 +159,8 @@ img {background-color: white;}
         .view02-container .collectionList {
             padding: 0 0.6vw;
         }
+    }
+    .heading {
+        font-size: 2.3em;
     }
 }

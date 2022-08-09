@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "archive-and-gallery": {
+      "hosting": {
+        "archive-and-gallery": [
+          "archive-and-gallery"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "archive-and-gallery"
+  }
+}

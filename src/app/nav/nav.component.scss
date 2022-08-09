@@ -23,6 +23,7 @@
                 font-weight: 700;
                 font-size: 15px;
                 &:hover {cursor: pointer}
+                &.italic {font-style: italic}
             }
         }
     
@@ -137,10 +138,13 @@
 
 @media only screen and (max-width: 1250px) {
     .nav-container nav {grid-gap: 1.7vw;}
+    .nav-area .grid {padding: calc(40px + 2.7em) 1.7vw 2.7em;}
 }
 @media only screen and (max-width: 1100px) {
     .nav-container nav {grid-gap: 1vw}
+    .nav-area .grid {padding: calc(40px + 2.7em) 1vw 2.7em;}
 }
 @media only screen and (max-width: 950px) {
     .nav-container nav {grid-gap: 0.6vw}
+    .nav-area .grid {padding: calc(40px + 2.7em) 0.6vw 2.7em;}
 }

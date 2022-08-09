@@ -25,7 +25,7 @@ export class NavComponent implements OnInit {
   greyscale: boolean = false;
   viewState: number = 1;
 
-  constructor(private router: Router, private viewSwitcherService: ViewSwitcherService) {
+  constructor(private router: Router, public viewSwitcherService: ViewSwitcherService) {
     // Create a new Observable that publishes only the NavigationStart event
     this.navStart = router.events.pipe(
       filter(evt => evt instanceof NavigationStart)

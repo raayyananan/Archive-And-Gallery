@@ -18,6 +18,7 @@ export class ViewSwitcherService {
   setLinkState(state: 'frozen' | 'available') {
     this.linkState = state;
   }
+  getViewState(): number {return this.viewState}
 
   switchView(viewNumber: number, viewState?: number): void {
     // console.log(`Current state: ${this.viewState}, Attempted call on: ${viewNumber}`)

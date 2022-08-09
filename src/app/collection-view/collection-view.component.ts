@@ -3,6 +3,7 @@ import { collectionOrder, names, URLify } from '../collectionOrder';
 import { gsap } from 'gsap';
 import { Router } from '@angular/router';
 import { ViewSwitcherService } from '../view-switcher.service';
+import { LoaderService } from '../loader.service';
 
 @Component({
   selector: 'app-collection-view',
@@ -20,10 +21,9 @@ export class CollectionViewComponent implements OnInit {
   names = names;
   currentTitle: string = 'Archive & Gallery';
 
-  constructor(private router: Router, private ngZone: NgZone, private viewSwitcherService: ViewSwitcherService) { }
+  constructor(private router: Router, private ngZone: NgZone, private viewSwitcherService: ViewSwitcherService, private loaderService: LoaderService) { }
 
   ngOnInit(): void {
-    
   }
 
   @ViewChild('rightHeading') rightHeading!: ElementRef;
@@ -33,7 +33,13 @@ export class CollectionViewComponent implements OnInit {
   @ViewChildren('images') images!: QueryList<any>;
 
   ngAfterViewInit(): void {
-    setTimeout(() => {this.initialAnimations()}, 200)
+    this.loaderService.loaded.subscribe(value => {
+      this.initialAnimations();
+    })
+
+    if (this.loaderService.loadedStatus == true) {
+      this.initialAnimations();
+    }
   }
 
   navigate(url: string, id: number) {
@@ -107,6 +113,7 @@ export class CollectionViewComponent implements OnInit {
     let headingHeight = this.rightHeading.nativeElement.clientHeight;  
     
     this.viewSwitcherService.setLinkState('frozen');
+    this.viewSwitcherService.setViewState(1);
 
     itl.set('.collection', {opacity: 1})
     itl.set('.heading', {opacity: 1})

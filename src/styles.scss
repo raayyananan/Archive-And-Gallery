@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'bigilla';
+    src: url('./assets/webfontkit-20220809-121457/bigilla_bigfontsite.com-webfont.woff2') format('woff2'),
+         url('./assets/webfontkit-20220809-121457/bigilla_bigfontsite.com-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 :root {
     --background: rgb(250,250,250);
     --background-text: black;
@@ -22,6 +31,10 @@ html, body {
 a {
     text-decoration: none;
     color: var(--background-text);
+}
+
+.column-text-outer {
+    overflow: hidden;
 }
 
 ::-moz-selection { background: black; color: white; }
