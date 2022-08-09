@@ -7,6 +7,14 @@
     font-style: normal;
 
 }
+@font-face {
+    font-family: 'Urbanist';
+    src: url('./assets/Urbanist/Urbanist-Italic-VariableFont_wght.ttf') format('ttf'),
+         url('./assets/Urbanist/Urbanist-VariableFont_wght.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+    
+}
 
 :root {
     --background: rgb(250,250,250);

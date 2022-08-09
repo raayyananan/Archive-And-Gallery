@@ -25,11 +25,11 @@ export class AppComponent implements AfterViewInit{
 
     setTimeout(() => {
       gsap.to('.loader .column-text-inner', {
-        duration: 1,
+        duration: 1.5,
         y: 0,
         ease: "power3.out"
       })
-    }, 1250)
+    }, 1500)
   }
 
   getRouteAnimationData() {
@@ -43,7 +43,7 @@ export class AppComponent implements AfterViewInit{
     //     opacity: 0,
     //     display: 'none',
     //   })
-    // }, 3000)
+    // }, 5000)
     gsap.to('#loader', {
       duration: 0.3,
       opacity: 0,
