@@ -22,7 +22,7 @@ export class NavComponent implements OnInit {
   // menuClosed is initial state, menuOpen is menuOpen, routeOpen is when application has routed
 
   names = names;
-  greyscale: boolean = true;
+  greyscale: boolean = false;
   viewState: number = 1;
 
   constructor(private router: Router, public viewSwitcherService: ViewSwitcherService) {

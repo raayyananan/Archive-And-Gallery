@@ -1,4 +1,4 @@
-<main class="collection grayscale">
+<main class="collection">
 
     <div *ngFor="let image of collection" class="cell" #images>
             <img *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
