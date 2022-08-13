@@ -147,6 +147,9 @@ export class CollectionViewComponent implements OnInit {
     
   }
 
+  topZIndex: number = 0;
+  incrementZ(z: number) {z += 1;}
+
   changeHeading(direction: 'in' | 'out', name?: string): void {
     const permanentTitle = 'Archive & Gallery';
 
