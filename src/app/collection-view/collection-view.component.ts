@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList, NgZone } from '@angular/core';
-import { collectionOrder, names, URLify } from '../collectionOrder';
+import { collectionOrder, names, URLify, thumbnailNumbers } from '../collectionOrder';
 import { gsap } from 'gsap';
 import { Router } from '@angular/router';
 import { ViewSwitcherService } from '../view-switcher.service';
@@ -213,6 +213,7 @@ export class CollectionViewComponent implements OnInit {
 
   view02Navigate(url: string) {
     let v2n = gsap.timeline();
+    this.topImage(13, true); // make the last image come out on top and reset order of all images
     v2n.to('.column-text-inner', {
       duration: 1.1,
       y: '-1.5rem',
@@ -227,5 +228,9 @@ export class CollectionViewComponent implements OnInit {
         this.router.navigate(['collection', url])
       })
     }, '<')
+  }
+
+  topImage(i: number, reset?: boolean) {
+    this.viewSwitcherService.topImage(i, reset);
   }
 }

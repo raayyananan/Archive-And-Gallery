@@ -1,5 +1,7 @@
 import { Injectable, QueryList } from '@angular/core';
 import { gsap } from 'gsap';
+import { delay } from 'rxjs';
+import { thumbnailNumbers } from './collectionOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,19 @@ export class ViewSwitcherService {
   }
   getViewState(): number {return this.viewState}
 
+  z = 5;
+  topImage(index: number, reset?: boolean) {
+    if (reset == true) {
+      (document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>).forEach((img) => {
+        img.style.zIndex = '0';
+      })
+    } 
+    else {
+      (document.querySelectorAll('.collection img')[thumbnailNumbers[index]] as HTMLElement).style.zIndex = `${this.z + 1}`;
+      this.z += 1;
+    }
+  }
+
   switchView(viewNumber: number, viewState?: number): void {
     // console.log(`Current state: ${this.viewState}, Attempted call on: ${viewNumber}`)
 
@@ -30,8 +45,7 @@ export class ViewSwitcherService {
       
       if (viewNumber == 1) {
         let ls = gsap.timeline();
-        this.linkState = 'frozen';
-  
+        this.linkState = 'frozen';  
   
         ls.set('.column-text-inner', {
           y: 0,
@@ -45,37 +59,62 @@ export class ViewSwitcherService {
         })
         ls.set('.column-text-inner', {}, "<+=0.2")
   
-        images.forEach((img) => {
-            let margin = 0
-            let b = img.offsetTop;
-            let horizontalMovement = window.innerWidth - (img.offsetLeft + img.offsetWidth/2) - margin - (window.innerWidth/4);
-            let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
+        // images.forEach((img) => {
+        //     let margin = 0
+        //     let b = img.offsetTop;
+        //     let horizontalMovement = window.innerWidth - (img.offsetLeft + img.offsetWidth/2) - margin - (window.innerWidth/4);
+        //     let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
             
-            ls.to(img, {
-                duration: duration*1.3,
-                y: 0,
-                x : 0,
-                scale: 1,
-                filter: 'none',
-                ease: "power3.out",
-            }, "<")
+        //     ls.to(img, {
+        //         duration: duration*1.3,
+        //         y: 0,
+        //         x : 0,
+        //         scale: 1,
+        //         filter: 'none',
+        //         ease: "power3.out",
+        //         delay: 0.02
+        //     }, "<")
+        // })
+
+        let delay = 0;
+        Array.from(images) // convert images NodeList to array
+        .slice() // get a copy of array
+        .reverse() // reverse images array
+        .forEach(img => {
+          let margin = 0
+          let b = img.offsetTop;
+          let horizontalMovement = window.innerWidth - (img.offsetLeft + img.offsetWidth/2) - margin - (window.innerWidth/4);
+          let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
+          
+          ls.to(img, {
+              duration: duration*1.1,
+              y: 0,
+              x : 0,
+              scale: 1,
+              filter: 'none',
+              ease: "power3.out",
+              delay: 0.012, //0.01
+              onStart: () => {
+                this.topImage(13, true);
+              }
+          }, "<")
         })
   
         // make heading reappear
-        ls.set('.heading .right, .heading .left', {opacity: 1});
+        ls.set('.heading .right, .heading .left', {opacity: 1}, "<");
         ls.set('.heading .left',
           {
               y: -headingHeight - 0,
-          })
+          }, "<")
         ls.set('.heading .right', {
               y: +headingHeight + 0,
-          })
+          }, "<")
         ls.to('.heading .left',
         {
             duration: 0.9,
             y: '-0.7rem',
             ease: "power3.out",
-        })
+        }, "-=0.75")
         ls.to('.heading .right',
           {
               duration: 0.9,
@@ -119,19 +158,20 @@ export class ViewSwitcherService {
             let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
   
             ls.to(img, {
-                duration: duration*1.3,
+                duration: duration*1.1,
                 y: -verticalMovement,
                 x : horizontalMovement,
                 scale: 2.5,
                 filter: 'grayscale(1)',
                 ease: "power3.out",
+                delay: 0.01,
             }, "<")
         })
         ls.set('.heading .right, .heading .left', {opacity: 0});
         ls.to('.column-text-inner', {
-          duration: 1.4,
+          duration: 1,
           y: 0,
-          stagger: 0.035,
+          stagger: 0.025,
           ease: "power3.out",
           onComplete: () => {
             this.viewState = 2;

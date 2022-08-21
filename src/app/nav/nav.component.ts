@@ -106,7 +106,7 @@ export class NavComponent implements OnInit {
       if (this.menuState == 'open') {
         // close menu
         this.abtl.to('app-nav .column-text-inner', {
-          duration: this.duration + 0.4,
+          duration: this.duration + 0.35,
           y: "3rem",
           ease: Power2.easeOut,
         }, "<")

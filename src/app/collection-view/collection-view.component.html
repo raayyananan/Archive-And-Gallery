@@ -3,7 +3,7 @@
     <div *ngFor="let image of collection" class="cell" #images>
             <img *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
             (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, image.id)" [attr.data-srno]="image.id"
-            style="z-index: '{{topZIndex}}'">
+            style="z-index: '{{topZIndex}}'; position: relative;">
     </div>
 
     <section class="view02-container">
@@ -11,7 +11,7 @@
             <div class="flex-container left">
                 <ul *ngFor="let i of [1,2]">
                     <div *ngFor="let name of names; let i = index" class="column-text-outer">
-                        <li class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (click)="incrementZ(topZIndex)">{{name}}</a></li>
+                        <li class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (mouseenter)="topImage(i)">{{name}}</a></li>
                     </div>
                 </ul>
             </div>
@@ -20,7 +20,7 @@
             <div class="flex-container">
                 <ul *ngFor="let i of [1,2]">
                     <div *ngFor="let name of names; let i = index" class="column-text-outer">
-                        <li class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (click)="incrementZ(topZIndex)">{{name}}</a></li>
+                        <li class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (mouseenter)="topImage(i)">{{name}}</a></li>
                     </div>
                 </ul>
             </div>

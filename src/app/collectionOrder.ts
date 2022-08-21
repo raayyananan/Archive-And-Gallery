@@ -17,6 +17,8 @@ export const names: Array<string> = [
     'Insectified'
 ]
 
+export const thumbnailNumbers = [11, 8, 1, 12, 6, 10, 7, 13];
+
 export const collectionOrder: collectionItem[] = [
     // row 1:
     {id: 0, }, // edge
