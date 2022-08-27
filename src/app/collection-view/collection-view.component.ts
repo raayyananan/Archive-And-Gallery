@@ -42,13 +42,19 @@ export class CollectionViewComponent implements OnInit {
     }
   }
 
-  navigate(url: string, id: number) {
-    // first make all images disappear, then navigate to route
+  parseInt(data: any) {
+    return parseInt(data);
+  }
+
+  navigate(url: string, id: number, number: number) {
+    if (this.viewSwitcherService.getViewState() === 1) {
+          // first make all images disappear, then navigate to route
+    const images = document.querySelectorAll('.collection .image-cell img') as NodeListOf<HTMLElement>;
     let imagesBelow: HTMLElement[] = [], imagesAbove: HTMLElement[] = []
-    this.images.forEach(image => {
-      if (image.nativeElement.firstChild.dataset != undefined) {
-        if (image.nativeElement.firstChild.dataset.srno > id) {imagesBelow.push(image.nativeElement)}
-        else if (image.nativeElement.firstChild.dataset.srno <= id) {imagesAbove.push(image.nativeElement)}
+    images.forEach(image => {
+      if (image.dataset != undefined) {
+        if (Number(image.dataset['srno']) > id) {imagesBelow.push(image)}
+        else if (Number(image.dataset['srno']) <= id) {imagesAbove.push(image)}
       }
     })
 
@@ -105,6 +111,25 @@ export class CollectionViewComponent implements OnInit {
 
       // now navigate to the given route
       // this.router.navigate(['collection', url])
+    }
+    else if (this.viewSwitcherService.getViewState() === 3) {
+      const tl = gsap.timeline();
+      const images = (document.querySelectorAll('.bottom-bar img') as NodeListOf<HTMLElement>);
+      tl.to('.bottom-bar img', {
+        duration: 0.5,
+        ease: "power2.in",
+        stagger: {
+          each: 0.02,
+          from: number
+        },
+        opacity: -0.1,
+        y: '110%',
+        delay: 0.04,
+        onComplete: () => this.ngZone.run(() => {
+          this.router.navigate(['collection', url])
+        })
+      })
+    }
       
   }
 
@@ -147,68 +172,67 @@ export class CollectionViewComponent implements OnInit {
     
   }
 
-  topZIndex: number = 0;
-  incrementZ(z: number) {z += 1;}
-
   changeHeading(direction: 'in' | 'out', name?: string): void {
     const permanentTitle = 'Archive & Gallery';
 
-    let htl = gsap.timeline();
-    let headingHeight = this.rightHeading.nativeElement.clientHeight
-    // let headingHeight = (document.querySelector('.heading h1') as HTMLElement).clientHeight
-    
-
-    htl.to('.heading .left',
-        {
-            duration: 0.7,
-            y: +headingHeight + 0,
-            ease: "power2.out",
-        })
-    htl.to('.heading .right',
-        {
-            duration: 0.7,
-            y: -headingHeight - 0,
-            ease: "power2.out",
-        },
-        "<")
-    
-    
-    htl.set('.heading .left',
-        {
-            y: -headingHeight - 0,
-        })
-    htl.set('.heading .right', {
-            y: +headingHeight + 0,
-        })
-    
-    htl.to('.heading .left',
-        {
-            duration: 0.7,
-            y: '-0.7rem',
-            ease: "power2.out",
-            onStart: () => {
-              if (direction === 'in') {
-                this.leftHeading.nativeElement.innerHTML = name;
-              }
-              else {
-                this.leftHeading.nativeElement.innerHTML = permanentTitle;
-              }
-          }
-        })
-    htl.to('.heading .right',
-        {
-            duration: 0.7,
-            y: '0.7rem', 
-            ease: "power2.out",
-            onStart: () => {
-              if (direction === 'in') {
-                this.rightHeading.nativeElement.innerHTML = name;
-              }
-              else {
-                this.rightHeading.nativeElement.innerHTML = permanentTitle;
-              }
-          }
-        },"<")
+    if (this.viewSwitcherService.getViewState() == 1 && this.viewSwitcherService.getLinkState() == 'available') {
+      let htl = gsap.timeline();
+      let headingHeight = this.rightHeading.nativeElement.clientHeight
+      // let headingHeight = (document.querySelector('.heading h1') as HTMLElement).clientHeight
+      
+  
+      htl.to('.heading .left',
+          {
+              duration: 0.7,
+              y: +headingHeight + 0,
+              ease: "power2.out",
+          })
+      htl.to('.heading .right',
+          {
+              duration: 0.7,
+              y: -headingHeight - 0,
+              ease: "power2.out",
+          },
+          "<")
+      
+      
+      htl.set('.heading .left',
+          {
+              y: -headingHeight - 0,
+          })
+      htl.set('.heading .right', {
+              y: +headingHeight + 0,
+          })
+      
+      htl.to('.heading .left',
+          {
+              duration: 0.7,
+              y: '-0.7rem',
+              ease: "power2.out",
+              onStart: () => {
+                if (direction === 'in') {
+                  this.leftHeading.nativeElement.innerHTML = name;
+                }
+                else {
+                  this.leftHeading.nativeElement.innerHTML = permanentTitle;
+                }
+            }
+          })
+      htl.to('.heading .right',
+          {
+              duration: 0.7,
+              y: '0.7rem', 
+              ease: "power2.out",
+              onStart: () => {
+                if (direction === 'in') {
+                  this.rightHeading.nativeElement.innerHTML = name;
+                }
+                else {
+                  this.rightHeading.nativeElement.innerHTML = permanentTitle;
+                }
+            }
+          },"<")
+    }
   }
 
   view02Navigate(url: string) {

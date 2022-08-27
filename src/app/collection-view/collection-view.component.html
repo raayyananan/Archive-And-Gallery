@@ -1,12 +1,22 @@
 <main class="collection">
 
-    <div *ngFor="let image of collection" class="cell" #images>
+    <div *ngFor="let image of collection, let i = index" class="cell" [ngClass]="{'image-cell': image.src}" #images>
             <img *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
-            (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, image.id)" [attr.data-srno]="image.id"
-            style="z-index: '{{topZIndex}}'; position: relative;">
+            (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, image.id, parseInt(image.number))"  [attr.data-srno]="image.id">
     </div>
+    <section class="heading">
+        <div class="text-container">
+            <h1 class="right" #rightHeading>{{ currentTitle }}</h1>
+        </div>
+        <div class="text-container">
+            <h1 class="left" #leftHeading>{{ currentTitle }}</h1>
+        </div>
+    </section>
 
     <section class="view02-container">
+        <div id="image-container">
+            <!-- <img src="../../assets/thumbnails/03.jpg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"> -->
+        </div>
         <div class="collectionList">
             <div class="flex-container left">
                 <ul *ngFor="let i of [1,2]">
@@ -26,12 +36,7 @@
             </div>
         </div>
     </section>
-    <section class="heading">
-        <div class="text-container">
-            <h1 class="right" #rightHeading>{{ currentTitle }}</h1>
-        </div>
-        <div class="text-container">
-            <h1 class="left" #leftHeading>{{ currentTitle }}</h1>
-        </div>
-    </section>
+
+    <section class="bottom-bar"></section>
+
 </main>

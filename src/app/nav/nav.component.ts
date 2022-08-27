@@ -84,7 +84,7 @@ export class NavComponent implements OnInit {
         this.abtl.from('app-nav .column-text-inner', {
             duration: this.duration + 0.5,
             y: '3rem',
-            stagger: 0.03,
+            stagger: 0.02,
             ease: "power3.out",
         }, "<+=0")
       }
@@ -140,6 +140,7 @@ export class NavComponent implements OnInit {
       document.querySelector('.collection')?.classList.add('grayscale')
     } else {document.querySelector('.collection')?.classList.remove('grayscale')}
   }
+  
   
 
 }

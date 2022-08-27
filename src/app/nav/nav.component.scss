@@ -21,9 +21,9 @@
     
             a {
                 font-weight: 700;
-                font-size: 15px;
+                font-size: 16px;
                 &:hover {cursor: pointer}
-                &.italic {font-style: italic}
+                &.italic {font-style: italic; text-decoration: line-through}
             }
         }
     

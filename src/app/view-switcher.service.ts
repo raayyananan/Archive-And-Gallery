@@ -1,5 +1,6 @@
 import { Injectable, QueryList } from '@angular/core';
 import { gsap } from 'gsap';
+import { Flip } from 'gsap/all';
 import { delay } from 'rxjs';
 import { thumbnailNumbers } from './collectionOrder';
 
@@ -8,19 +9,23 @@ import { thumbnailNumbers } from './collectionOrder';
 })
 export class ViewSwitcherService {
 
-  constructor() { }
+  constructor() {
+    gsap.registerPlugin(Flip);
+  }
 
-  private rightHeading = document.querySelector('.heading h1');
-  private viewState: number = 1;
+  public viewState: number = 1;
   private linkState: 'frozen' | 'available' = 'available';
+  private viewSwitchEvent: Event = new Event('viewswitch');
 
   setViewState(state: number) {
     this.viewState = state;
+    document.dispatchEvent(this.viewSwitchEvent)
   }
   setLinkState(state: 'frozen' | 'available') {
     this.linkState = state;
   }
   getViewState(): number {return this.viewState}
+  getLinkState() {return this.linkState}
 
   z = 5;
   topImage(index: number, reset?: boolean) {
@@ -35,178 +40,200 @@ export class ViewSwitcherService {
     }
   }
 
+  headingMove(direction: 'in' | 'out', timeline: any, timelinePlacementArg?: string | number, delay?: number) {
+    let headingHeight = (document.querySelector('.heading .right') as HTMLElement).clientHeight;
+
+    if (direction === 'out') {
+      timeline.to('.heading .left',
+      {
+          duration: 0.6,
+          y: +headingHeight + 0,
+          ease: "power2.inOut",
+      }, timelinePlacementArg)
+      timeline.to('.heading .right',
+      {
+          duration: 0.6,
+          y: -headingHeight - 0,
+          ease: "power2.inOut",
+      },
+      "<")
+    }
+    else if (direction === 'in') {
+      // make heading reappear
+
+      timeline.set('.heading .left',
+        {
+          y: -headingHeight - 0,
+        })
+      timeline.set('.heading .right', 
+        {
+          y: +headingHeight + 0,
+        })
+      timeline.to('.heading .left',
+      {
+          duration: 0.9,
+          y: "-0.7rem",
+          ease: "power3.out",
+          delay: delay
+      }, timelinePlacementArg)
+      timeline.to('.heading .right',
+        {
+            duration: 0.9,
+            y: "0.7rem",
+            ease: "power3.out",
+        },
+      "<")
+    }
+  }
+
   switchView(viewNumber: number, viewState?: number): void {
     // console.log(`Current state: ${this.viewState}, Attempted call on: ${viewNumber}`)
+
+    document.addEventListener('switchView', () => {return null})
 
     if (this.linkState != 'frozen' && this.viewState !== viewNumber) {
       let headingHeight = (document.querySelector('.heading h1') as HTMLElement).clientHeight;
       let images = document.querySelectorAll('main.collection img') as NodeListOf<HTMLElement>;
       let duration = 1.5;   
+
+      let tl = gsap.timeline();
+
+      this.setLinkState('frozen');
+            
+      const destroyDisconnectedSequences = (view: number) => {
+
+        if (view == 1) {
+          this.headingMove('out', tl);
+          tl.set('.heading h1', {display: 'none'});
+        }
+        else if (view == 2) {
+          tl.to('.column-text-inner', {
+            duration: 1.1,
+            y: '-1.5rem',
+            stagger: -0.01,
+            ease: "power2.out",
+          })
+          tl.set('.view02-container', {display: 'none'});
+          // tl.set('.column-text-inner', {}, "<+=0.2")
+        }
+        else if (view == 3) {}
+      }
+
+      // destroy disconnected sequences to make space clean for new view
+      const currentView = this.getViewState();
+      destroyDisconnectedSequences(currentView);
       
       if (viewNumber == 1) {
-        let ls = gsap.timeline();
-        this.linkState = 'frozen';  
-  
-        ls.set('.column-text-inner', {
-          y: 0,
-        })
-  
-        ls.to('.column-text-inner', {
-          duration: 1.1,
-          y: '-1.5rem',
-          stagger: -0.0075,
-          ease: "power2.out",
-        })
-        ls.set('.column-text-inner', {}, "<+=0.2")
-  
-        // images.forEach((img) => {
-        //     let margin = 0
-        //     let b = img.offsetTop;
-        //     let horizontalMovement = window.innerWidth - (img.offsetLeft + img.offsetWidth/2) - margin - (window.innerWidth/4);
-        //     let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
-            
-        //     ls.to(img, {
-        //         duration: duration*1.3,
-        //         y: 0,
-        //         x : 0,
-        //         scale: 1,
-        //         filter: 'none',
-        //         ease: "power3.out",
-        //         delay: 0.02
-        //     }, "<")
-        // })
+        const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
+        imageCells = document.querySelectorAll('.image-cell') as NodeListOf<HTMLElement>;
 
-        let delay = 0;
-        Array.from(images) // convert images NodeList to array
-        .slice() // get a copy of array
-        .reverse() // reverse images array
-        .forEach(img => {
-          let margin = 0
-          let b = img.offsetTop;
-          let horizontalMovement = window.innerWidth - (img.offsetLeft + img.offsetWidth/2) - margin - (window.innerWidth/4);
-          let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
-          
-          ls.to(img, {
-              duration: duration*1.1,
-              y: 0,
-              x : 0,
-              scale: 1,
-              filter: 'none',
-              ease: "power3.out",
-              delay: 0.012, //0.01
-              onStart: () => {
-                this.topImage(13, true);
-              }
-          }, "<")
-        })
-  
-        // make heading reappear
-        ls.set('.heading .right, .heading .left', {opacity: 1}, "<");
-        ls.set('.heading .left',
-          {
-              y: -headingHeight - 0,
-          }, "<")
-        ls.set('.heading .right', {
-              y: +headingHeight + 0,
-          }, "<")
-        ls.to('.heading .left',
-        {
-            duration: 0.9,
-            y: '-0.7rem',
-            ease: "power3.out",
-        }, "-=0.75")
-        ls.to('.heading .right',
-          {
-              duration: 0.9,
-              y: '0.7rem',
-              ease: "power3.out",
-              onComplete: () => {
-                this.viewState = 1;
-                this.linkState = 'available';
-              }
-          },
-        "<")
-        ls.set('.view02-container', {display: 'none'}, ">+=0.1");
+        let d = 1.75, s = 0.02;
+        if (this.getViewState() === 3) {
+          d = 2, s = 0.025;
+        }
+
+        const state = Flip.getState(images, {props: "padding,filter"})
+        images.forEach((image, i) => {
+          imageCells[i].appendChild(image);
+        });
+        Flip.from(state, {
+          duration: d,
+          ease: "power4.out",
+          absolute: true,
+          stagger: {
+            each: s,
+            from: "center",
+          }, // 0.017
+          delay: 0.1,
+          onComplete: () => {
+            this.setViewState(1);
+            this.setLinkState('available');
+          }
+        });
+
+        setTimeout(() => {
+          (document.querySelector('.heading .right') as HTMLElement).style.display = 'block';
+          (document.querySelector('.heading .left') as HTMLElement).style.display = 'block';
+          this.headingMove('in', gsap, undefined, 1);
+        }, 0)
       }
   
       else if (viewNumber == 2) {
-        let ls = gsap.timeline();
-        this.linkState = 'frozen';
-  
-        ls.set('.view02-container', {display: 'block'}, 0);
-  
-        // make heading disappear
-        ls.to('.heading .left',
-          {
-              duration: 0.7,
-              y: +headingHeight + 0,
-              ease: "power2.out",
-          })
-        ls.to('.heading .right',
-          {
-              duration: 0.7,
-              y: -headingHeight - 0,
-              ease: "power2.out",
+
+        const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
+        imageContainer = document.querySelector('#image-container') as HTMLElement,
+        view02container = document.querySelector('.view02-container') as HTMLElement;
+
+        view02container.style.display = 'block';
+
+        // let tl = gsap.timeline();
+
+        const state = Flip.getState(images, {props: "padding,filter"});
+        images.forEach((image) => {
+          imageContainer?.appendChild(image);
+        });
+        Flip.from(state, {
+          duration: 1.5,
+          ease: "power3.out",
+          absolute: true,
+          stagger: {
+            each: 0.015,
           },
-        "<")
-        
-        // calculate the translation needed for each image to go to desired position, then translate it 
-        images.forEach((img, index) => {
-            let margin = 0
-            let b = img.offsetTop;
-            let horizontalMovement = window.innerWidth - (img.offsetLeft + img.offsetWidth/2) - margin - (window.innerWidth/2);
-            let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
-  
-            ls.to(img, {
-                duration: duration*1.1,
-                y: -verticalMovement,
-                x : horizontalMovement,
-                scale: 2.5,
-                filter: 'grayscale(1)',
-                ease: "power3.out",
-                delay: 0.01,
-            }, "<")
+          delay: 0.08,
         })
-        ls.set('.heading .right, .heading .left', {opacity: 0});
-        ls.to('.column-text-inner', {
+
+        tl.to('.view02-container .column-text-inner', {
           duration: 1,
           y: 0,
           stagger: 0.025,
           ease: "power3.out",
           onComplete: () => {
-            this.viewState = 2;
-            this.linkState = 'available';
+            this.setViewState(2);
+            this.setLinkState('available');
           }
-        }, -0.25)
-  
-        window.addEventListener('resize', () => {
-          // calculate the translation needed for each image to go to desired position, then translate it
-          if (this.viewState == 2) {
-            images.forEach((img, index) => {
-              gsap.set(img, {
-                y: 0,
-                x : 0,
-                scale: 1,
-              })
-      
-              let margin = 0
-              let b = img.offsetTop;
-              let horizontalMovement = window.innerWidth - (img.offsetLeft + img.offsetWidth/2) - margin - (window.innerWidth/2);
-              let verticalMovement = (b + img.clientHeight/2 - margin) - (window.innerHeight/2);
-  
-              gsap.set(img, {
-                  // duration: duration*1.5,
-                  y: -verticalMovement,
-                  x : horizontalMovement,
-                  scale: 2.5,
-                  filter: 'grayscale(1)',
-                  // ease: "power2.inOut",
-              })
-          })
-          } 
+        }, "<")
+
+      }
+
+      else if (viewNumber == 3) {
+
+        const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
+        bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
+
+        // let tl = gsap.timeline();
+        bottomBar.classList.remove('scrollable');
+
+        const state = Flip.getState('.collection img', {props: "padding,filter"});
+        images.forEach((image) => {
+          bottomBar.appendChild(image)
         })
+        Flip.from(state, {
+          duration: 1.75,
+          ease: "power4.out",
+          absolute: true,
+          stagger: {
+            each: 0.017, 
+            from: "start"
+          },
+          delay: 0.12,
+          onComplete: () => {
+            bottomBar.classList.add('scrollable');
+            bottomBar.focus();
+            this.setViewState(3);
+            this.setLinkState('available');
+          }
+        })
+    
+        function transformScroll(event: any) {
+          // bottomBar.scrollLeft += event.deltaY + event.deltaX;
+          bottomBar.scrollLeft += event.deltaY + event.deltaX;
+          console.log('scroll')
+        }
+        window.addEventListener('wheel', transformScroll);        
       }
     }
+
+    return
 
   }
 }
