@@ -7,12 +7,12 @@
         <div class="column title"><a routerLink="">Rayyan's&nbsp;Archive&nbsp;and&nbsp;Gallery</a></div>
         <div class="column"></div>
         <div class="column"></div>
-        <div class="column"><a class="main-link" (click)="switchView(1)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 1}">View&hairsp;001</a></div>
-        <div class="column"><a class="main-link" (click)="switchView(2)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 2}">View&hairsp;002</a></div>
-        <div class="column"><a class="main-link" (click)="switchView(3)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 3}">View&hairsp;003</a></div>
+        <div class="column"><a class="main-link link" (click)="switchView(1)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 1}">View&hairsp;001</a></div>
+        <div class="column"><a class="main-link link" (click)="switchView(2)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 2}">View&hairsp;002</a></div>
+        <div class="column"><a class="main-link link" (click)="switchView(3)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 3}">View&hairsp;003</a></div>
         <div class="column"></div>
-        <div class="column"><a (click)="routeMenu('open', true)">About</a></div>
-        <div class="column"><a (click)="toggleGrayscale()">BW</a></div>
+        <div class="column"><a class="link" (click)="routeMenu('open', true)">About</a></div>
+        <div class="column"><a class="link" (click)="toggleGrayscale()">BW</a></div>
         <div class="edge-margin">
         </div>
     </nav>
@@ -137,14 +137,14 @@
                 <li>
                     <div class="column-text-outer">
                         <div class="column-text-inner">
-                            <a  target="_blank" href="https://fonts.google.com/specimen/Urbanist?vfquery=urbani">Urbanist font</a>
+                            <a  target="_blank" href="https://fonts.google.com/specimen/Urbanist?vfquery=urbani">Urbanist font <span>&#8599;</span></a>
                         </div>
                     </div>
                 </li>
                 <li>
                     <div class="column-text-outer">
                         <div class="column-text-inner">
-                            <a  target="_blank" href="https://www.behance.net/gallery/93242287/BIGILLA-FREE-DISPLAY-SERIF-TYPEFACE">Bigilla font</a>
+                            <a  target="_blank" href="https://www.behance.net/gallery/93242287/BIGILLA-FREE-DISPLAY-SERIF-TYPEFACE">Bigilla font <span>&#8599;</span></a>
                         </div>
                     </div>
                 </li>
@@ -180,21 +180,28 @@
                 <li>
                     <div class="column-text-outer">
                         <div class="column-text-inner">
-                            <a href="mailto:raytariq93@gmail.com">Email: raytariq93@gmail.com</a>
+                            <a href="https://www.upwork.com/freelancers/~01ba051af719a3a1d4" target="_blank"><a class="title">Upwork:</a> Rayyan Tariq <span>&#8599;</span></a>
                         </div>
                     </div>
                 </li>
                 <li>
                     <div class="column-text-outer">
                         <div class="column-text-inner">
-                            <a href="https://www.instagram.com/rayyananan" target="_blank">Instagram: @rayyananan</a>
+                            <a href="mailto:raytariq93@gmail.com">raytariq93@gmail.com <span>&#8599;</span></a>
                         </div>
                     </div>
                 </li>
                 <li>
                     <div class="column-text-outer">
                         <div class="column-text-inner">
-                            <a href="https://twitter.com/raayyananan" target="_blank">Twitter: @rayyananan</a>
+                            <a href="https://www.instagram.com/rayyananan" target="_blank">Instagram: @rayyananan <span>&#8599;</span></a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="column-text-outer">
+                        <div class="column-text-inner">
+                            <a href="https://twitter.com/raayyananan" target="_blank">Twitter: @rayyananan <span>&#8599;</span></a>
                         </div>
                     </div>
                 </li>

@@ -133,7 +133,7 @@
                     font-size: 1.2rem;
                     text-transform: uppercase;
                     font-weight: 600;
-                    &:hover {font-style: italic;}
+                    &:hover {font-style: italic; cursor: pointer;}
                 }
             }
         }
@@ -187,18 +187,64 @@ img {
 }
 
 
+.view03-container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+
+    display: none; // set to flex in js
+    flex-flow: column nowrap;
+
+    .content {
+        flex: auto;
+        display: flex;
+        flex-flow: column nowrap;
+        padding: 0 10px;
+        box-sizing: border-box;
+
+        .filler {flex: auto}
+        .arrows-container {
+            display: flex;
+            flex-flow: row nowrap;
+
+            .arrows {
+                padding: 0 35px 0 10px;
+                font-size: 2.5rem;
+
+                a {padding: 0 2px;}
+
+                // #arrow_1, #arrow_2 {
+                //     animation: nothing 0s;
+                //     animation-delay: 1s;
+                //     animation-fill-mode: forwards;
+                // }
+                // @keyframes nothing {
+                //     0% {opacity: 0}
+                //     100% {opacity: 1}
+                // }
+            }
+        }
+    }
+    .bottom-bar-filler {
+        height: calc(48vh + 60px);
+    }
+}
 .bottom-bar {
-    display: flex;
+    display: none; // set to flex with js
     flex-flow: row nowrap;
     justify-content: flex-start;
     padding: 0 10px 20px;
     height: 48%;
+    width: 100vw;
     box-sizing: border-box;
 
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     bottom: 20px;
     left: 0;
+
+    transition: transform 50ms cubic-bezier(0.250, 0.460, 0.450, 0.940, 1);
 
     overflow: visible;
 

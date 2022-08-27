@@ -43,6 +43,12 @@ export class NavComponent implements OnInit {
     })
 
     this.menuState = 'closed';
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code == 'Digit1') {this.switchView(1)}
+      else if (e.code == 'Digit2') {this.switchView(2)}
+      else if (e.code == 'Digit3') {this.switchView(3)}
+    })
   }
 
   abtl = gsap.timeline();

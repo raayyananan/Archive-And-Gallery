@@ -1,0 +1,4 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50"><defs><style>.cls-1{fill:none;stroke:#231f20;stroke-miterlimit:10;stroke-width:2px;}</style></defs><polyline class="cls-1 svg-elem-1" points="3 25 47 25 39.55 31.98 47 25 39.55 18.02"></polyline></svg>
+<style>
+@-webkit-keyframes animate-svg-stroke-1{0%{stroke-dashoffset:76.62688446044922px;stroke-dasharray:76.62688446044922px}100%{stroke-dashoffset:0;stroke-dasharray:76.62688446044922px}}@keyframes animate-svg-stroke-1{0%{stroke-dashoffset:76.62688446044922px;stroke-dasharray:76.62688446044922px}100%{stroke-dashoffset:0;stroke-dasharray:76.62688446044922px}}.svg-elem-1{-webkit-animation:animate-svg-stroke-1 0.75s cubic-bezier(0.455,0.03,0.515,0.955) 0s both;animation:animate-svg-stroke-1 0.75s cubic-bezier(0.455,0.03,0.515,0.955) 0s both}
+</style>

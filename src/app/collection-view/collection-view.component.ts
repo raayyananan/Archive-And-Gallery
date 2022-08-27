@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList, NgZone } from '@angular/core';
 import { collectionOrder, names, URLify, thumbnailNumbers } from '../collectionOrder';
 import { gsap } from 'gsap';
-import { Router } from '@angular/router';
+import { Router, Scroll } from '@angular/router';
 import { ViewSwitcherService } from '../view-switcher.service';
 import { LoaderService } from '../loader.service';
+
 
 @Component({
   selector: 'app-collection-view',
@@ -21,7 +22,7 @@ export class CollectionViewComponent implements OnInit {
   names = names;
   currentTitle: string = 'Archive & Gallery';
 
-  constructor(private router: Router, private ngZone: NgZone, private viewSwitcherService: ViewSwitcherService, private loaderService: LoaderService) { }
+  constructor(private router: Router, private ngZone: NgZone, public viewSwitcherService: ViewSwitcherService, private loaderService: LoaderService) { }
 
   ngOnInit(): void {
   }
@@ -32,6 +33,8 @@ export class CollectionViewComponent implements OnInit {
   // Typescript thinks heading is undefined - use ! to tell typescript that you are sure heading is not null or undefined
   @ViewChildren('images') images!: QueryList<any>;
 
+  totalScrolled = 0;
+
   ngAfterViewInit(): void {
     this.loaderService.loaded.subscribe(value => {
       this.initialAnimations();
@@ -41,42 +44,31 @@ export class CollectionViewComponent implements OnInit {
       this.initialAnimations();
     }
 
-    let totalScrolled = 0;
-    function transformScroll(event: any, target: HTMLElement): void {
-      // have element width, total scrolled amount that adds or subtracts when scrolled
-      // is total scrolled is less than zero or greater than element width, then no scroll applied
+    this.viewSwitcherService.initializeScrollTransform();
 
-      let scroll = (event.deltaX + event.deltaY) * 0.45,
-      scrollableWidth = target.scrollWidth - target.clientWidth;
-
-      if (totalScrolled > 0 && totalScrolled <= scrollableWidth) 
-      {
-        target.style.transform += `translateX(${-scroll}px)`;
-        totalScrolled += scroll;
-        // console.log(`Scrolled ${scroll}px, Total scroll is ${totalScrolled}`)
-      } 
-      else if (totalScrolled <= 0 && scroll > 0) 
-      {
-        target.style.transform += `translateX(${-scroll}px)`;
-        totalScrolled += scroll;
+    document.addEventListener("keydown", (e) => {
+      if (this.viewSwitcherService.getTransitionalViewState() == 3) {
+        if (e.code == 'ArrowRight') {
+          this.viewSwitcherService.buttonMoveX('forwards', true);
+        }
+        else if (e.code == 'ArrowLeft') {
+          this.viewSwitcherService.buttonMoveX('backwards', true);
+        }
       }
-      else if (totalScrolled > scrollableWidth && scroll < 0) {
-        target.style.transform += `translateX(${-scroll}px)`;
-        totalScrolled += scroll;
-      }
-
-      return 
-    }
-    const bottomBar = document.querySelector('.bottom-bar') as HTMLElement
-    window.addEventListener('wheel', (event) => {
-      if (this.viewSwitcherService.getTransitionalViewState() === 3) {
-        transformScroll(event, bottomBar)
-      }
-    });
+    })
   }
-
+  
   parseInt(data: any) {
     return parseInt(data);
+  }
+
+  onPan(e: any, direction: 'forwards' | 'backwards') {
+    if (direction == 'forwards') {
+      this.viewSwitcherService.buttonMoveX('forwards');
+    }
+    else if (direction == 'backwards') {
+      this.viewSwitcherService.buttonMoveX('backwards');
+    }
   }
 
   navigate(url: string, id: number, number: number) {

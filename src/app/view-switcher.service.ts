@@ -1,6 +1,6 @@
 import { Injectable, QueryList } from '@angular/core';
 import { gsap } from 'gsap';
-import { Flip } from 'gsap/all';
+import { Flip, CustomEase } from 'gsap/all';
 import { delay } from 'rxjs';
 import { thumbnailNumbers } from './collectionOrder';
 
@@ -11,6 +11,9 @@ export class ViewSwitcherService {
 
   constructor() {
     gsap.registerPlugin(Flip);
+    gsap.registerPlugin(CustomEase);
+
+    CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
   }
 
   public viewState: number = 1;
@@ -98,12 +101,8 @@ export class ViewSwitcherService {
     document.addEventListener('switchView', () => {return null})
 
     if (this.linkState != 'frozen' && this.viewState !== viewNumber) {
-      let headingHeight = (document.querySelector('.heading h1') as HTMLElement).clientHeight;
-      let images = document.querySelectorAll('main.collection img') as NodeListOf<HTMLElement>;
-      let duration = 1.5;   
 
       let tl = gsap.timeline();
-
       this.setLinkState('frozen');
             
       const destroyDisconnectedSequences = (view: number) => {
@@ -122,7 +121,15 @@ export class ViewSwitcherService {
           tl.set('.view02-container', {display: 'none'});
           // tl.set('.column-text-inner', {}, "<+=0.2")
         }
-        else if (view == 3) {}
+        else if (view == 3) {
+          tl.to('.arrows-container .arrows', {
+            duration: 0.25,
+            opacity: 0
+          }, "<")
+          tl.set('.view03-container', {display: 'none'});
+          tl.set('.bottom-bar', {display: 'none'});
+          tl.set('.arrows-container .arrows', {opacity: 1})
+        }
       }
 
       // destroy disconnected sequences to make space clean for new view
@@ -136,29 +143,43 @@ export class ViewSwitcherService {
         const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
         imageCells = document.querySelectorAll('.image-cell') as NodeListOf<HTMLElement>;
 
-        let d = 1.5, s = 0.02;
-        if (this.getViewState() === 3) {
-          d = 2, s = 0.025;
-        }
-
         const state = Flip.getState(images, {props: "padding,filter"})
         images.forEach((image, i) => {
           imageCells[i].appendChild(image);
         });
-        Flip.from(state, {
-          duration: d,
-          ease: "power4.out",
-          absolute: true,
-          stagger: {
-            each: s,
-            from: "center",
-          }, // 0.017
-          delay: 0.125,
-          onComplete: () => {
-            this.setViewState(1);
-            this.setLinkState('available');
-          }
-        });
+        if (currentView === 3) {
+          Flip.from(state, {
+            duration: 1.7,
+            ease: "cubic",
+            absolute: true,
+            stagger: {
+              each: 0.05,
+              from: "start",
+            }, // 0.017
+            delay: 0.075,
+            onComplete: () => {
+              this.setViewState(1);
+              this.setLinkState('available');
+            }
+          });
+        }
+        else {
+          Flip.from(state, {
+            duration: 1.6,
+            ease: "cubic",
+            absolute: true,
+            stagger: {
+              each: 0.02,
+              from: "end",
+            }, // 0.017
+            delay: 0.1,
+            onComplete: () => {
+              this.setViewState(1);
+              this.setLinkState('available');
+            }
+          });
+        }
+
 
         setTimeout(() => {
           (document.querySelector('.heading .right') as HTMLElement).style.display = 'block';
@@ -185,8 +206,8 @@ export class ViewSwitcherService {
           imageContainer?.appendChild(image);
         });
         Flip.from(state, {
-          duration: 1.4,
-          ease: "power3.out",
+          duration: 1.5,
+          ease: "cubic",
           absolute: true,
           stagger: {
             each: 0.015,
@@ -211,12 +232,13 @@ export class ViewSwitcherService {
 
         this.setTransitionalViewState(3);
 
+        (document.querySelector('.view03-container') as HTMLElement).style.display = 'flex';
+        (document.querySelector('.bottom-bar') as HTMLElement).style.display = 'flex';
 
         const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
         bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
 
-        // let tl = gsap.timeline();
-        bottomBar.classList.remove('scrollable');
+        // bottomBar.classList.remove('scrollable');
 
         const state = Flip.getState('.collection img', {props: "padding,filter"});
         images.forEach((image) => {
@@ -224,7 +246,7 @@ export class ViewSwitcherService {
         })
         Flip.from(state, {
           duration: 1.75,
-          ease: "power4.out",
+          ease: "cubic", //power4.out
           absolute: true,
           stagger: {
             each: 0.017, 
@@ -232,16 +254,162 @@ export class ViewSwitcherService {
           },
           delay: 0.12,
           onComplete: () => {
-            bottomBar.classList.add('scrollable');
+            // bottomBar.classList.add('scrollable');
             bottomBar.focus();
             this.setViewState(3);
             this.setLinkState('available');
           }
         })       
+        //0.230, 0.545, 0.085, 0.995
       }
     }
 
     return
 
+  }
+
+  getTranslateValues (element: HTMLElement): any {
+    const style = window.getComputedStyle(element)
+    const matrix: any = style['transform'] || style.webkitTransform;
+
+    // No transform property. Simply return 0 values.
+    if (matrix === 'none' || typeof matrix === 'undefined') {
+      return {
+        x: 0,
+        y: 0,
+        z: 0
+      }
+    }
+
+    // Can either be 2d or 3d transform
+    const matrixType = matrix.includes('3d') ? '3d' : '2d'
+    const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ')
+
+    // 2d matrices have 6 values
+    // Last 2 values are X and Y.
+    // 2d matrices does not have Z value.
+    if (matrixType === '2d') {
+      return {
+        x: matrixValues[4],
+        y: matrixValues[5],
+        z: 0
+      }
+    }
+
+    // 3d matrices have 16 values
+    // The 13th, 14th, and 15th values are X, Y, and Z
+    if (matrixType === '3d') {
+      return {
+        x: matrixValues[12],
+        y: matrixValues[13],
+        z: matrixValues[14]
+      }
+    }
+  }
+
+  initializeScrollTransform(): any { // for scrolling in view03
+
+    // bottomBars translateX cannot be higher than 0, nor lower than -width of bottomBar
+    const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
+    
+    const scrollTransform = (deltaX: any, deltaY: any, target: HTMLElement): void => {
+      const scrollableWidth = target.scrollWidth - target.clientWidth;
+      let scroll = (deltaX + deltaY) * 0.4;
+      let translateX = this.getTranslateValues(target).x;
+
+      if (translateX >= 0 && scroll > 0) 
+      {
+        // allows only positive scroll
+        // target.style.transform += `translateX(${-scroll}px)`;
+        gsap.set(target, {x: "+="+(-scroll)})
+      }
+      else if (translateX < 0 && Number(-translateX) <= scrollableWidth) {
+        // allows scrolling in any direction
+        // target.style.transform += `translateX(${-scroll}px)`;
+        gsap.set(target, {x: "+="+(-scroll)})
+      }
+      else if (Number(-translateX) > scrollableWidth && scroll < 0) {
+        // allows only negative scroll
+        // target.style.transform += `translateX(${-scroll}px)`;
+        gsap.set(target, {x: "+="+(-scroll)})
+      }
+      // console.log(typeof(Number(-translateX)))
+      // console.log(-translateX, scrollableWidth)
+
+
+      return 
+    }
+
+    window.addEventListener('wheel', (event) => {
+      if (this.getTransitionalViewState() === 3) {
+        scrollTransform(event.deltaX, event.deltaY, bottomBar);
+      }
+    });
+  }
+
+  buttonMoveX(direction: 'forwards' | 'backwards', button?: boolean, target?: HTMLElement) {
+    const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
+    target = bottomBar;
+    const scrollableWidth = target.scrollWidth - target.clientWidth;
+    let translateX = Number(this.getTranslateValues(target).x);
+    let ease = "cubic", dr = 1.5, factor = 1.5;
+    let movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
+
+    if (button == true) {
+      dr = 1, factor = 2;
+      movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
+    }
+
+    const tl = gsap.timeline()
+
+    if (translateX >= 0 && direction == 'forwards') {
+      tl.to(bottomBar, {
+        duration: dr,
+        ease: ease,
+        x: "-="+movement
+      })
+    }
+    else if (translateX < 0 && (-translateX + movement) <= scrollableWidth) {
+      if (direction == 'forwards') {
+        tl.to(bottomBar, {
+          duration: dr,
+          ease: ease,
+          x: "-="+movement
+        })
+      }
+      else if (direction == 'backwards') {
+        if ((translateX + movement) >= 0) {
+          tl.to(bottomBar, {
+            duration: dr,
+            ease: ease,
+            x: 0
+          })
+        }
+        else {
+          tl.to(bottomBar, {
+            duration: dr,
+            ease: ease,
+            x: "+="+movement
+          })
+        }
+      }
+    }
+    else if ((-translateX + movement) >= scrollableWidth && direction == 'backwards') {
+      tl.to(bottomBar, {
+        duration: dr,
+        ease: ease,
+        x: "+="+movement
+      })
+    }
+    //edge cases
+    else if ((-translateX + movement) >= scrollableWidth && direction == 'forwards') {
+      tl.to(bottomBar, {
+        duration: dr,
+        ease: ease,
+        x: -scrollableWidth
+      })
+    }
+
+      
   }
 }
