@@ -40,6 +40,39 @@ export class CollectionViewComponent implements OnInit {
     if (this.loaderService.loadedStatus == true) {
       this.initialAnimations();
     }
+
+    let totalScrolled = 0;
+    function transformScroll(event: any, target: HTMLElement): void {
+      // have element width, total scrolled amount that adds or subtracts when scrolled
+      // is total scrolled is less than zero or greater than element width, then no scroll applied
+
+      let scroll = (event.deltaX + event.deltaY) * 0.45,
+      scrollableWidth = target.scrollWidth - target.clientWidth;
+
+      if (totalScrolled > 0 && totalScrolled <= scrollableWidth) 
+      {
+        target.style.transform += `translateX(${-scroll}px)`;
+        totalScrolled += scroll;
+        // console.log(`Scrolled ${scroll}px, Total scroll is ${totalScrolled}`)
+      } 
+      else if (totalScrolled <= 0 && scroll > 0) 
+      {
+        target.style.transform += `translateX(${-scroll}px)`;
+        totalScrolled += scroll;
+      }
+      else if (totalScrolled > scrollableWidth && scroll < 0) {
+        target.style.transform += `translateX(${-scroll}px)`;
+        totalScrolled += scroll;
+      }
+
+      return 
+    }
+    const bottomBar = document.querySelector('.bottom-bar') as HTMLElement
+    window.addEventListener('wheel', (event) => {
+      if (this.viewSwitcherService.getTransitionalViewState() === 3) {
+        transformScroll(event, bottomBar)
+      }
+    });
   }
 
   parseInt(data: any) {

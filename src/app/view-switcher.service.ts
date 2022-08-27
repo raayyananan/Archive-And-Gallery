@@ -14,17 +14,23 @@ export class ViewSwitcherService {
   }
 
   public viewState: number = 1;
+  public transitionalViewState: number = 1;
   private linkState: 'frozen' | 'available' = 'available';
   private viewSwitchEvent: Event = new Event('viewswitch');
 
   setViewState(state: number) {
     this.viewState = state;
+    this.setTransitionalViewState(state)
     document.dispatchEvent(this.viewSwitchEvent)
+  }
+  setTransitionalViewState(state: number) {
+    this.transitionalViewState = state;
   }
   setLinkState(state: 'frozen' | 'available') {
     this.linkState = state;
   }
   getViewState(): number {return this.viewState}
+  getTransitionalViewState(): number {return this.transitionalViewState}
   getLinkState() {return this.linkState}
 
   z = 5;
@@ -124,10 +130,13 @@ export class ViewSwitcherService {
       destroyDisconnectedSequences(currentView);
       
       if (viewNumber == 1) {
+
+        this.setTransitionalViewState(1);
+        
         const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
         imageCells = document.querySelectorAll('.image-cell') as NodeListOf<HTMLElement>;
 
-        let d = 1.75, s = 0.02;
+        let d = 1.5, s = 0.02;
         if (this.getViewState() === 3) {
           d = 2, s = 0.025;
         }
@@ -144,7 +153,7 @@ export class ViewSwitcherService {
             each: s,
             from: "center",
           }, // 0.017
-          delay: 0.1,
+          delay: 0.125,
           onComplete: () => {
             this.setViewState(1);
             this.setLinkState('available');
@@ -160,6 +169,9 @@ export class ViewSwitcherService {
   
       else if (viewNumber == 2) {
 
+        this.setTransitionalViewState(2);
+
+
         const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
         imageContainer = document.querySelector('#image-container') as HTMLElement,
         view02container = document.querySelector('.view02-container') as HTMLElement;
@@ -173,13 +185,13 @@ export class ViewSwitcherService {
           imageContainer?.appendChild(image);
         });
         Flip.from(state, {
-          duration: 1.5,
+          duration: 1.4,
           ease: "power3.out",
           absolute: true,
           stagger: {
             each: 0.015,
           },
-          delay: 0.08,
+          delay: 0.1,
         })
 
         tl.to('.view02-container .column-text-inner', {
@@ -196,6 +208,9 @@ export class ViewSwitcherService {
       }
 
       else if (viewNumber == 3) {
+
+        this.setTransitionalViewState(3);
+
 
         const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
         bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
@@ -222,14 +237,7 @@ export class ViewSwitcherService {
             this.setViewState(3);
             this.setLinkState('available');
           }
-        })
-    
-        function transformScroll(event: any) {
-          // bottomBar.scrollLeft += event.deltaY + event.deltaX;
-          bottomBar.scrollLeft += event.deltaY + event.deltaX;
-          console.log('scroll')
-        }
-        window.addEventListener('wheel', transformScroll);        
+        })       
       }
     }
 
