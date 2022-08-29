@@ -2,13 +2,13 @@
     overflow: hidden;
     position: fixed;
     z-index: 4;
-    height: 40px;
+    height: 45px;
 
     nav {
         width: 100%;
         left: 0;
         align-items: center;
-        height: 40px;
+        height: 45px;
         display: grid;
         grid-template-columns: 0 repeat(9, 1fr) 0;
         grid-auto-flow: column;
@@ -21,7 +21,7 @@
     
             a {
                 font-weight: 700;
-                font-size: 16px;
+                font-size: 15px;
                 text-transform: uppercase;
                 &:hover {
                     cursor: pointer;
@@ -73,11 +73,11 @@
     }
 
     .collection-nav {
-        transform: translateY(-40px)
+        transform: translateY(-45px)
     }
 }
 .nav-filler {
-    height: 40px;
+    height: 45px;
     width: 100%;
 }
 
@@ -111,7 +111,7 @@
         display: grid;
         grid-template-columns: repeat(5, 1fr) auto;
         grid-gap: 1vw;
-        padding: calc(40px + 2.7em) 2.7vw 2.7em;
+        padding: calc(45px + 2.7em) 2.7vw 2.7em;
         height: 100%;
         box-sizing: border-box;
 
@@ -166,13 +166,13 @@
 
 @media only screen and (max-width: 1250px) {
     .nav-container nav {grid-gap: 1.9vw;}
-    .nav-area .grid {padding: calc(40px + 2.7em) 1.9vw 2.7em;}
+    .nav-area .grid {padding: calc(45px + 2.7em) 1.9vw 2.7em;}
 }
 @media only screen and (max-width: 1100px) {
     .nav-container nav {grid-gap: 1.2vw}
-    .nav-area .grid {padding: calc(40px + 2.7em) 1.2vw 2.7em;}
+    .nav-area .grid {padding: calc(45px + 2.7em) 1.2vw 2.7em;}
 }
 @media only screen and (max-width: 950px) {
     .nav-container nav {grid-gap: 0.9vw}
-    .nav-area .grid {padding: calc(40px + 2.7em) 0.9vw 2.7em;}
+    .nav-area .grid {padding: calc(45px + 2.7em) 0.9vw 2.7em;}
 }
