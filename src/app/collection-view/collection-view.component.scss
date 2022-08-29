@@ -76,6 +76,7 @@
         transform: rotate(180deg) translateY(0.7rem);
     }
 }
+* {box-sizing: border-box;}
 
 #image-container {
     img {
@@ -141,7 +142,7 @@
 }
 
 img {
-    background-color: var(--background);
+    // background-color: var(--background);
     transition: filter 1s;
     transition-timing-function: cubic-bezier(.28,.67,.32,.99);
 
@@ -251,6 +252,7 @@ img {
     img {
         height: 100%;
         padding: 0 4px;
+        box-sizing: border-box;
 
         max-width: 100%;
         max-height: 100%;

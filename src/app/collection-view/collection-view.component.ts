@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ViewChildren, QueryList, NgZone } from '@angular/core';
 import { collectionOrder, names, URLify, thumbnailNumbers } from '../collectionOrder';
 import { gsap } from 'gsap';
+import { CustomEase } from 'gsap/all';
 import { Router, Scroll } from '@angular/router';
 import { ViewSwitcherService } from '../view-switcher.service';
 import { LoaderService } from '../loader.service';
@@ -36,6 +37,7 @@ export class CollectionViewComponent implements OnInit {
   totalScrolled = 0;
 
   ngAfterViewInit(): void {
+    gsap.registerPlugin(CustomEase);
     this.loaderService.loaded.subscribe(value => {
       this.initialAnimations();
     })
@@ -168,13 +170,12 @@ export class CollectionViewComponent implements OnInit {
     itl.set('.collection', {opacity: 1})
     itl.set('.heading', {opacity: 1})
     itl.from('.collection img', {
-      duration: 1.75,
+      duration: 1.35,
       stagger: {
           from: 0,
           amount: 1  // 1.7
       }, 
-      delay: 0,
-      ease: "power4.out",
+      ease: CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000"),
 
       y: window.innerHeight + 10,
       opacity: -0.2,
@@ -185,7 +186,7 @@ export class CollectionViewComponent implements OnInit {
           duration: 0.9,
           y: -headingHeight - 0,
           ease: "power3.out"
-      }, "<+=2")
+      }, "<+=1.5")
       itl.from('.heading .right', {
           duration: 0.9,
           y: +headingHeight + 0,

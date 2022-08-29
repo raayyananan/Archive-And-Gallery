@@ -14,6 +14,7 @@ export class ViewSwitcherService {
     gsap.registerPlugin(CustomEase);
 
     CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
+    // CustomEase.create("cubic", "M0,0 C0.027,0.112 0.058,0.491 0.268,0.726 0.449,0.929 0.562,1 1,1 ");
   }
 
   public viewState: number = 1;
@@ -149,12 +150,12 @@ export class ViewSwitcherService {
         });
         if (currentView === 3) {
           Flip.from(state, {
-            duration: 1.7,
+            duration: 1.75,
             ease: "cubic",
             absolute: true,
             stagger: {
-              each: 0.05,
-              from: "start",
+              each: 0.03,
+              from: "center",
             }, // 0.017
             delay: 0.075,
             onComplete: () => {
@@ -165,7 +166,7 @@ export class ViewSwitcherService {
         }
         else {
           Flip.from(state, {
-            duration: 1.6,
+            duration: 1.7,
             ease: "cubic",
             absolute: true,
             stagger: {
