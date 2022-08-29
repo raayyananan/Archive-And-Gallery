@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { gsap, Power2 } from 'gsap';
+import { CustomEase } from 'gsap/all';
 import { Observable, filter } from 'rxjs';
 import { names } from '../collectionOrder';
 import { ViewSwitcherService } from '../view-switcher.service';
@@ -40,6 +41,8 @@ export class NavComponent implements OnInit {
       else if (event.url.includes('collection') || event.url.includes('about')) {
         this.routeMenu('open')
       }
+      gsap.registerPlugin(CustomEase);
+      CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
     })
 
     this.menuState = 'closed';
@@ -52,7 +55,7 @@ export class NavComponent implements OnInit {
   }
 
   abtl = gsap.timeline();
-  duration = 0.7;
+  duration = 0.75;
 
   routeMenu(menuAction: 'open' | 'close', openMenu?: boolean): void {
     if (menuAction == 'open') {
@@ -66,12 +69,12 @@ export class NavComponent implements OnInit {
       this.abtl.to('.nav', {
           duration: this.duration,
           y: -40,
-          ease: Power2.easeOut
+          ease: "cubic"
       }, "<")
       this.abtl.to('.about-nav', {
           duration: this.duration,
           y: -40,
-          ease: Power2.easeOut
+          ease: "cubic"
       }, "<")
 
       if (openMenu) {
@@ -89,42 +92,43 @@ export class NavComponent implements OnInit {
         
         this.abtl.from('app-nav .column-text-inner', {
             duration: this.duration + 0.5,
-            y: '3rem',
+            y: '101%',
             stagger: 0.02,
-            ease: "power3.out",
+            ease: "cubic",
         }, "<+=0")
       }
     }
     else if (menuAction == 'close') {
+      // (document.querySelector('.image-container img') as HTMLElement).classList.add('faded');
       this.abtl.clear();
       this.abtl.play();
       this.abtl.to('.nav', {
         duration: this.duration,
         y: 0,
-        ease: Power2.easeOut
+        ease: "cubic"
       }, '<')
       this.abtl.to('.about-nav', {
         duration: this.duration,
         y: 0,
-        ease: Power2.easeOut
+        ease: "cubic"
       }, '<')
   
       if (this.menuState == 'open') {
         // close menu
         this.abtl.to('app-nav .column-text-inner', {
           duration: this.duration + 0.35,
-          y: "3rem",
-          ease: Power2.easeOut,
+          y: "101%",
+          ease: "cubic",
         }, "<")
   
         this.abtl.to('.nav-area', {
-          duration: this.duration,
+          duration: this.duration-0.25,
           opacity: 0
-        }, "<")
+        }, "<+=0.25")
         this.abtl.to('.about-nav a', {
+          duration: this.duration-0.25,
           color: 'black',
-          duration: this.duration
-        }, '<')
+        }, '<+=0.25')
   
         this.abtl.set('.nav-area', {display: 'none'});
         this.abtl.set('app-nav .column-text-inner', {y: 0});

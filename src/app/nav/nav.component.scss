@@ -3,6 +3,7 @@
     position: fixed;
     z-index: 4;
     height: 45px;
+    width: 100vw;
 
     nav {
         width: 100%;
@@ -56,20 +57,6 @@
             &:active {background: transparent;}
         }
     
-        &.about-revealed {
-    
-            a {
-                color: var(--about-background-text);
-            }
-            .main-link a {
-                opacity: 0;
-                
-                &:hover {
-                    cursor: default;
-                }
-            }
-        }
-    
     }
 
     .collection-nav {
@@ -78,11 +65,11 @@
 }
 .nav-filler {
     height: 45px;
-    width: 100%;
+    width: 100vw;
 }
 
 .nav-area {
-    width: 100%;
+    width: 100vw;
     height: 100%;
     position: fixed;
     top: 0;
@@ -137,13 +124,17 @@
             
             img {
                 max-width: 100%;
-                animation: fade-in 0.5s 1.2s forwards;
-                opacity: 0;
+                // animation: fade-in 0.5s 0.9s forwards;
+                // opacity: 0;
+                background-color: white;
+                transition: opacity 0.25s;
 
                 @keyframes fade-in {
                     0% {opacity: 0}
                     100% {opacity: 1}
                 }
+
+                &.faded {opacity: 0;}
             }
             .filler {
                 flex: auto;
@@ -151,8 +142,8 @@
         }
 
         .column-text-outer.credit {
-            position: fixed;
-            bottom: 2.7vw;
+            position: absolute;
+            bottom: 2.7vh;
             left: 2.7vw;
             h1 {
                 margin: 0;
