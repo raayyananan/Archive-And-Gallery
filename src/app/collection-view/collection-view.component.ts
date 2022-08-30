@@ -38,6 +38,7 @@ export class CollectionViewComponent implements OnInit {
 
   ngAfterViewInit(): void {
     gsap.registerPlugin(CustomEase);
+    CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000")
     this.loaderService.loaded.subscribe(value => {
       this.initialAnimations();
     })
@@ -175,7 +176,7 @@ export class CollectionViewComponent implements OnInit {
           from: 0,
           amount: 1  // 1.7
       }, 
-      ease: CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000"),
+      ease: "cubic",
 
       y: window.innerHeight + 10,
       opacity: -0.2,
@@ -185,12 +186,12 @@ export class CollectionViewComponent implements OnInit {
       itl.from('.heading .left', {
           duration: 0.9,
           y: -headingHeight - 0,
-          ease: "power3.out"
+          ease: "cubic"
       }, "<+=1.5")
       itl.from('.heading .right', {
           duration: 0.9,
           y: +headingHeight + 0,
-          ease: "power3.out",
+          ease: "cubic",
           onComplete: () => {
             this.viewSwitcherService.setLinkState('available');
           }
