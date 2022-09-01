@@ -25,6 +25,8 @@ export class AppComponent implements AfterViewInit{
       this.smallScreenDisplay();
     }); // if resized, check if viewport too small
     setTimeout(() => {this.smallScreenDisplay()}, 100 )
+
+    
     
     // if (document.readyState === 'loading') {  // Loading hasn't finished yet
     //   document.addEventListener('DOMContentLoaded', () => {setTimeout(this.smallScreenDisplay, 300)});
