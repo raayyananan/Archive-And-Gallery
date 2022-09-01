@@ -2,9 +2,9 @@
     width: 100%;
     height: calc(100%);
     display: grid;
-    grid-template-columns: 0 repeat(9, 1fr) 0;
+    grid-template-columns: 0 repeat(10, 1fr) 0;
     grid-template-rows: repeat(4, 1fr) 0;
-    grid-gap: 2.7vw; 
+    grid-gap: 1.6vw; 
     box-sizing: border-box;
 
     opacity: 0;
@@ -45,6 +45,7 @@
 }
 
 .heading {
+    display: none;
     mask-position: right;
     font-size: 2.5em;
     position: fixed;
