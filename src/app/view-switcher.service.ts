@@ -41,7 +41,7 @@ export class ViewSwitcherService {
   topImage(index: number, reset?: boolean) {
     if (reset == true) {
       (document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>).forEach((img) => {
-        img.style.zIndex = '0';
+        img.style.zIndex = '';
       })
     } 
     else {

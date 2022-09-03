@@ -31,6 +31,18 @@
     --about-background-text: white;
 }
 
+// @media (prefers-color-scheme: dark) {
+//     :root {
+//         --background: rgb(20,20,20);
+//         --background-text: white;
+//         --column-background: var(--background);
+//         --about-background: rgb(0,0,0);
+//         --about-background-text: white;
+//         color: white;
+//     }
+//     h1, a, p, li {color: white !important}
+// }
+
 html, body {
     height: 100vh;
     width: 100vw;

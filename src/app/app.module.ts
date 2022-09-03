@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { CollectionViewComponent } from './collection-view/collection-view.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
+import { MobileComponent } from './mobile/mobile.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DetailViewComponent } from './detail-view/detail-view.component';
     NavComponent,
     CollectionViewComponent,
     DetailViewComponent,
+    MobileComponent,
   ],
   imports: [
     BrowserModule,

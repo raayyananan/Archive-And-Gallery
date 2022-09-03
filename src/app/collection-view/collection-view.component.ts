@@ -44,7 +44,9 @@ export class CollectionViewComponent implements OnInit {
     })
 
     if (this.loaderService.loadedStatus == true) {
-      this.initialAnimations();
+      setTimeout(() => {
+        this.initialAnimations();
+      }, 100)
     }
 
     this.viewSwitcherService.initializeScrollTransform();
@@ -171,7 +173,7 @@ export class CollectionViewComponent implements OnInit {
     itl.set('.collection', {opacity: 1})
     itl.set('.heading', {opacity: 1})
     itl.from('.collection img', {
-      duration: 1.35,
+      duration: 1.25,
       stagger: {
           from: 0,
           amount: 1  // 1.7
@@ -275,6 +277,7 @@ export class CollectionViewComponent implements OnInit {
       duration: 0.07,
       stagger: -0.07,
       opacity: 0,
+      display: 'none',
       onComplete: () => this.ngZone.run(() => {
         this.router.navigate(['collection', url])
       })
