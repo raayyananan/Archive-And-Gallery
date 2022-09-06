@@ -1,1 +1,23 @@
-<p>mobile works!</p>
+<main id="scroller" (scroll)="onScroll()">
+    <section class="column" *ngFor="let image of topList, let i = index">
+        <div class="edge"></div>
+        <div class="image-list top">
+            <div class="image"      >
+                <img src="{{topList[i].src}}">
+            </div>
+        </div>
+        <div class="middle-space"></div>
+        <div class="image-list bottom">
+            <div class="image">
+                <img src="{{bottomList[i].src}}">
+            </div>
+        </div>
+        <div class="edge"></div>
+    </section>
+</main>
+
+<section class="heading">
+    <div class="column-text-inner">
+        <h1 #heading>{{name}}</h1>
+    </div>
+</section>

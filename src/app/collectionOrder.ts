@@ -74,6 +74,29 @@ export const collectionOrder: collectionItem[] = [
     {id: 43, }, // edge
 ]
 
+export const mobileListOrder: Array<collectionItem[]> = [
+    [ // top list
+        {id: 1, src: 'assets/thumbnails/20.png', name: names[0], url: URLify(names[0])},
+        {id: 2, src: 'assets/thumbnails/10.jpg', name: names[1], url: URLify(names[1])},
+        {id: 3, src: 'assets/thumbnails/16.jpg', name: names[2], url: URLify(names[2])},
+        {id: 4, src: 'assets/thumbnails/18.jpg', name: names[3], url: URLify(names[3])},
+        {id: 5, src: 'assets/thumbnails/21.jpg', name: names[4], url: URLify(names[4])},
+        {id: 6, src: 'assets/thumbnails/12.png', name: names[5], url: URLify(names[5])},
+        {id: 7, src: 'assets/thumbnails/07.jpg', name: names[6], url: URLify(names[6])},
+        {id: 8, src: 'assets/thumbnails/04.jpg', name: names[7], url: URLify(names[7])},
+    ],
+    [ // bottom list
+        {id: 9, src: 'assets/thumbnails/15.png', name: names[0], url: URLify(names[0])},
+        {id: 10, src: 'assets/thumbnails/11.jpg', name: names[1], url: URLify(names[1])},
+        {id: 11, src: 'assets/thumbnails/09.jpg', name: names[2], url: URLify(names[2])},
+        {id: 12, src: 'assets/thumbnails/19.png', name: names[3], url: URLify(names[3])},
+        {id: 13, src: 'assets/thumbnails/17.jpg', name: names[4], url: URLify(names[4])},
+        {id: 14, src: 'assets/thumbnails/13.png', name: names[5], url: URLify(names[5])},
+        {id: 15, src: 'assets/thumbnails/08.jpg', name: names[6], url: URLify(names[6])},
+        {id: 16, src: 'assets/thumbnails/03.jpg', name: names[7], url: URLify(names[7])},
+    ]
+    // in order to access corresponding list item, add/subtract 8
+]
 
 export function URLify(name: string): string {
     let output: string = '';

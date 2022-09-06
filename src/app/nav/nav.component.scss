@@ -159,11 +159,21 @@
     .nav-container nav {grid-gap: 1.9vw;}
     .nav-area .grid {padding: calc(45px + 2.7em) 1.9vw 2.7em;}
 }
-@media only screen and (max-width: 1100px) {
+@media only screen and (max-width: 1150px) {
     .nav-container nav {grid-gap: 1.2vw}
     .nav-area .grid {padding: calc(45px + 2.7em) 1.2vw 2.7em;}
 }
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1050px) {
     .nav-container nav {grid-gap: 0.9vw}
     .nav-area .grid {padding: calc(45px + 2.7em) 0.9vw 2.7em;}
+}
+
+@media only screen and (max-width: 900px) {
+    .nav-container nav {
+        grid-template-columns: 0 repeat(5, 1fr) 0;
+        grid-gap: 15px;
+
+        .hide-small-screen {display: none;}
+        .menu {text-align: right;}
+    }
 }

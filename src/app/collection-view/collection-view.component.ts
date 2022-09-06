@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, ViewChildren, 
 import { collectionOrder, names, URLify, thumbnailNumbers } from '../collectionOrder';
 import { gsap } from 'gsap';
 import { CustomEase } from 'gsap/all';
-import { Router, Scroll } from '@angular/router';
+import { Router } from '@angular/router';
 import { ViewSwitcherService } from '../view-switcher.service';
 import { LoaderService } from '../loader.service';
 
@@ -46,6 +46,7 @@ export class CollectionViewComponent implements OnInit {
     if (this.loaderService.loadedStatus == true) {
       setTimeout(() => {
         this.initialAnimations();
+        console.log('fwap')
       }, 100)
     }
 
@@ -176,9 +177,9 @@ export class CollectionViewComponent implements OnInit {
       duration: 1.25,
       stagger: {
           from: 0,
-          amount: 1  // 1.7
+          amount: 1 // 1.7
       }, 
-      ease: "cubic",
+      ease: "expo.out",
 
       y: window.innerHeight + 10,
       opacity: -0.2,
@@ -212,15 +213,15 @@ export class CollectionViewComponent implements OnInit {
   
       htl.to('.heading .left',
           {
-              duration: 0.7,
+              duration: 0.35,
               y: +headingHeight + 0,
-              ease: "power2.out",
+              ease: "sine.in",
           })
       htl.to('.heading .right',
           {
-              duration: 0.7,
+              duration: 0.35,
               y: -headingHeight - 0,
-              ease: "power2.out",
+              ease: "sine.in",
           },
           "<")
       
@@ -237,7 +238,7 @@ export class CollectionViewComponent implements OnInit {
           {
               duration: 0.7,
               y: '-0.7rem',
-              ease: "power2.out",
+              ease: "cubic",
               onStart: () => {
                 if (direction === 'in') {
                   this.leftHeading.nativeElement.innerHTML = name;
@@ -251,7 +252,7 @@ export class CollectionViewComponent implements OnInit {
           {
               duration: 0.7,
               y: '0.7rem', 
-              ease: "power2.out",
+              ease: "cubic",
               onStart: () => {
                 if (direction === 'in') {
                   this.rightHeading.nativeElement.innerHTML = name;
@@ -269,7 +270,7 @@ export class CollectionViewComponent implements OnInit {
     this.topImage(13, true); // make the last image come out on top and reset order of all images
     v2n.to('.column-text-inner', {
       duration: 1.1,
-      y: '-1.5rem',
+      y: '-100%',
       stagger: -0.015,
       ease: "power2.out",
     })

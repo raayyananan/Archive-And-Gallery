@@ -15,13 +15,27 @@
     font-style: normal;
     
 }
-// @font-face {
-//     font-family: 'Helvetica Now';
-//     src: url('./assets/helvetica/HelveticaNowDisplay-Light.otf') format('opentype'),
-//          url('./assets/helvetica/HelveticaNowDisplay-LightIta.otf') format('opentype');
-//     font-weight: 300;
-//     font-style: 300;
-// }
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('./assets/helvetica/HelveticaNowDisplay-Light.otf') format('opentype'),
+         url('./assets/helvetica/HelveticaNowDisplay-LightIta.otf') format('opentype');
+    font-weight: 300;
+    font-style: 300;
+}
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('./assets/helvetica/HelveticaNowDisplay-Regular.otf') format('opentype'),
+         url('./assets/helvetica/HelveticaNowDisplay-RegIta.otf') format('opentype');
+    font-weight: 400;
+    font-style: 400;
+}
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('./assets/helvetica/HelveticaNowDisplay-Medium.otf') format('opentype'),
+         url('./assets/helvetica/HelveticaNowDisplay-MedIta.otf') format('opentype');
+    font-weight: 500;
+    font-style: 500;
+}
 
 :root {
     --background: rgb(250,250,250);
@@ -29,6 +43,7 @@
     --column-background: var(--background);
     --about-background: black;
     --about-background-text: white;
+    // font-size: 15px;
 }
 
 // @media (prefers-color-scheme: dark) {
@@ -49,11 +64,14 @@ html, body {
     padding: 0;
     margin: 0;
     font-family: 'Urbanist', sans-serif;
-    background: var(--background);
     color: var(--background-text);
     overflow: hidden;
     overscroll-behavior-y:none;
     user-select: none; /* Standard */
+}
+
+html {
+    background: var(--background);
 }
 
 a {

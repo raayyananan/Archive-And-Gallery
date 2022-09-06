@@ -23,6 +23,7 @@ export class LoaderService {
     window.addEventListener('load', () => {
       this.loadedStatus = true;
       this.loaded.next(this.loadedStatus)
+      console.log('loaded')
     })
 
   }

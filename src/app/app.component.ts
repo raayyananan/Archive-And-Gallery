@@ -71,8 +71,7 @@ export class AppComponent implements AfterViewInit{
       [`Please view this website on a larger screen`, `Archive & Gallery is an interactive and animated website which is best experienced on a larger screen. So grab your laptop or an ipad and pull right up!`],
       [`Please rotate your device`, 'Your screen width is too small to view Archive & Gallery. Please rotate your device']
     ]
-    console.log(`${window.innerWidth} x ${window.innerHeight}`);
-    console.log(this.smallViewport);
+    // console.log(`${window.innerWidth} x ${window.innerHeight}`);
     if (window.innerWidth <= 915 || window.innerHeight <= 599) { // If true: Viewport too small 
       if (window.innerWidth <= 599 || window.innerHeight <= 915) { // If true: viewport too small even when rotated
         this.smallViewport?.nativeElement.classList.add('visible');

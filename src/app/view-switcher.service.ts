@@ -13,8 +13,11 @@ export class ViewSwitcherService {
     gsap.registerPlugin(Flip);
     gsap.registerPlugin(CustomEase);
 
-    CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
-    // CustomEase.create("cubic", "M0,0 C0.027,0.112 0.058,0.491 0.268,0.726 0.449,0.929 0.562,1 1,1 ");
+    // CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
+    // CustomEase.create("cubic", "00.070, 0.780, 0.000, 1.000");
+    // CustomEase.create("cubic", "M0,0,C0.084,0.61,0.214,0.802,0.28,0.856,0.356,0.918,0.374,1,1,1");
+    CustomEase.create("cubic", "M0,0,C0.084,0.61,0.026,0.703,0.172,0.906,0.218,0.97,0.29,0.99,1,1");
+    CustomEase.create("custom", "M0,0 C0.076,0.553 0.06,0.704 0.184,0.834 0.302,0.957 0.29,0.99 1,1 ");
   }
 
   public viewState: number = 1;
@@ -113,13 +116,14 @@ export class ViewSwitcherService {
           tl.set('.heading h1', {display: 'none'});
         }
         else if (view == 2) {
-          tl.to('.column-text-inner', {
+          tl.to('app-collection-view .column-text-inner', {
             duration: 1.1,
-            y: '-1.5rem',
+            y: '-101%',
             stagger: -0.01,
             ease: "power2.out",
           })
           tl.set('.view02-container', {display: 'none'});
+          tl.set('app-collection-view .column-text-inner', {y: '101%'})
           // tl.set('.column-text-inner', {}, "<+=0.2")
         }
         else if (view == 3) {
@@ -136,6 +140,8 @@ export class ViewSwitcherService {
       // destroy disconnected sequences to make space clean for new view
       const currentView = this.getViewState();
       destroyDisconnectedSequences(currentView);
+
+      let duration = 1.6, ease ="expo.out", stagger = 0.035;
       
       if (viewNumber == 1) {
 
@@ -150,12 +156,12 @@ export class ViewSwitcherService {
         });
         if (currentView === 3) {
           Flip.from(state, {
-            duration: 1.75,
-            ease: "cubic",
+            duration: duration, // 1.75
+            ease: ease,
             absolute: true,
             stagger: {
-              each: 0.03,
-              from: "center",
+              each: stagger,
+              from: "start",
             }, // 0.017
             delay: 0.075,
             onComplete: () => {
@@ -166,14 +172,14 @@ export class ViewSwitcherService {
         }
         else {
           Flip.from(state, {
-            duration: 1.7,
-            ease: "cubic",
+            duration: duration, //1.7
+            ease: ease,
             absolute: true,
             stagger: {
-              each: 0.02,
+              each: stagger,
               from: "end",
             }, // 0.017
-            delay: 0.1,
+            delay: 0.12,
             onComplete: () => {
               this.setViewState(1);
               this.setLinkState('available');
@@ -207,11 +213,11 @@ export class ViewSwitcherService {
           imageContainer?.appendChild(image);
         });
         Flip.from(state, {
-          duration: 1.5,
-          ease: "cubic",
+          duration: duration, //1.5
+          ease: ease,
           absolute: true,
           stagger: {
-            each: 0.015,
+            each: stagger, //0.015
           },
           delay: 0.1,
         })
@@ -246,11 +252,11 @@ export class ViewSwitcherService {
           bottomBar.appendChild(image)
         })
         Flip.from(state, {
-          duration: 1.75,
-          ease: "cubic", //power4.out
+          duration: duration, //1.75
+          ease: ease, //power4.out
           absolute: true,
           stagger: {
-            each: 0.017, 
+            each: stagger, //0.017 
             from: "start"
           },
           delay: 0.12,
