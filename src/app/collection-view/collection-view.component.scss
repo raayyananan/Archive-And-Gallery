@@ -24,11 +24,12 @@
             max-width: 100%;
             max-height: 131%;
             transition: filter 1s;
+            filter: grayscale(0.5);
             transition-timing-function: cubic-bezier(.28,.67,.32,.99);
 
             &:hover {
                 cursor: pointer;
-                filter: grayscale(1) contrast(1.1);
+                filter: grayscale(0.5) invert(1);
             }
         }
     }
@@ -44,7 +45,7 @@
     }
 }
   
-.column-grid-background {
+.column-background {
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -58,7 +59,8 @@
 
     div {
         // background: rgba(0,0,0,0.015);
-        border: 1px solid rgba(0,0,0,0.035);
+        border-left: 1px solid rgba(0,0,0,0.025);
+        border-right: 1px solid rgba(0,0,0,0.025);
     }
 
     @media only screen and (max-width: 1250px) {grid-gap: 1.9vw}
@@ -106,7 +108,7 @@
         left: calc(50% - 10vw);
         top: calc(50% - 12.5vw); // 4:5 aspect ratio images
         width: 20vw;
-        filter: grayscale(1);
+        filter: grayscale(0.75);
         box-sizing: border-box;
     }
 }
@@ -275,7 +277,7 @@ img {
         }
     }
     .heading {
-        font-size: 2.4em;
+        font-size: 2.3em;
     }
     .column-grid-background {grid-gap: 1.9vw}
 }
@@ -288,7 +290,7 @@ img {
         }
     }
     .heading {
-        font-size: 2.3em;
+        font-size: 2.2em;
     }
     .column-grid-background {grid-gap: 1.2vw}
 
@@ -302,7 +304,7 @@ img {
         }
     }
     .heading {
-        font-size: 2.2em;
+        font-size: 2.1em;
     }
     .column-grid-background {grid-gap: 0.9vw}
 

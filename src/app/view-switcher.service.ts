@@ -108,11 +108,19 @@ export class ViewSwitcherService {
 
       let tl = gsap.timeline();
       this.setLinkState('frozen');
+
+      let duration = 1.6, ease ="expo.out", stagger = 0.035;
             
       const destroyDisconnectedSequences = (view: number) => {
 
         if (view == 1) {
           this.headingMove('out', tl);
+          gsap.to('.column-background', {
+            duration: duration*0.75,
+            ease: ease,
+            height: 0,
+            display: 'none'
+          })
           tl.set('.heading h1', {display: 'none'});
         }
         else if (view == 2) {
@@ -140,8 +148,6 @@ export class ViewSwitcherService {
       // destroy disconnected sequences to make space clean for new view
       const currentView = this.getViewState();
       destroyDisconnectedSequences(currentView);
-
-      let duration = 1.6, ease ="expo.out", stagger = 0.035;
       
       if (viewNumber == 1) {
 
@@ -186,6 +192,15 @@ export class ViewSwitcherService {
             }
           });
         }
+
+        gsap.to('.column-background', {
+          duration: duration*0.75,
+          delay: 0.25,
+          ease: "expo.inOut",
+          // delay: duration/5,
+          display: 'grid',
+          height: '100vh'
+        })
 
 
         setTimeout(() => {
@@ -342,7 +357,6 @@ export class ViewSwitcherService {
       }
       // console.log(typeof(Number(-translateX)))
       // console.log(-translateX, scrollableWidth)
-
 
       return 
     }
