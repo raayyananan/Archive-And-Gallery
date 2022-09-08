@@ -24,7 +24,6 @@
             max-width: 100%;
             max-height: 131%;
             transition: filter 1s;
-            filter: grayscale(0.5);
             transition-timing-function: cubic-bezier(.28,.67,.32,.99);
 
             &:hover {
@@ -53,14 +52,27 @@
     left: 0;
     z-index: 0;
     display: grid;
-    grid-template-columns: 0 repeat(9, 1fr) 0;
+    grid-template-columns: 0 repeat(9 , 1fr) 0;
     grid-auto-flow: column;
     grid-gap: 2.7vw;
 
-    div {
-        // background: rgba(0,0,0,0.015);
-        border-left: 1px solid rgba(0,0,0,0.025);
-        border-right: 1px solid rgba(0,0,0,0.025);
+    div.inner {
+        box-sizing: border-box;
+        // transition-property: ;
+        transition: background-color 0.35s, border-color 0.35s;
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
+    }
+
+    &.border {
+        div.inner {
+            border-color: rgba(0,0,0,0.035)
+        }
+    }
+    &.background {
+        div.inner {
+            background: rgba(0,0,0,0.01);
+        }
     }
 
     @media only screen and (max-width: 1250px) {grid-gap: 1.9vw}
@@ -172,6 +184,7 @@
 
 img {
     // background-color: var(--background);
+    filter: grayscale(0.5);
     transition: filter 1s;
     transition-timing-function: cubic-bezier(.28,.67,.32,.99);
 

@@ -22,8 +22,9 @@ export class NavComponent implements OnInit {
   menuState!: 'open' | 'closed'; 
   // menuClosed is initial state, menuOpen is menuOpen, routeOpen is when application has routed
 
+  gridState: 1 | 2 | 3 = 1;
+
   names = names;
-  greyscale: boolean = false;
   viewState: number = 1;
 
   constructor(private router: Router, public viewSwitcherService: ViewSwitcherService) {
@@ -55,7 +56,7 @@ export class NavComponent implements OnInit {
   }
 
   abtl = gsap.timeline();
-  duration = 0.75;
+  duration = 0.6;
 
   routeMenu(menuAction: 'open' | 'close', openMenu?: boolean): void {
     if (menuAction == 'open') {
@@ -91,7 +92,7 @@ export class NavComponent implements OnInit {
         }, '<')
         
         this.abtl.from('app-nav .column-text-inner', {
-            duration: this.duration + 0.5,
+            duration: this.duration + 0.4,
             y: '101%',
             stagger: 0.02,
             ease: "cubic",
@@ -116,17 +117,17 @@ export class NavComponent implements OnInit {
       if (this.menuState == 'open') {
         // close menu
         this.abtl.to('app-nav .column-text-inner', {
-          duration: this.duration + 0.35,
+          duration: this.duration + 0.3,
           y: "101%",
           ease: "cubic",
         }, "<")
   
         this.abtl.to('.nav-area', {
-          duration: this.duration-0.25,
+          duration: this.duration-0.2,
           opacity: 0
         }, "<+=0.25")
         this.abtl.to('.about-nav a', {
-          duration: this.duration-0.25,
+          duration: this.duration-0.2,
           color: 'black',
         }, '<+=0.25')
   
@@ -143,12 +144,24 @@ export class NavComponent implements OnInit {
     // viewState MUST be set after calling switchView() as switchView() checks for viewState before running
   }
 
-  toggleGrayscale() {
-    this.greyscale = !this.greyscale;
-
-    if (this.greyscale) {
-      document.querySelector('.collection')?.classList.add('grayscale')
-    } else {document.querySelector('.collection')?.classList.remove('grayscale')}
+  toggleGrid(): void {
+    const grid = document.querySelector('.column-background') as HTMLElement;
+    if (this.gridState == 1) { // background
+      this.gridState = 2;
+      grid.classList.remove('background');
+      grid.classList.add('border');
+    }
+    else if (this.gridState == 2) { // border
+      this.gridState = 3;
+      grid.classList.remove('background');
+      grid.classList.remove('border');
+    } 
+    else if (this.gridState == 3) { // plain
+      this.gridState = 1;
+      grid.classList.add('background');
+      // grid.classList.remove('border');
+    }
+    return
   }
   
   

@@ -115,11 +115,12 @@ export class ViewSwitcherService {
 
         if (view == 1) {
           this.headingMove('out', tl);
-          gsap.to('.column-background', {
-            duration: duration*0.75,
+          gsap.to('.column-background div', {
+            duration: duration*0.7,
             ease: ease,
             height: 0,
-            display: 'none'
+            stagger: 0.075,
+            // display: 'none',
           })
           tl.set('.heading h1', {display: 'none'});
         }
@@ -193,13 +194,13 @@ export class ViewSwitcherService {
           });
         }
 
-        gsap.to('.column-background', {
-          duration: duration*0.75,
-          delay: 0.25,
+        gsap.to('.column-background div', {
+          duration: duration*0.7,
+          stagger: 0.075,
           ease: "expo.inOut",
           // delay: duration/5,
-          display: 'grid',
-          height: '100vh'
+          // display: 'grid',
+          height: '100vh',
         })
 
 

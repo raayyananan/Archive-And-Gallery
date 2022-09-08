@@ -120,26 +120,27 @@ export class CollectionViewComponent implements OnInit {
               // tl.clear()
           }
       }, "<")
-
+      
       // animate heading to disappear
       cs.to('.heading .left',
-        {
-            duration: 0.7,
-            y: +this.rightHeading.nativeElement.clientHeight + 0,
-            ease: "power2.out",
-        }, "<")
+      {
+        duration: 0.7,
+        y: +this.rightHeading.nativeElement.clientHeight + 0,
+        ease: "power2.out",
+      }, "<")
       cs.to('.heading .right', // navigate at the end of this one 
-        {
-            duration: 0.7,
-            y: -this.rightHeading.nativeElement.clientHeight - 0,
-            ease: "power2.out",
-            onComplete: () => this.ngZone.run(() => {
-              this.router.navigate(['collection', url])
-            })
-        },
-        "<")
+      {
+        duration: 0.7,
+        y: -this.rightHeading.nativeElement.clientHeight - 0,
+        ease: "power2.out",
+        onComplete: () => this.ngZone.run(() => {
+          this.router.navigate(['collection', url])
+        })
+      },
+      "<")
+      cs.to('.column-background', {duration: 0.35, opacity: 0}, "<+=0.35")
       cs.set('.heading .left, .heading .right', {opacity: 0, onComplete: () => {}})
-
+      
       // now navigate to the given route
       // this.router.navigate(['collection', url])
     }
