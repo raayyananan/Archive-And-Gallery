@@ -22,7 +22,7 @@ export class NavComponent implements OnInit {
   menuState!: 'open' | 'closed'; 
   // menuClosed is initial state, menuOpen is menuOpen, routeOpen is when application has routed
 
-  gridState: 1 | 2 | 3 = 1;
+  gridState: 1 | 2 | 3 = 3;
 
   names = names;
   viewState: number = 1;

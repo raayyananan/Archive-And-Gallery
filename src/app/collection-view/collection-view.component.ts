@@ -46,7 +46,7 @@ export class CollectionViewComponent implements OnInit {
     if (this.loaderService.loadedStatus == true) {
       setTimeout(() => {
         this.initialAnimations();
-        console.log('fwap')
+        // console.log('fwap')
       }, 100)
     }
 
