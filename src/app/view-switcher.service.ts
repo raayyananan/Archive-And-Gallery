@@ -109,7 +109,7 @@ export class ViewSwitcherService {
       let tl = gsap.timeline();
       this.setLinkState('frozen');
 
-      let duration = 1.6, ease ="expo.out", stagger = 0.035;
+      let duration = 1.5, ease ="expo.out", stagger = 0.035;
             
       const destroyDisconnectedSequences = (view: number) => {
 

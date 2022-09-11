@@ -1,11 +1,11 @@
 <main>
-    <section class="images">
+    <section class="images detail-view-images">
         <!-- <div>        
             <img src="../../assets/images/Insectified/1.jpg">
         </div> -->
 
-        <div *ngFor="let src of collection.sources" (load)="loaded()">
-            <img src="{{src}}">
+        <div *ngFor="let src of collection.sources, let i = index" (load)="loaded()">
+            <img src="{{src}}" [ngClass]="{'right': i % 2 === 0, 'left' : i % 2 !== 0 }">
         </div>
     </section>
 </main>

@@ -1,4 +1,6 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, NgZone } from '@angular/core';
+
+import { Router } from '@angular/router';
 
 import { ChildrenOutletContexts, RouterOutlet } from '@angular/router';
 import { CollectionViewComponent } from './collection-view/collection-view.component';
@@ -17,7 +19,7 @@ export class AppComponent implements AfterViewInit{
   title = "Rayyan's Archive & Gallery";
   
 
-  constructor(private contexts: ChildrenOutletContexts) {}
+  constructor(private contexts: ChildrenOutletContexts, private ngZone: NgZone, private router: Router) {}
 
   ngAfterViewInit(): void {
     window.addEventListener('load', this.removeLoader); // if loaded, remove loader
@@ -42,6 +44,16 @@ export class AppComponent implements AfterViewInit{
         ease: "power3.out"
       })
     }, 1500)
+  }
+
+  ngOnInit(): void {
+    if(window.location.search.substring(1) !== "full=true") { // do not redirect if querystring is ?full=true
+      if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) { // detect mobile browser
+        this.ngZone.run(() => {
+          this.router.navigate(['mobile']);
+        })
+      }
+    }
   }
 
   getRouteAnimationData() {

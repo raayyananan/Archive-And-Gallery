@@ -40,14 +40,13 @@ export class CollectionViewComponent implements OnInit {
     gsap.registerPlugin(CustomEase);
     CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000")
     this.loaderService.loaded.subscribe(value => {
-      this.initialAnimations();
+      setTimeout(() => {this.initialAnimations();}, 200)
     })
 
     if (this.loaderService.loadedStatus == true) {
       setTimeout(() => {
         this.initialAnimations();
-        // console.log('fwap')
-      }, 100)
+      }, 200)
     }
 
     this.viewSwitcherService.initializeScrollTransform();

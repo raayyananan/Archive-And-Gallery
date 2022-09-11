@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { gsap, Power2 } from 'gsap';
 import { CustomEase } from 'gsap/all';
@@ -26,8 +26,9 @@ export class NavComponent implements OnInit {
 
   names = names;
   viewState: number = 1;
+  detailView: boolean = false;
 
-  constructor(private router: Router, public viewSwitcherService: ViewSwitcherService) {
+  constructor(private router: Router, public viewSwitcherService: ViewSwitcherService, private ngZone: NgZone) {
     // Create a new Observable that publishes only the NavigationStart event
     this.navStart = router.events.pipe(
       filter(evt => evt instanceof NavigationStart)
@@ -37,9 +38,11 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.navStart.subscribe((event) => {
       if (event.url == '/') {
+        this.detailView = false;
         this.routeMenu('close')
       } 
       else if (event.url.includes('collection') || event.url.includes('about')) {
+        this.detailView = true;
         this.routeMenu('open')
       }
       gsap.registerPlugin(CustomEase);
@@ -142,6 +145,32 @@ export class NavComponent implements OnInit {
     this.viewSwitcherService.switchView(viewNumber, this.viewState);
     // this.viewSwitcherService.setViewState(viewNumber); // not needed for now as viewState is checked within switchView()
     // viewState MUST be set after calling switchView() as switchView() checks for viewState before running
+  }
+
+  navigateHome() {
+    let mobile, path: string;
+    if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) {
+      mobile = true;
+    }
+    if(window.location.search.substring(1) !== "full=true") { // do not redirect if querystring is ?full=true
+      if (!mobile) { // detect mobile browser
+        path = '';
+        this.router.navigate([path])
+      }
+    }
+    if (mobile) {
+      path = 'mobile';
+      if (this.detailView) {
+        gsap.to('.detail-view-images img', {
+          duration: 0.2,
+          opacity: 0,
+          // y: -15,
+          onComplete: () => { this.ngZone.run(() => {
+            this.router.navigate([path])
+          }) }
+        })
+      }
+    }
   }
 
   toggleGrid(): void {

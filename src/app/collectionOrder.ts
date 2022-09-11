@@ -18,62 +18,92 @@ export const names: Array<string> = [
     'Insectified'
 ]
 
+// export const view3names: Array<string> = [
+//     'AromaticFragranceScents',
+//     'StuartLittleKittyKatStu',
+//     'BlossingBloomingFlowers',
+//     'OverwhelmedOverwhelmedO',
+//     'StationaryStudyStationa',
+//     'EditorialMimicryEditori',
+//     'ArchitecturalDesignArch',
+//     'InsectifiedInsectificat',
+// ]
+
+export const view3names: Array<string> = [
+    'AromaticFragranceSc',
+    'StuartLittleKittyKa',
+    'BlossingBloomingFlo',
+    'OverwhelmedOverwhel',
+    'StationaryStudyStat',
+    'EditorialMimicryEdi',
+    'ArchitecturalDesign',
+    'InsectifiedInsectif',
+    'AromaticFragranceSc',
+    'StuartLittleKittyKa',
+    'BlossingBloomingFlo',
+    'OverwhelmedOverwhel',
+    'StationaryStudyStat',
+    'EditorialMimicryEdi',
+    'ArchitecturalDesign',
+    'InsectifiedInsectif',
+]
+
 // export const thumbnailNumbers = [11, 8, 1, 12, 6, 2, 7, 13];
 export const thumbnailNumbers = [11, 8, 9, 12, 6, 2, 7, 13];
 
-export const collectionOrderOld: collectionItem[] = [
-    // row 1:
-    {id: 0, }, // edge
-    {id: 1, src: 'assets/thumbnails/15.png', name: names[0], url: URLify(names[0]), number: 0},
-    {id: 2, },
-    {id: 3, src: 'assets/thumbnails/16.jpg', name: names[2], url: URLify(names[2]), number: 1},
-    {id: 4, },
-    {id: 5, },
-    {id: 6, },
-    {id: 7, src: 'assets/thumbnails/12.png', name: names[5], url: URLify(names[5]), number: 2},
-    {id: 8, },
-    {id: 9, src: 'assets/thumbnails/04.jpg', name: names[7], url: URLify(names[7]), number: 3},
-    {id: 10, }, // edge
+// export const collectionOrderOld: collectionItem[] = [
+//     // row 1:
+//     {id: 0, }, // edge
+//     {id: 1, src: 'assets/thumbnails/15.png', name: names[0], url: URLify(names[0]), number: 0},
+//     {id: 2, },
+//     {id: 3, src: 'assets/thumbnails/16.jpg', name: names[2], url: URLify(names[2]), number: 1},
+//     {id: 4, },
+//     {id: 5, },
+//     {id: 6, },
+//     {id: 7, src: 'assets/thumbnails/12.png', name: names[5], url: URLify(names[5]), number: 2},
+//     {id: 8, },
+//     {id: 9, src: 'assets/thumbnails/04.jpg', name: names[7], url: URLify(names[7]), number: 3},
+//     {id: 10, }, // edge
 
-    // row 2:
-    {id: 11, }, // edge
-    {id: 12, src: 'assets/thumbnails/20.png', name: names[0], url: URLify(names[0]), number: 4},
-    {id: 13, },
-    {id: 14, },
-    {id: 15, src: 'assets/thumbnails/18.jpg', name: names[3], url: URLify(names[3]), number: 5},
-    {id: 16, },
-    {id: 17, src: 'assets/thumbnails/17.jpg', name: names[4], url: URLify(names[4]), number: 6},
-    {id: 18, },
-    {id: 19, src: 'assets/thumbnails/07.jpg', name: names[6], url: URLify(names[6]), number: 7},
-    {id: 20, },
-    {id: 21, }, // edge
+//     // row 2:
+//     {id: 11, }, // edge
+//     {id: 12, src: 'assets/thumbnails/20.png', name: names[0], url: URLify(names[0]), number: 4},
+//     {id: 13, },
+//     {id: 14, },
+//     {id: 15, src: 'assets/thumbnails/18.jpg', name: names[3], url: URLify(names[3]), number: 5},
+//     {id: 16, },
+//     {id: 17, src: 'assets/thumbnails/17.jpg', name: names[4], url: URLify(names[4]), number: 6},
+//     {id: 18, },
+//     {id: 19, src: 'assets/thumbnails/07.jpg', name: names[6], url: URLify(names[6]), number: 7},
+//     {id: 20, },
+//     {id: 21, }, // edge
 
-    // row 3:
-    {id: 22, }, // edge
-    {id: 23, },
-    {id: 24, src: 'assets/thumbnails/10.jpg', name: names[1], url: URLify(names[1]), number: 8},
-    {id: 25, src: 'assets/thumbnails/09.jpg', name: names[2], url: URLify(names[2]), number: 9},
-    {id: 26, },
-    {id: 27, },
-    {id: 28, },
-    {id: 29, src: 'assets/thumbnails/13.png', name: names[5], url: URLify(names[5]), number: 10},
-    {id: 30, },
-    {id: 31, },
-    {id: 32, }, // edge
+//     // row 3:
+//     {id: 22, }, // edge
+//     {id: 23, },
+//     {id: 24, src: 'assets/thumbnails/10.jpg', name: names[1], url: URLify(names[1]), number: 8},
+//     {id: 25, src: 'assets/thumbnails/09.jpg', name: names[2], url: URLify(names[2]), number: 9},
+//     {id: 26, },
+//     {id: 27, },
+//     {id: 28, },
+//     {id: 29, src: 'assets/thumbnails/13.png', name: names[5], url: URLify(names[5]), number: 10},
+//     {id: 30, },
+//     {id: 31, },
+//     {id: 32, }, // edge
 
-    // row 4:
-    {id: 33, }, // edge
-    {id: 34, src: 'assets/thumbnails/06.jpg', name: names[0], url: URLify(names[0]), number: 11},
-    {id: 35, },
-    {id: 36, },
-    {id: 37, src: 'assets/thumbnails/19.png', name: names[3], url: URLify(names[3]), number: 12},
-    {id: 38, },
-    {id: 39, },
-    {id: 40, },
-    {id: 41, },
-    {id: 42, src: 'assets/thumbnails/03.jpg', name: names[7], url: URLify(names[7]), number: 13},
-    {id: 43, }, // edge
-]
+//     // row 4:
+//     {id: 33, }, // edge
+//     {id: 34, src: 'assets/thumbnails/06.jpg', name: names[0], url: URLify(names[0]), number: 11},
+//     {id: 35, },
+//     {id: 36, },
+//     {id: 37, src: 'assets/thumbnails/19.png', name: names[3], url: URLify(names[3]), number: 12},
+//     {id: 38, },
+//     {id: 39, },
+//     {id: 40, },
+//     {id: 41, },
+//     {id: 42, src: 'assets/thumbnails/03.jpg', name: names[7], url: URLify(names[7]), number: 13},
+//     {id: 43, }, // edge
+// ]
 
 export const collectionOrder: collectionItem[] = [
     // row 1:
@@ -129,28 +159,48 @@ export const collectionOrder: collectionItem[] = [
     {id: 43, }, // edge
 ]
 
-export const mobileListOrder: Array<collectionItem[]> = [
-    [ // top list
-        {id: 1, src: 'assets/thumbnails/20.png', name: names[0], url: URLify(names[0])},
-        {id: 2, src: 'assets/thumbnails/10.jpg', name: names[1], url: URLify(names[1])},
-        {id: 3, src: 'assets/thumbnails/16.jpg', name: names[2], url: URLify(names[2])},
-        {id: 4, src: 'assets/thumbnails/18.jpg', name: names[3], url: URLify(names[3])},
-        {id: 5, src: 'assets/thumbnails/21.jpg', name: names[4], url: URLify(names[4])},
-        {id: 6, src: 'assets/thumbnails/12.png', name: names[5], url: URLify(names[5])},
-        {id: 7, src: 'assets/thumbnails/07.jpg', name: names[6], url: URLify(names[6])},
-        {id: 8, src: 'assets/thumbnails/04.jpg', name: names[7], url: URLify(names[7])},
-    ],
-    [ // bottom list
-        {id: 9, src: 'assets/thumbnails/15.png', name: names[0], url: URLify(names[0])},
-        {id: 10, src: 'assets/thumbnails/11.jpg', name: names[1], url: URLify(names[1])},
-        {id: 11, src: 'assets/thumbnails/09.jpg', name: names[2], url: URLify(names[2])},
-        {id: 12, src: 'assets/thumbnails/19.png', name: names[3], url: URLify(names[3])},
-        {id: 13, src: 'assets/thumbnails/17.jpg', name: names[4], url: URLify(names[4])},
-        {id: 14, src: 'assets/thumbnails/13.png', name: names[5], url: URLify(names[5])},
-        {id: 15, src: 'assets/thumbnails/08.jpg', name: names[6], url: URLify(names[6])},
-        {id: 16, src: 'assets/thumbnails/03.jpg', name: names[7], url: URLify(names[7])},
-    ]
-    // in order to access corresponding list item, add/subtract 8
+// export const mobileListOrder: Array<collectionItem[]> = [
+//     [ // top list
+//         {id: 1, src: 'assets/thumbnails/20.png', name: names[0], url: URLify(names[0])},
+//         {id: 2, src: 'assets/thumbnails/10.jpg', name: names[1], url: URLify(names[1])},
+//         {id: 3, src: 'assets/thumbnails/16.jpg', name: names[2], url: URLify(names[2])},
+//         {id: 4, src: 'assets/thumbnails/18.jpg', name: names[3], url: URLify(names[3])},
+//         {id: 5, src: 'assets/thumbnails/21.jpg', name: names[4], url: URLify(names[4])},
+//         {id: 6, src: 'assets/thumbnails/12.png', name: names[5], url: URLify(names[5])},
+//         {id: 7, src: 'assets/thumbnails/07.jpg', name: names[6], url: URLify(names[6])},
+//         {id: 8, src: 'assets/thumbnails/04.jpg', name: names[7], url: URLify(names[7])},
+//     ],
+//     [ // bottom list
+//         {id: 9, src: 'assets/thumbnails/15.png', name: names[0], url: URLify(names[0])},
+//         {id: 10, src: 'assets/thumbnails/11.jpg', name: names[1], url: URLify(names[1])},
+//         {id: 11, src: 'assets/thumbnails/09.jpg', name: names[2], url: URLify(names[2])},
+//         {id: 12, src: 'assets/thumbnails/19.png', name: names[3], url: URLify(names[3])},
+//         {id: 13, src: 'assets/thumbnails/17.jpg', name: names[4], url: URLify(names[4])},
+//         {id: 14, src: 'assets/thumbnails/13.png', name: names[5], url: URLify(names[5])},
+//         {id: 15, src: 'assets/thumbnails/08.jpg', name: names[6], url: URLify(names[6])},
+//         {id: 16, src: 'assets/thumbnails/03.jpg', name: names[7], url: URLify(names[7])},
+//     ]
+//     // in order to access corresponding list item, add/subtract 8
+// ]
+
+export const imageList: Array<collectionItem> = [
+    {id: 1, src: 'assets/bwthumbnails/1.png', name: names[0], url: URLify(names[0])},
+    {id: 2, src: 'assets/bwthumbnails/4.png', name: names[1], url: URLify(names[1])},
+    {id: 3, src: 'assets/bwthumbnails/5.jpg', name: names[2], url: URLify(names[2])},
+    {id: 4, src: 'assets/bwthumbnails/8.png', name: names[3], url: URLify(names[3])},
+    {id: 5, src: 'assets/bwthumbnails/9.png', name: names[4], url: URLify(names[4])},
+    {id: 6, src: 'assets/bwthumbnails/11.png', name: names[5], url: URLify(names[5])},
+    {id: 7, src: 'assets/bwthumbnails/14.png', name: names[6], url: URLify(names[6])},
+    {id: 8, src: 'assets/bwthumbnails/16.png', name: names[7], url: URLify(names[7])},
+    // repetition: 
+    {id: 9, src: 'assets/bwthumbnails/1.png', name: names[0], url: URLify(names[0])},
+    {id: 10, src: 'assets/bwthumbnails/4.png', name: names[1], url: URLify(names[1])},
+    {id: 11, src: 'assets/bwthumbnails/5.jpg', name: names[2], url: URLify(names[2])},
+    {id: 12, src: 'assets/bwthumbnails/8.png', name: names[3], url: URLify(names[3])},
+    {id: 13, src: 'assets/bwthumbnails/9.png', name: names[4], url: URLify(names[4])},
+    {id: 14, src: 'assets/bwthumbnails/11.png', name: names[5], url: URLify(names[5])},
+    {id: 15, src: 'assets/bwthumbnails/14.png', name: names[6], url: URLify(names[6])},
+    {id: 16, src: 'assets/bwthumbnails/16.png', name: names[7], url: URLify(names[7])},
 ]
 
 export function URLify(name: string): string {

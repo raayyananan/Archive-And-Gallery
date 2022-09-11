@@ -30,6 +30,9 @@ export class DetailViewComponent implements AfterViewInit {
     imagesSection.focus();
 
     function transformScroll(event: any) {
+      if (window.innerWidth <= 950) {
+        return
+      }
       if (!event.deltaY) {
         return;
       }

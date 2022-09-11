@@ -71,7 +71,7 @@
     }
     &.background {
         div.inner {
-            background: rgba(0,0,0,0.01);
+            background: rgba(0,0,0,0.0075);
         }
     }
 
@@ -216,8 +216,9 @@ img {
             .arrows {
                 padding: 0 35px 0 10px;
                 font-size: 2.5rem;
+                transform: scale(0.9);
 
-                a {padding: 0 2px;}
+                a {padding: 0 2px}
 
                 // #arrow_1, #arrow_2 {
                 //     animation: nothing 0s;
@@ -232,7 +233,7 @@ img {
         }
     }
     .bottom-bar-filler {
-        height: calc(24vh + 60px);
+        height: calc(23vh + 60px);
     }
 }
 .bottom-bar {
@@ -240,7 +241,7 @@ img {
     flex-flow: row nowrap;
     justify-content: flex-start;
     padding: 0 10px 20px;
-    height: 24%; // 48%
+    height: 22%; // 48%
     width: 100vw;
     box-sizing: border-box;
 

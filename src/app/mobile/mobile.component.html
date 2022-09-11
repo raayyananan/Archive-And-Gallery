@@ -1,23 +1,22 @@
-<main id="scroller" (scroll)="onScroll()">
-    <section class="column" *ngFor="let image of topList, let i = index">
-        <div class="edge"></div>
-        <div class="image-list top">
-            <div class="image"      >
-                <img src="{{topList[i].src}}">
-            </div>
-        </div>
-        <div class="middle-space"></div>
-        <div class="image-list bottom">
+<main #main id="scroller" (scroll)="onScroll()">
+    <section class="column" *ngFor="let image of imageList, let i = index">
+        <div class="edge-top"></div>
+        <div class="image-list">
             <div class="image">
-                <img src="{{bottomList[i].src}}">
+                <img src="{{image.src}}" (click)="navigate(image.url, image.id)" style="transform: translate(0px, 100px); opacity: -0.1">
             </div>
         </div>
-        <div class="edge"></div>
+        <div class="edge-bottom"></div>
     </section>
 </main>
 
 <section class="heading">
-    <div class="column-text-inner">
-        <h1 #heading>{{name}}</h1>
+    <div class="content">
+        <div class="column-text-inner" (click)="navigate('collection/aromatic-fragrance', 0)">
+            <h1 #heading style="transform: translate(0px, 100%)">{{name}}</h1>
+        </div>
     </div>
+    <div class="filler"></div>
 </section>
+
+<div class="line" style="height: 0"></div>
