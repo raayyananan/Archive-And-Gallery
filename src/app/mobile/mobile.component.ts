@@ -28,13 +28,13 @@ export class MobileComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loaderService.loaded.subscribe(value => {
-      setTimeout(() => {this.initialAnimations();}, 200)
+      setTimeout(() => {this.initialAnimations(0.9);})
     })
 
     if (this.loaderService.loadedStatus == true) {
       setTimeout(() => {
-        this.initialAnimations();
-      }, 75)
+        this.initialAnimations(0.1);
+      })
     }
 
     let timer: any = null;
@@ -51,7 +51,7 @@ export class MobileComponent implements AfterViewInit {
     }, false);
   }
 
-  initialAnimations(): void {
+  initialAnimations(delay: number): void {
     const itl = gsap.timeline()
     itl.to('.image-list img', {
       duration: 1.35,
@@ -59,7 +59,7 @@ export class MobileComponent implements AfterViewInit {
       ease: "expo.out",
       opacity: 1,
       y: 0
-    });
+    }, delay);
     itl.to('.line', {
       duration: 1.5,
       ease: 'expo.in',
