@@ -63,6 +63,14 @@
     .collection-nav {
         transform: translateY(-45px)
     }
+
+    .transition {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 0;
+    }
 }
 .nav-filler {
     height: 45px;

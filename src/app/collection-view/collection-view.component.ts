@@ -37,16 +37,19 @@ export class CollectionViewComponent implements OnInit {
   totalScrolled = 0;
 
   ngAfterViewInit(): void {
+    this.widthHeightCheck();
+
     gsap.registerPlugin(CustomEase);
     CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000")
+
     this.loaderService.loaded.subscribe(value => {
-      setTimeout(() => {this.initialAnimations();}, 200)
+      setTimeout(() => {this.initialAnimations(0.9);})
     })
 
     if (this.loaderService.loadedStatus == true) {
       setTimeout(() => {
-        this.initialAnimations();
-      }, 200)
+        this.initialAnimations(0.2);
+      })
     }
 
     this.viewSwitcherService.initializeScrollTransform();
@@ -61,6 +64,8 @@ export class CollectionViewComponent implements OnInit {
         }
       }
     })
+
+    window.addEventListener('resize', this.widthHeightCheck)
   }
   
   parseInt(data: any) {
@@ -164,7 +169,7 @@ export class CollectionViewComponent implements OnInit {
       
   }
 
-  initialAnimations(): void {
+  initialAnimations(delay: number): void {
     let itl = gsap.timeline(); // initial animations timeline
     let headingHeight = this.rightHeading.nativeElement.clientHeight;  
     
@@ -183,7 +188,7 @@ export class CollectionViewComponent implements OnInit {
 
       y: window.innerHeight + 10,
       opacity: -0.2,
-    })
+    }, delay)
 
         // heading animation
       itl.from('.heading .left', {
@@ -287,5 +292,17 @@ export class CollectionViewComponent implements OnInit {
 
   topImage(i: number, reset?: boolean) {
     this.viewSwitcherService.topImage(i, reset);
+  }
+
+  widthHeightCheck() {
+    const rotate = document.querySelector('.please-rotate') as HTMLElement;
+    if (window.innerHeight > window.innerWidth) {
+      rotate.style.display = 'flex';
+    }
+    else {
+      if (rotate.style.display == 'flex') {
+        rotate.style.display = 'none';
+      }
+    }
   }
 }

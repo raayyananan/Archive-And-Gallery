@@ -56,6 +56,28 @@ export class NavComponent implements OnInit {
       else if (e.code == 'Digit2') {this.switchView(2)}
       else if (e.code == 'Digit3') {this.switchView(3)}
     })
+
+    window.addEventListener('load', () => {
+      const tl = gsap.timeline()
+      tl.from('.transition', {
+        duration: 1.4,
+        stagger: -0.09,
+        ease: 'expo.inOut',
+        height: '100%',
+        display: 'none'
+      })
+      let nav;
+      if (!this.detailView) {
+        nav = '.nav'
+      } else {
+        nav = '.about-nav'
+      }
+      tl.from(nav, {
+        duration: 1.4,
+        ease: 'expo.inOut',
+        y: '-100%',
+      }, "<+=0.5")
+    })
   }
 
   abtl = gsap.timeline();
@@ -70,15 +92,18 @@ export class NavComponent implements OnInit {
           y: 0,
       })
       // this.abtl.set('.image-container img', {opacity: 1})
-      this.abtl.to('.nav', {
-          duration: this.duration,
-          y: -40,
-          ease: "cubic"
+      this.abtl.to('.nav a', {
+          duration: this.duration*1.25,
+          y: -45,
+          ease: "power3.out",
+          stagger: 0.035
       }, "<")
-      this.abtl.to('.about-nav', {
-          duration: this.duration,
-          y: -40,
-          ease: "cubic"
+      this.abtl.to('.about-nav a', {
+          duration: this.duration*1.25,
+          y: -45,
+          ease: "power3.out",
+          stagger: 0.035,
+          delay: 0.035
       }, "<")
 
       if (openMenu) {
@@ -106,15 +131,18 @@ export class NavComponent implements OnInit {
       // (document.querySelector('.image-container img') as HTMLElement).classList.add('faded');
       this.abtl.clear();
       this.abtl.play();
-      this.abtl.to('.nav', {
-        duration: this.duration,
+      this.abtl.to('.about-nav a', {
+        duration: this.duration*1.25,
         y: 0,
-        ease: "cubic"
+        ease: "power3.out",
+        stagger: 0.035,
       }, '<')
-      this.abtl.to('.about-nav', {
-        duration: this.duration,
+      this.abtl.to('.nav a', {
+        duration: this.duration*1.25,
         y: 0,
-        ease: "cubic"
+        ease: "power3.out",
+        stagger: 0.035,
+        delay: 0.035,
       }, '<')
   
       if (this.menuState == 'open') {
