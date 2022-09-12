@@ -31,7 +31,7 @@ export class LoaderService {
     setTimeout(() => {
       this.animationComplete = true;
       bothComplete()
-    }, 2200)
+    }, 0) //2200
 
     window.addEventListener('load', () => {
       this.loadedStatus = true;
