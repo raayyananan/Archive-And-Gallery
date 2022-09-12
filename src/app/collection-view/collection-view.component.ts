@@ -43,7 +43,7 @@ export class CollectionViewComponent implements OnInit {
     CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000")
 
     this.loaderService.loaded.subscribe(value => {
-      setTimeout(() => {this.initialAnimations(0.9);})
+      setTimeout(() => {this.initialAnimations(0.85);})
     })
 
     if (this.loaderService.loadedStatus == true) {
@@ -176,6 +176,7 @@ export class CollectionViewComponent implements OnInit {
     this.viewSwitcherService.setLinkState('frozen');
     this.viewSwitcherService.setViewState(1);
 
+    this.viewSwitcherService.toggleGrid();
     itl.set('.collection', {opacity: 1})
     itl.set('.heading', {opacity: 1})
     itl.from('.collection img', {

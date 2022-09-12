@@ -18,15 +18,28 @@ export class LoaderService {
 
   loaded = new Subject();
   loadedStatus: boolean = false;
+  animationComplete: boolean = false;
+  
   constructor() {
+
+    let bothComplete = () => {
+      if (this.loadedStatus && this.animationComplete) {
+        this.loaded.next(this.loadedStatus)
+      }
+    }
+
+    setTimeout(() => {
+      this.animationComplete = true;
+      bothComplete()
+    }, 2200)
 
     window.addEventListener('load', () => {
       this.loadedStatus = true;
-      this.loaded.next(this.loadedStatus)
-      console.log('loaded')
+      bothComplete()
     })
 
   }
+
 
   // waitForLoad() {
 

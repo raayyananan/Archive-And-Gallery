@@ -5,6 +5,7 @@ import { CustomEase } from 'gsap/all';
 import { Observable, filter } from 'rxjs';
 import { names } from '../collectionOrder';
 import { ViewSwitcherService } from '../view-switcher.service';
+import { LoaderService } from '../loader.service';
 
 @Component({
   selector: 'app-nav',
@@ -22,13 +23,11 @@ export class NavComponent implements OnInit {
   menuState!: 'open' | 'closed'; 
   // menuClosed is initial state, menuOpen is menuOpen, routeOpen is when application has routed
 
-  gridState: 1 | 2 | 3 = 3;
-
   names = names;
   viewState: number = 1;
   detailView: boolean = false;
 
-  constructor(private router: Router, public viewSwitcherService: ViewSwitcherService, private ngZone: NgZone) {
+  constructor(private router: Router, public viewSwitcherService: ViewSwitcherService, private ngZone: NgZone, private loaderService: LoaderService) {
     // Create a new Observable that publishes only the NavigationStart event
     this.navStart = router.events.pipe(
       filter(evt => evt instanceof NavigationStart)
@@ -47,7 +46,27 @@ export class NavComponent implements OnInit {
       }
       gsap.registerPlugin(CustomEase);
       CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
+
+      setTimeout(() => {
+        gsap.to('.loader .column-text-inner', {
+          duration: 1,
+          y: 0,
+          ease: "expo.out"
+        })
+      }, 750)
     })
+
+    this.loaderService.loaded.subscribe(value => {
+      this.removeLoader()
+    })
+
+    // if (this.loaderService.loadedStatus == true) {
+    //   setTimeout(() => {
+    //     this.initialAnimations(0.2);
+    //   })
+    // }
+
+
 
     this.menuState = 'closed';
 
@@ -56,32 +75,37 @@ export class NavComponent implements OnInit {
       else if (e.code == 'Digit2') {this.switchView(2)}
       else if (e.code == 'Digit3') {this.switchView(3)}
     })
-
-    window.addEventListener('load', () => {
-      const tl = gsap.timeline()
-      tl.from('.transition', {
-        duration: 1.4,
-        stagger: -0.09,
-        ease: 'expo.inOut',
-        height: '100%',
-        display: 'none'
-      })
-      let nav;
-      if (!this.detailView) {
-        nav = '.nav'
-      } else {
-        nav = '.about-nav'
-      }
-      tl.from(nav, {
-        duration: 1.4,
-        ease: 'expo.inOut',
-        y: '-100%',
-      }, "<+=0.5")
-    })
   }
 
   abtl = gsap.timeline();
   duration = 0.6;
+
+  removeLoader() {
+    const tl = gsap.timeline()
+    tl.to('#loader', {
+      duration: 0.6,
+      opacity: 0,
+      display: 'none',
+    })
+    tl.from('.transition', {
+      duration: 1.4,
+      stagger: -0.09,
+      ease: 'expo.inOut',
+      height: '100%',
+      display: 'none'
+    }, "<")
+    let nav;
+    if (!this.detailView) {
+      nav = '.nav'
+    } else {
+      nav = '.about-nav'
+    }
+    tl.from(nav, {
+      duration: 1.6,
+      ease: 'expo.inOut',
+      y: '-100%',
+    }, "<+=0.3")
+  }
 
   routeMenu(menuAction: 'open' | 'close', openMenu?: boolean): void {
     if (menuAction == 'open') {
@@ -199,26 +223,6 @@ export class NavComponent implements OnInit {
         })
       }
     }
-  }
-
-  toggleGrid(): void {
-    const grid = document.querySelector('.column-background') as HTMLElement;
-    if (this.gridState == 1) { // background
-      this.gridState = 2;
-      grid.classList.remove('background');
-      grid.classList.add('border');
-    }
-    else if (this.gridState == 2) { // border
-      this.gridState = 3;
-      grid.classList.remove('background');
-      grid.classList.remove('border');
-    } 
-    else if (this.gridState == 3) { // plain
-      this.gridState = 1;
-      grid.classList.add('background');
-      // grid.classList.remove('border');
-    }
-    return
   }
   
   

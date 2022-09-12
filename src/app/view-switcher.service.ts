@@ -434,4 +434,26 @@ export class ViewSwitcherService {
 
       
   }
+
+  gridState: 1 | 2 | 3 = 2;
+  getGridState(): number {return this.gridState}
+  toggleGrid(): void {
+    const grid = document.querySelector('.column-background') as HTMLElement;
+    if (this.gridState == 1) { // background
+      this.gridState = 2;
+      grid.classList.remove('background');
+      grid.classList.add('border');
+    }
+    else if (this.gridState == 2) { // border
+      this.gridState = 3;
+      grid.classList.remove('background');
+      grid.classList.remove('border');
+    } 
+    else if (this.gridState == 3) { // plain
+      this.gridState = 1;
+      grid.classList.add('background');
+      grid.classList.remove('border');
+    }
+    return
+  }
 }
