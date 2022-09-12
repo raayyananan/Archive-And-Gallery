@@ -45,6 +45,7 @@
 }
   
 .column-background {
+    display: none !important;
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -81,6 +82,7 @@
 }
 
 .heading {
+    display: none !important;
     mask-position: right;
     font-size: 2.5em;
     position: fixed;
@@ -138,6 +140,7 @@
 
 
     .collectionList{
+        display: none !important;
         position: absolute;
         top: 0;
         box-sizing: border-box;
@@ -193,6 +196,7 @@ img {
 .column-text-outer {overflow: hidden;}
 
 .view03-container {
+    display: none !important;
     height: 100%;
     width: 100%;
     position: absolute;
@@ -241,7 +245,7 @@ img {
     flex-flow: row nowrap;
     justify-content: flex-start;
     padding: 0 10px 20px;
-    height: 22%; // 48%
+    height: 20%; // 48%
     width: 100vw;
     box-sizing: border-box;
 

@@ -104,12 +104,12 @@ export class ViewSwitcherService {
 
     document.addEventListener('switchView', () => {return null})
 
-    if (this.linkState != 'frozen' && this.viewState !== viewNumber) {
+    if (true) {
 
       let tl = gsap.timeline();
       this.setLinkState('frozen');
 
-      let duration = 1.5, ease ="expo.out", stagger = 0.035;
+      let duration = 1.5, ease ="expo.out", stagger = 0.015;
             
       const destroyDisconnectedSequences = (view: number) => {
 
@@ -131,7 +131,7 @@ export class ViewSwitcherService {
             stagger: -0.01,
             ease: "power2.out",
           })
-          tl.set('.view02-container', {display: 'none'});
+          // tl.set('.view02-container', {display: 'none'});
           tl.set('app-collection-view .column-text-inner', {y: '101%'})
           // tl.set('.column-text-inner', {}, "<+=0.2")
         }
@@ -140,8 +140,8 @@ export class ViewSwitcherService {
             duration: 0.25,
             opacity: 0
           }, "<")
-          tl.set('.view03-container', {display: 'none'});
-          tl.set('.bottom-bar', {display: 'none'});
+          // tl.set('.view03-container', {display: 'none'});
+          // tl.set('.bottom-bar', {display: 'none'});
           tl.set('.arrows-container .arrows', {opacity: 1})
         }
       }
@@ -168,9 +168,9 @@ export class ViewSwitcherService {
             absolute: true,
             stagger: {
               each: stagger,
-              from: "start",
+              from: "end",
             }, // 0.017
-            delay: 0.075,
+            // delay: 0.05,
             onComplete: () => {
               this.setViewState(1);
               this.setLinkState('available');
@@ -186,7 +186,7 @@ export class ViewSwitcherService {
               each: stagger,
               from: "end",
             }, // 0.017
-            delay: 0.12,
+            // delay: 0.05,
             onComplete: () => {
               this.setViewState(1);
               this.setLinkState('available');
@@ -234,8 +234,9 @@ export class ViewSwitcherService {
           absolute: true,
           stagger: {
             each: stagger, //0.015
+            from: "end"
           },
-          delay: 0.1,
+          // delay: 0.05,
         })
 
         tl.to('.view02-container .column-text-inner', {
@@ -273,9 +274,9 @@ export class ViewSwitcherService {
           absolute: true,
           stagger: {
             each: stagger, //0.017 
-            from: "start"
+            from: "end"
           },
-          delay: 0.12,
+          // delay: 0.05,
           onComplete: () => {
             // bottomBar.classList.add('scrollable');
             bottomBar.focus();
