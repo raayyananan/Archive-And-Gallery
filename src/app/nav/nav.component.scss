@@ -126,7 +126,7 @@
         .remaining-layout {
             grid-column: span 6;
     
-            .heading {
+            .aboutheading {
                 width: 100%;
     
                 h1, h2 {
@@ -145,8 +145,8 @@
                 }
                 h1 {
                     font-size: 5.5vw; 
-                    line-height: 1; 
-                    padding-top: 10px;
+                    line-height: 0.95; 
+                    // padding-top: 10px;
     
                     @media only screen and (max-width: 1350px) {font-size: 5.65vw}
                     @media only screen and (max-width: 1150px) {font-size: 6vw}

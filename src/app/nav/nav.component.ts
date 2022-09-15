@@ -84,7 +84,7 @@ export class NavComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    const divs = (document.querySelectorAll(".heading h1 div, .heading h2, .bio div, .collections li, .tools li, .contact li") as NodeListOf<HTMLElement>);
+    const divs = (document.querySelectorAll(".aboutheading h1 div, .aboutheading h2, .bio div, .collections li, .tools li, .contact li") as NodeListOf<HTMLElement>);
     divs.forEach((div) => {spanify(div)})
     function spanify(element: HTMLElement): void {
       const words = element.outerText.split(" ");
@@ -159,7 +159,7 @@ export class NavComponent implements OnInit {
           duration: this.duration,
           opacity: 1,
         }, "<")   
-        this.abtl.from('.nav-area .heading .column-text-inner', {
+        this.abtl.from('.nav-area .aboutheading .column-text-inner', {
           duration: this.duration + 0.4,
           y: '101%',
           stagger: 0.045,
