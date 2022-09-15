@@ -9,8 +9,6 @@ import { NavComponent } from './nav/nav.component';
 import { CollectionViewComponent } from './collection-view/collection-view.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { MobileComponent } from './mobile/mobile.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -24,13 +22,7 @@ import { environment } from '../environments/environment';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HammerModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
+    HammerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

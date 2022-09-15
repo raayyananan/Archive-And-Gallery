@@ -52,20 +52,6 @@ export class MobileComponent implements AfterViewInit {
           this.animation(images, this.currentImage)
         }, 200);
     }, false);
-
-    window.addEventListener('resize', this.widthHeightCheck)
-  }
-
-  widthHeightCheck() {
-    const rotate = document.querySelector('.please-rotate') as HTMLElement;
-    if (window.innerWidth > window.innerHeight) {
-      rotate.style.display = 'flex';
-    }
-    else {
-      if (rotate.style.display == 'flex') {
-        rotate.style.display = 'none';
-      }
-    }
   }
 
   initialAnimations(delay: number): void {
