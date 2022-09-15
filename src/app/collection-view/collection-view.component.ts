@@ -221,13 +221,13 @@ export class CollectionViewComponent implements OnInit {
           {
               duration: 0.35,
               y: +headingHeight + 0,
-              ease: "sine.in",
+              ease: "sine.out",
           })
       htl.to('.heading .right',
           {
               duration: 0.35,
               y: -headingHeight - 0,
-              ease: "sine.in",
+              ease: "sine.out",
           },
           "<")
       

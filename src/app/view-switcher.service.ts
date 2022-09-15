@@ -337,7 +337,7 @@ export class ViewSwitcherService {
     
     const scrollTransform = (deltaX: any, deltaY: any, target: HTMLElement): void => {
       const scrollableWidth = target.scrollWidth - target.clientWidth;
-      let scroll = (deltaX + deltaY) * 0.4;
+      let scroll = (deltaX + deltaY) * 0.15;
       let translateX = this.getTranslateValues(target).x;
 
       if (translateX >= 0 && scroll > 0) 
