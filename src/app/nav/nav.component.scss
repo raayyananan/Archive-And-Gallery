@@ -80,92 +80,92 @@
     width: 100vw;
 }
 
-.nav-area {
-    width: 100vw;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    background: var(--about-background);
-    color: var(--about-background-text);
-    display: none;
-    opacity: 0;
+// .nav-area {
+//     width: 100vw;
+//     height: 100%;
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     z-index: 3;
+//     background: var(--about-background);
+//     color: var(--about-background-text);
+//     display: none;
+//     opacity: 0;
 
-    h1, a {color: white}
+//     h1, a {color: white}
 
-    a {
-        span {
-            transition: opacity 0.25s;
-            opacity: 0;
-        }
-        &:hover {
-            span {
-                opacity: 1;
-            }
-        }
-    }
+//     a {
+//         span {
+//             transition: opacity 0.25s;
+//             opacity: 0;
+//         }
+//         &:hover {
+//             span {
+//                 opacity: 1;
+//             }
+//         }
+//     }
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr) auto;
-        grid-gap: 1vw;
-        padding: calc(45px + 2.7em) 2.7vw 2.7em;
-        height: 100%;
-        box-sizing: border-box;
+//     .grid {
+//         display: grid;
+//         grid-template-columns: repeat(5, 1fr) auto;
+//         grid-gap: 1vw;
+//         padding: calc(45px + 2.7em) 2.7vw 2.7em;
+//         height: 100%;
+//         box-sizing: border-box;
 
-        .column-text-outer {
-            overflow: hidden;
-        }
+//         .column-text-outer {
+//             overflow: hidden;
+//         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+//         ul {
+//             list-style-type: none;
+//             padding: 0;
+//             margin: 0;
 
-            .title {
-                font-weight: 600;
-            }
-        }
+//             .title {
+//                 font-weight: 600;
+//             }
+//         }
 
-        .image-container {
-            display: flex;
-            flex-direction: column;
-            width: 23vw;
-            height: 100%;
+//         .image-container {
+//             display: flex;
+//             flex-direction: column;
+//             width: 23vw;
+//             height: 100%;
             
-            img {
-                max-width: 100%;
-                // animation: fade-in 0.5s 0.9s forwards;
-                // opacity: 0;
-                background-color: white;
-                transition: opacity 0.25s;
+//             img {
+//                 max-width: 100%;
+//                 // animation: fade-in 0.5s 0.9s forwards;
+//                 // opacity: 0;
+//                 background-color: white;
+//                 transition: opacity 0.25s;
 
-                @keyframes fade-in {
-                    0% {opacity: 0}
-                    100% {opacity: 1}
-                }
+//                 @keyframes fade-in {
+//                     0% {opacity: 0}
+//                     100% {opacity: 1}
+//                 }
 
-                &.faded {opacity: 0;}
-            }
-            .filler {
-                flex: auto;
-            }
-        }
+//                 &.faded {opacity: 0;}
+//             }
+//             .filler {
+//                 flex: auto;
+//             }
+//         }
 
-        .column-text-outer.credit {
-            position: absolute;
-            bottom: 2.7vh;
-            left: 2.7vw;
-            h1 {
-                margin: 0;
-                padding: 0;
-                font-size: 3rem;
-                text-transform: uppercase;
-            }
-        }
-    }
-}
+//         .column-text-outer.credit {
+//             position: absolute;
+//             bottom: 2.7vh;
+//             left: 2.7vw;
+//             h1 {
+//                 margin: 0;
+//                 padding: 0;
+//                 font-size: 3rem;
+//                 text-transform: uppercase;
+//             }
+//         }
+//     }
+// }
 
 .loader {
     height: 100%;
@@ -191,6 +191,21 @@
             }
         }
     }
+}
+
+.nav-area {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: grid;
+    background: var(--background);
+    // opacity: 0;
+    // grid-auto-flow: column;
+    grid-template-columns: 0 repeat(9, 1fr), 0;
+    // grid-gap: 2.7vw;
 }
 
 @media only screen and (max-width: 1250px) {

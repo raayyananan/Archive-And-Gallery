@@ -120,14 +120,14 @@ export class NavComponent implements OnInit {
           duration: this.duration*1.25,
           y: -45,
           ease: "power3.out",
-          stagger: 0.035
+          // stagger: 0.035
       }, "<")
       this.abtl.to('.about-nav a', {
           duration: this.duration*1.25,
           y: -45,
           ease: "power3.out",
-          stagger: 0.035,
-          delay: 0.035
+          // stagger: 0.035,
+          // delay: 0.035
       }, "<")
 
       if (openMenu) {
@@ -138,10 +138,10 @@ export class NavComponent implements OnInit {
           duration: this.duration,
           opacity: 1,
         }, "<")
-        this.abtl.to('.about-nav a', {
-          color: 'white',
-          duration: this.duration
-        }, '<')
+        // this.abtl.to('.about-nav a', {
+        //   color: 'white',
+        //   duration: this.duration
+        // }, '<')
         
         this.abtl.from('app-nav .column-text-inner', {
             duration: this.duration + 0.4,
@@ -159,14 +159,14 @@ export class NavComponent implements OnInit {
         duration: this.duration*1.25,
         y: 0,
         ease: "power3.out",
-        stagger: 0.035,
+        // stagger: 0.035,
       }, '<')
       this.abtl.to('.nav a', {
         duration: this.duration*1.25,
         y: 0,
         ease: "power3.out",
-        stagger: 0.035,
-        delay: 0.035,
+        // stagger: 0.035,
+        // delay: 0.035,
       }, '<')
   
       if (this.menuState == 'open') {
@@ -181,10 +181,10 @@ export class NavComponent implements OnInit {
           duration: this.duration-0.2,
           opacity: 0
         }, "<+=0.25")
-        this.abtl.to('.about-nav a', {
-          duration: this.duration-0.2,
-          color: 'black',
-        }, '<+=0.25')
+        // this.abtl.to('.about-nav a', {
+        //   duration: this.duration-0.2,
+        //   color: 'black',
+        // }, '<+=0.25')
   
         this.abtl.set('.nav-area', {display: 'none'});
         this.abtl.set('app-nav .column-text-inner', {y: 0});
