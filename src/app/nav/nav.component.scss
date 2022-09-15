@@ -221,8 +221,8 @@
             }
             h1 {
                 font-size: 5vh; 
-                line-height: 1; 
-                // margin-top: -1px;
+                line-height: 0.95; 
+                padding-top: 3px;
             }
         }
         .layout {
@@ -233,7 +233,7 @@
             .col {
                 width: 50%;
                 padding-right: 15px;
-                font-size: 0.9rem;
+                font-size: 0.88rem;
 
                 .bio, .tools, .contact {
                     padding-top: 1vh;
