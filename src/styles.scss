@@ -1,32 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
-    font-family: 'bigilla';
-    src: url('./assets/webfontkit-20220809-121457/bigilla_bigfontsite.com-webfont.woff2') format('woff2'),
-         url('./assets/webfontkit-20220809-121457/bigilla_bigfontsite.com-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-@font-face {
-    font-family: 'Urbanist';
-    src: url('./assets/Urbanist/Urbanist-Italic-VariableFont_wght.ttf') format('ttf'),
-         url('./assets/Urbanist/Urbanist-VariableFont_wght.ttf') format('ttf');
-    font-weight: normal;
-    font-style: normal;
-    
-}
-@font-face {
-    font-family: 'Sk Modernist';
-    src: url('./assets/SkModernist/Sk-Modernist-Regular.otf') format('opentype');
+    font-family: 'Bigilla';
+    src: url('./assets/webfontkit-20220809-121457/Bigilla.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 @font-face {
-    font-family: 'Sk Modernist';
-    src: url('./assets/SkModernist/Sk-Modernist-Bold.otf') format('opentype');
-    font-weight: 700;
+    font-family: 'Bigilla';
+    src: url('./assets/webfontkit-20220809-121457/Bigilla-Bold.otf') format('opentype');
+    font-weight: 600;
     font-style: normal;
 }
+// @font-face {
+//     font-family: 'bigilla';
+//     src: url('./assets/webfontkit-20220809-121457/bigilla_bigfontsite.com-webfont.woff2') format('woff2'),
+//          url('./assets/webfontkit-20220809-121457/bigilla_bigfontsite.com-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: normal;
+
+// }
+// @font-face {
+//     font-family: 'Urbanist';
+//     src: url('./assets/Urbanist/Urbanist-Italic-VariableFont_wght.ttf') format('ttf'),
+//          url('./assets/Urbanist/Urbanist-VariableFont_wght.ttf') format('ttf');
+//     font-weight: normal;
+//     font-style: normal;
+    
+// }
+// @font-face {
+//     font-family: 'Sk Modernist';
+//     src: url('./assets/SkModernist/Sk-Modernist-Regular.otf') format('opentype');
+//     font-weight: 400;
+//     font-style: normal;
+// }
+// @font-face {
+//     font-family: 'Sk Modernist';
+//     src: url('./assets/SkModernist/Sk-Modernist-Bold.otf') format('opentype');
+//     font-weight: 700;
+//     font-style: normal;
+// }
 // @font-face {
 //     font-family: 'Helvetica Now';
 //     src: url('./assets/helvetica/HelveticaNowDisplay-Regular.otf') format('opentype'),

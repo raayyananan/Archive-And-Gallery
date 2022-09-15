@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, AfterViewInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { gsap, Power2 } from 'gsap';
 import { CustomEase } from 'gsap/all';
@@ -26,12 +26,19 @@ export class NavComponent implements OnInit {
   names = names;
   viewState: number = 1;
   detailView: boolean = false;
+  mobile!: boolean;
 
   constructor(private router: Router, public viewSwitcherService: ViewSwitcherService, private ngZone: NgZone, private loaderService: LoaderService) {
     // Create a new Observable that publishes only the NavigationStart event
     this.navStart = router.events.pipe(
       filter(evt => evt instanceof NavigationStart)
     ) as Observable<NavigationStart>;
+
+    if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) {
+      this.mobile = true;
+    } else {
+      this.mobile = false;
+    }
   }
 
   ngOnInit(): void {
@@ -44,6 +51,7 @@ export class NavComponent implements OnInit {
         this.detailView = true;
         this.routeMenu('open')
       }
+
       gsap.registerPlugin(CustomEase);
       CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
 
@@ -66,8 +74,6 @@ export class NavComponent implements OnInit {
     //   })
     // }
 
-
-
     this.menuState = 'closed';
 
     document.addEventListener('keydown', (e) => {
@@ -75,6 +81,21 @@ export class NavComponent implements OnInit {
       else if (e.code == 'Digit2') {this.switchView(2)}
       else if (e.code == 'Digit3') {this.switchView(3)}
     })
+  }
+
+  ngAfterViewInit() {
+    const divs = (document.querySelectorAll(".heading h1 div, .heading h2, .bio div, .collections li, .tools li, .contact li") as NodeListOf<HTMLElement>);
+    divs.forEach((div) => {spanify(div)})
+    function spanify(element: HTMLElement): void {
+      const words = element.outerText.split(" ");
+      const wordsDiv = element
+  
+      wordsDiv.innerHTML = ""
+      words.map((el) => {
+        wordsDiv.innerHTML += `<div class="column-text-outer" style="display: inline-block"><div class="column-text-inner">${el}</div></div> `
+      })
+      return
+    }
   }
 
   abtl = gsap.timeline();
@@ -112,20 +133,20 @@ export class NavComponent implements OnInit {
         
       this.abtl.clear();
       this.abtl.play();
-      this.abtl.set('app-nav .column-text-inner', {
+      this.abtl.set('.nav-area .column-text-inner', {
           y: 0,
       })
       // this.abtl.set('.image-container img', {opacity: 1})
       this.abtl.to('.nav a', {
           duration: this.duration*1.25,
           y: -45,
-          ease: "power3.out",
+          ease: "expo.out",
           // stagger: 0.035
       }, "<")
       this.abtl.to('.about-nav a', {
           duration: this.duration*1.25,
           y: -45,
-          ease: "power3.out",
+          ease: "expo.out",
           // stagger: 0.035,
           // delay: 0.035
       }, "<")
@@ -133,22 +154,27 @@ export class NavComponent implements OnInit {
       if (openMenu) {
         // open menu
         this.menuState = 'open';
-        this.abtl.set('.nav-area', {display: 'block'}, "<");
+        this.abtl.set('.nav-area', {display: 'grid'}, "<");
         this.abtl.to('.nav-area', {
           duration: this.duration,
           opacity: 1,
-        }, "<")
-        // this.abtl.to('.about-nav a', {
-        //   color: 'white',
-        //   duration: this.duration
-        // }, '<')
-        
-        this.abtl.from('app-nav .column-text-inner', {
-            duration: this.duration + 0.4,
-            y: '101%',
-            stagger: 0.02,
-            ease: "cubic",
-        }, "<+=0")
+        }, "<")   
+        this.abtl.from('.nav-area .heading .column-text-inner', {
+          duration: this.duration + 0.4,
+          y: '101%',
+          stagger: 0.045,
+          ease: "cubic",
+        }, "<+=0.1")
+        this.abtl.to('.nav-area .image img', {
+          duration: this.duration,
+          opacity: 1,
+        }, "<+=0.35") 
+        this.abtl.from('.nav-area .text-container .column-text-inner', {
+          duration: this.duration + 0.4,
+          y: '101%',
+          stagger: 0.008,
+          ease: "cubic",
+        }, "<+=0.1")    
       }
     }
     else if (menuAction == 'close') {
@@ -171,23 +197,24 @@ export class NavComponent implements OnInit {
   
       if (this.menuState == 'open') {
         // close menu
-        this.abtl.to('app-nav .column-text-inner', {
+        this.abtl.to('.nav-area .column-text-inner', {
           duration: this.duration + 0.3,
           y: "101%",
           ease: "cubic",
         }, "<")
+        this.abtl.to('.nav-area .image img', {
+          duration: this.duration*0.5,
+          opacity: 0,
+        }, "<")   
   
         this.abtl.to('.nav-area', {
           duration: this.duration-0.2,
-          opacity: 0
+          opacity: 0,
+          display: 'none'
         }, "<+=0.25")
-        // this.abtl.to('.about-nav a', {
-        //   duration: this.duration-0.2,
-        //   color: 'black',
-        // }, '<+=0.25')
   
-        this.abtl.set('.nav-area', {display: 'none'});
-        this.abtl.set('app-nav .column-text-inner', {y: 0});
+        this.abtl.set('.nav-area', {});
+        this.abtl.set('.nav-area .column-text-inner', {y: 0});
         this.menuState = 'closed';
       }
     }
@@ -200,17 +227,17 @@ export class NavComponent implements OnInit {
   }
 
   navigateHome() {
-    let mobile, path: string;
-    if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) {
-      mobile = true;
-    }
+    let path: string;
+    // if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) {
+    //   this.mobile = true;
+    // }
     if(window.location.search.substring(1) !== "full=true") { // do not redirect if querystring is ?full=true
-      if (!mobile) { // detect mobile browser
+      if (!this.mobile) { // detect mobile browser
         path = '';
         this.router.navigate([path])
       }
     }
-    if (mobile) {
+    if (this.mobile) {
       path = 'mobile';
       if (this.detailView) {
         gsap.to('.detail-view-images img', {

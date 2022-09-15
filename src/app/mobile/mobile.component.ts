@@ -2,7 +2,7 @@ import { Component, ElementRef, AfterViewInit, ViewChild, NgZone } from '@angula
 import { imageList } from '../collectionOrder';
 import { LoaderService } from '../loader.service';
 import { Router } from '@angular/router';
-import {gsap} from 'gsap';
+import {gsap, CustomEase} from 'gsap/all';
 
 @Component({
   selector: 'app-mobile',
@@ -36,6 +36,9 @@ export class MobileComponent implements AfterViewInit {
         this.initialAnimations(0.1);
       })
     }
+
+    gsap.registerPlugin(CustomEase);
+    CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
 
     let timer: any = null;
     this.main.nativeElement.addEventListener('scroll', () => {
