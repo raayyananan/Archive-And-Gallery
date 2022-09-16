@@ -25,6 +25,8 @@ export class ViewSwitcherService {
   private linkState: 'frozen' | 'available' = 'available';
   private viewSwitchEvent: Event = new Event('viewswitch');
 
+  switchedOnce: boolean = false;
+
   setViewState(state: number) {
     this.viewState = state;
     this.setTransitionalViewState(state)
@@ -108,6 +110,8 @@ export class ViewSwitcherService {
 
       let tl = gsap.timeline();
       this.setLinkState('frozen');
+
+      this.switchedOnce = true;
 
       let duration = 1.4, ease ="expo.out", stagger = 0.03;
             

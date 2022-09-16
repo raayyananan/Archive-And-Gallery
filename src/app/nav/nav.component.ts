@@ -142,6 +142,7 @@ export class NavComponent implements OnInit {
           y: -45,
           ease: "expo.out",
           // stagger: 0.035
+          delay: 0.08,
       }, "<")
       this.abtl.to('.about-nav a', {
           duration: this.duration*1.25,

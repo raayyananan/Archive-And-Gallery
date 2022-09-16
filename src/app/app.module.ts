@@ -9,6 +9,7 @@ import { NavComponent } from './nav/nav.component';
 import { CollectionViewComponent } from './collection-view/collection-view.component';
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { MobileComponent } from './mobile/mobile.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { MobileComponent } from './mobile/mobile.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HammerModule
+    HammerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
