@@ -25,6 +25,7 @@
             max-height: 131%;
             transition: filter 1s;
             transition-timing-function: cubic-bezier(.28,.67,.32,.99);
+            position: absolute;
 
             &:hover {
                 cursor: pointer;
@@ -277,21 +278,21 @@ img {
 .detail-view {
     display: flex; // set to flex with js
     flex-flow: column nowrap;
-    height: 100%; // 22%
+    height: calc(100% - 45px); // 22%
     width: 100vw;
 
     position: absolute;
     z-index: 0;
-    top: 0;
+    top: 45px;
     left: 0;
 
     .route-filler {
-        height: 88%;
+        height: 86%;
         box-sizing: border-box;
         // padding-top: 45px;
     }
     .detail-bar-filler {
-        height: calc(14vh + 30px);
+        height: 14%
     }
 }
 .detail-bar {
@@ -299,14 +300,14 @@ img {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: flex-end;
-    padding: 0 10px 20px 10px;
+    padding: 10px;
     height: 14%; // 22%
     width: 100vw;
     box-sizing: border-box;
 
     position: absolute;
     z-index: 1;
-    bottom: 10px; //20px
+    bottom: 0; //20px
     left: 0;
 
     img {

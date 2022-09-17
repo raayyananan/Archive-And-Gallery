@@ -82,6 +82,8 @@ html, body {
     user-select: none; /* Standard */
 }
 
+// img {filter: grayscale(1)}
+
 html {
     background: var(--background);
 }

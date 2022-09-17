@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HammerModule } from '@angular/platform-browser';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +11,6 @@ import { CollectionViewComponent } from './collection-view/collection-view.compo
 import { DetailViewComponent } from './detail-view/detail-view.component';
 import { MobileComponent } from './mobile/mobile.component';
 import { environment } from '../environments/environment';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { EmptyComponent } from './empty/empty.component';
 
 @NgModule({

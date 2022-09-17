@@ -1,27 +1,30 @@
-main {
-    // height: 100%;
-    // width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-}
+// main {
+//     // height: 100%;
+//     // width: 100%;
+//     display: flex;
+//     flex-flow: row nowrap;
+// }
 .images {
     display: flex;
     align-items: center;
     overflow-x: scroll;
-    // padding: 0 10px 0 10px;
-    box-sizing: border-box;
+    height: 100%;
+
     div {
         // max-width: 75%;
-        height: 90%;
+        height: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
 
         img {
             padding: 10px;
             box-sizing: border-box;
             // max-height: 60%;
-            height: 100%; //75
+            height: 80%; //75
             display: inline-block;
             
-            opacity: 0;
+            opacity: -0.1;
             transform: translate(30px, 0);
         }
     }
@@ -49,31 +52,35 @@ main {
 // @media only screen and (max-width: 700px) {
 //     .images div img {height: 45vh}
 // }
-@media only screen and (max-width: 650px) {
-    main {
-        flex-flow: column nowrap;
-        position: absolute;
-        top: 0;
 
-        .images {
-            display: flex;
-            flex-flow: column nowrap;
-            overflow-x: hidden;
-            overflow-y: scroll;
-            padding: 45px 0;
+
+
+
+// @media only screen and (max-width: 650px) {
+//     main {
+//         flex-flow: column nowrap;
+//         position: absolute;
+//         top: 0;
+
+//         .images {
+//             display: flex;
+//             flex-flow: column nowrap;
+//             overflow-x: hidden;
+//             overflow-y: scroll;
+//             padding: 45px 0;
             
-            img {
-                display: block;
-                height: auto;
-                width: 100%;
-                box-sizing: border-box;
+//             img {
+//                 display: block;
+//                 height: auto;
+//                 width: 100%;
+//                 box-sizing: border-box;
 
-                &.right {padding-right: 20vw; text-align: right;}
-                &.left {padding-left: 20vw; text-align: left;}
-            }
-        }
-    }
-}
+//                 &.right {padding-right: 20vw; text-align: right;}
+//                 &.left {padding-left: 20vw; text-align: left;}
+//             }
+//         }
+//     }
+// }
 
 
 
