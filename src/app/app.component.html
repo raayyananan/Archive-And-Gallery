@@ -1,7 +1,8 @@
 <app-nav></app-nav>
 <main [@fadeAnimation]="getRouteAnimationData()">
     <!-- <router-outlet></router-outlet> -->
-    <app-collection-view></app-collection-view>
+    <app-collection-view *ngIf="!mobile" ></app-collection-view>
+    <app-mobile *ngIf="mobile"></app-mobile>
 </main>
 
 <section class="column-grid-background">

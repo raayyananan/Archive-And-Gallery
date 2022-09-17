@@ -27,7 +27,10 @@ export class ViewSwitcherService {
   private linkState: 'frozen' | 'available' = 'available';
   private viewSwitchEvent: Event = new Event('viewswitch');
 
-  switchedOnce: boolean = false;
+  private safeToRouteBetweenCollections: boolean = false;
+  private switchedOnce: boolean = false;
+  
+  initialAnimationsComplete: boolean = false;
 
   setViewState(state: number) {
     this.viewState = state;
@@ -116,7 +119,7 @@ export class ViewSwitcherService {
       this.headingMove('out', tl);
       gsap.to('.column-background div', {
         duration: duration*0.7,
-        ease: "expo.in",
+        ease: "expo.out",
         height: 0,
         stagger: 0.075,
         // display: 'none',
@@ -322,7 +325,7 @@ export class ViewSwitcherService {
   }
 
   route(url: string) {
-    if (this.linkState) {
+    if (this.initialAnimationsComplete) {
       const tl = gsap.timeline();
       if (this.getTransitionalViewState() !== 4) {
         const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
@@ -350,6 +353,8 @@ export class ViewSwitcherService {
           onComplete: () => {
             this.setViewState(4);
             this.setLinkState('available');
+
+            setTimeout(() => {this.safeToRouteBetweenCollections = true}, 1600)
           }
         })
   
@@ -359,10 +364,10 @@ export class ViewSwitcherService {
               this.router.navigate(['collection', url])
             })
           },
-          delay: duration - 0.4
+          delay: duration - 0 //0.4
         })
       }
-      else if (this.getViewState() == 4) {
+      else if (this.getViewState() == 4 && this.safeToRouteBetweenCollections) {
         this.ngZone.run(() => {
           this.router.navigate(['collection', url])
         })
@@ -449,67 +454,67 @@ export class ViewSwitcherService {
   }
 
   buttonMoveX(direction: 'forwards' | 'backwards', button?: boolean, target?: HTMLElement) {
-    // const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
-    // target = bottomBar;
-    // const scrollableWidth = target.scrollWidth - target.clientWidth;
-    // let translateX = Number(this.getTranslateValues(target).x);
-    // let ease = "cubic", dr = 1.5, factor = 1.5;
-    // let movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
+    const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
+    target = bottomBar;
+    const scrollableWidth = target.scrollWidth - target.clientWidth;
+    let translateX = Number(this.getTranslateValues(target).x);
+    let ease = "cubic", dr = 1.5, factor = 1.5;
+    let movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
 
-    // if (button == true) {
-    //   dr = 1, factor = 2;
-    //   movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
-    // }
+    if (button == true) {
+      dr = 1, factor = 2;
+      movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
+    }
 
-    // const tl = gsap.timeline()
+    const tl = gsap.timeline()
 
-    // if (translateX >= 0 && direction == 'forwards') {
-    //   tl.to(bottomBar, {
-    //     duration: dr,
-    //     ease: ease,
-    //     x: "-="+movement
-    //   })
-    // }
-    // else if (translateX < 0 && (-translateX + movement) <= scrollableWidth) {
-    //   if (direction == 'forwards') {
-    //     tl.to(bottomBar, {
-    //       duration: dr,
-    //       ease: ease,
-    //       x: "-="+movement
-    //     })
-    //   }
-    //   else if (direction == 'backwards') {
-    //     if ((translateX + movement) >= 0) {
-    //       tl.to(bottomBar, {
-    //         duration: dr,
-    //         ease: ease,
-    //         x: 0
-    //       })
-    //     }
-    //     else {
-    //       tl.to(bottomBar, {
-    //         duration: dr,
-    //         ease: ease,
-    //         x: "+="+movement
-    //       })
-    //     }
-    //   }
-    // }
-    // else if ((-translateX + movement) >= scrollableWidth && direction == 'backwards') {
-    //   tl.to(bottomBar, {
-    //     duration: dr,
-    //     ease: ease,
-    //     x: "+="+movement
-    //   })
-    // }
-    // //edge cases
-    // else if ((-translateX + movement) >= scrollableWidth && direction == 'forwards') {
-    //   tl.to(bottomBar, {
-    //     duration: dr,
-    //     ease: ease,
-    //     x: -scrollableWidth
-    //   })
-    // }
+    if (translateX >= 0 && direction == 'forwards') {
+      tl.to(bottomBar, {
+        duration: dr,
+        ease: ease,
+        x: "-="+movement
+      })
+    }
+    else if (translateX < 0 && (-translateX + movement) <= scrollableWidth) {
+      if (direction == 'forwards') {
+        tl.to(bottomBar, {
+          duration: dr,
+          ease: ease,
+          x: "-="+movement
+        })
+      }
+      else if (direction == 'backwards') {
+        if ((translateX + movement) >= 0) {
+          tl.to(bottomBar, {
+            duration: dr,
+            ease: ease,
+            x: 0
+          })
+        }
+        else {
+          tl.to(bottomBar, {
+            duration: dr,
+            ease: ease,
+            x: "+="+movement
+          })
+        }
+      }
+    }
+    else if ((-translateX + movement) >= scrollableWidth && direction == 'backwards') {
+      tl.to(bottomBar, {
+        duration: dr,
+        ease: ease,
+        x: "+="+movement
+      })
+    }
+    //edge cases
+    else if ((-translateX + movement) >= scrollableWidth && direction == 'forwards') {
+      tl.to(bottomBar, {
+        duration: dr,
+        ease: ease,
+        x: -scrollableWidth
+      })
+    }
 
       
   }

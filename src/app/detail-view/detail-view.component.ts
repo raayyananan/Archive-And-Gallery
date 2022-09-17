@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { Observable, filter } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { collections, Collection } from '../collectionOrder';
 import { gsap } from 'gsap';
 import { LoaderService } from '../loader.service';
@@ -13,10 +12,8 @@ import { LoaderService } from '../loader.service';
 export class DetailViewComponent implements AfterViewInit {
 
   collection!: Collection;
-  // navStart: Observable<NavigationStart>;
 
   @ViewChild('detailViewSection') detailViewSection!: ElementRef;
-  dtl = gsap.timeline()
 
   constructor(private activatedRoute: ActivatedRoute, private loaderService: LoaderService, private router: Router) {
     // // Create a new Observable that publishes only the NavigationStart event
@@ -24,37 +21,12 @@ export class DetailViewComponent implements AfterViewInit {
     //   filter(evt => evt instanceof NavigationStart)
     // ) as Observable<NavigationStart>;
 
-    // // get images and load them
-    // this.getImages(); // generally its not recommended to put initialization logic in the constructor for optimization purposes
-  }
-
-  initialize(name: string) {
-    const collection = collections.find(imageCollection => imageCollection.url == name);
-    this.detailViewSection.nativeElement.innerHTML = '';
-    const images = document.querySelectorAll('.detail-view-images img') as NodeListOf<HTMLElement>
-    collection?.sources.forEach((src) => {
-      if (images.length !== 0) {
-        this.dtl.to('.detail-view-images img', {
-          duration: 0,
-          ease: "sine.in",
-          // x: -30,
-          onComplete: () => {
-            this.detailViewSection.nativeElement.innerHTML += `<div style="height: 100%;display: flex;flex-flow: column nowrap;justify-content: center;"><img src="${src}" style="padding: 10px;box-sizing: border-box;height: 80%;display: inline-block; opacity: 1;"></div>`;
-          }
-        })
-      }
-      else {
-        this.detailViewSection.nativeElement.innerHTML += `<div style="height: 100%;display: flex;flex-flow: column nowrap;justify-content: center;"><img src="${src}" style="padding: 10px;box-sizing: border-box;height: 80%;display: inline-block; opacity: 1;"></div>`;
-      }
-      this.loadImages();
-    })
-  }
-
-
-  ngAfterViewInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.initialize(params["name"]);
     })
+  }
+
+  ngAfterViewInit(): void {
 
     const imagesSection = document.querySelector('section.images') as HTMLElement;
     imagesSection.focus();
@@ -74,24 +46,44 @@ export class DetailViewComponent implements AfterViewInit {
 
   }
 
-  loadImages(): void {
-    const images = document.querySelectorAll('.detail-view-images img');
-    let loaded: number = 0;
-    images.forEach(image => {
-      image.addEventListener('load', () => {
-        loaded += 1;
-        if (loaded > 2) {
-          this.dtl.from(images, {
-            duration: 1.5,
-            x: -30,
-            opacity: -0.1,
-            ease: "expo.out",
-            stagger: 0.1,
-            delay: 0.3
-          })
+  initializationCount = 0;
+  initialize(name: string | null) {
+    this.initializationCount += 1;
+    const tl = gsap.timeline();
+    const collection = collections.find(imageCollection => imageCollection.url == name);
+    // let images = document.querySelectorAll('.detail-view-images img') as NodeListOf<HTMLElement>;
+
+    if (this.initializationCount == 1) {
+      this.collection = collection!;
+      setTimeout(() => {    
+        tl.to('.detail-view-images img', {
+          duration: 0.75,
+          x: 0,
+          opacity: 1,
+          ease: "power3.out",
+          stagger: 0.05,
+        })
+      }, 250);
+    }
+    else {
+      tl.to('.detail-view-images img', {
+        duration: 0.4,
+        x: -30,
+        opacity: 0,
+        ease: "sine.in",
+        onComplete: () => {
+          this.collection = collection!;
+          setTimeout(() => {    
+            tl.to('.detail-view-images img', {
+              duration: 0.75,
+              x: 0,
+              opacity: 1,
+              ease: "power3.out",
+              stagger: 0.05,
+            })
+          }, 150);
         }
       })
-    })
+    }
   }
-
 }

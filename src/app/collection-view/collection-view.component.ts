@@ -73,11 +73,13 @@ export class CollectionViewComponent implements OnInit {
   }
 
   onPan(e: any, direction: 'forwards' | 'backwards') {
-    if (direction == 'forwards') {
-      this.viewSwitcherService.buttonMoveX('forwards');
-    }
-    else if (direction == 'backwards') {
-      this.viewSwitcherService.buttonMoveX('backwards');
+    if (this.viewSwitcherService.getTransitionalViewState() == 3) {
+      if (direction == 'forwards') {
+        this.viewSwitcherService.buttonMoveX('forwards');
+      }
+      else if (direction == 'backwards') {
+        this.viewSwitcherService.buttonMoveX('backwards');
+      }
     }
   }
 
@@ -203,6 +205,7 @@ export class CollectionViewComponent implements OnInit {
           ease: "cubic",
           onComplete: () => {
             this.viewSwitcherService.setLinkState('available');
+            this.viewSwitcherService.initialAnimationsComplete = true;
           }
       }, "<")
     

@@ -8,6 +8,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { gsap } from 'gsap';
+import { collections } from './collectionOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +32,19 @@ export class LoaderService {
     setTimeout(() => {
       this.animationComplete = true;
       bothComplete()
-    }, 0) //2200
+    }, 2200) //2200
 
     window.addEventListener('load', () => {
       this.loadedStatus = true;
       bothComplete()
+
+      collections.forEach((collection) => {
+        collection.sources.forEach((src) => {
+          let img = new Image();
+          img.src=src;
+          img.onload = () => {console.log('loaded')}
+        })
+      })
     })
 
   }
