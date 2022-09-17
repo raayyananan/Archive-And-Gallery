@@ -29,6 +29,11 @@ export class AppComponent implements OnInit {
         })
       }
     }
+    if (!navigator.userAgent.match(/iPhone/i) || !navigator.userAgent.match(/Android/i) || !navigator.userAgent.match(/Blackberry/i) || !navigator.userAgent.match(/WebOs/i)) { // detect mobile browser
+      this.ngZone.run(() => {
+        this.router.navigate(['']);
+      })
+    }
   }
 
   getRouteAnimationData() {

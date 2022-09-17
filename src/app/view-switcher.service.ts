@@ -1,4 +1,5 @@
-import { Injectable, QueryList } from '@angular/core';
+import { Injectable, QueryList, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { gsap } from 'gsap';
 import { Flip, CustomEase } from 'gsap/all';
 import { delay } from 'rxjs';
@@ -9,7 +10,7 @@ import { thumbnailNumbers } from './collectionOrder';
 })
 export class ViewSwitcherService {
 
-  constructor() {
+  constructor(private ngZone: NgZone, private router: Router) {
     gsap.registerPlugin(Flip);
     gsap.registerPlugin(CustomEase);
 
@@ -22,6 +23,7 @@ export class ViewSwitcherService {
 
   public viewState: number = 1;
   public transitionalViewState: number = 1;
+  public imageViewState: number = 1;
   private linkState: 'frozen' | 'available' = 'available';
   private viewSwitchEvent: Event = new Event('viewswitch');
 
@@ -30,16 +32,24 @@ export class ViewSwitcherService {
   setViewState(state: number) {
     this.viewState = state;
     this.setTransitionalViewState(state)
-    document.dispatchEvent(this.viewSwitchEvent)
+
+    if (this.viewState !== 4) {
+      this.setImageViewState(state)
+    }
+    // document.dispatchEvent(this.viewSwitchEvent)
   }
   setTransitionalViewState(state: number) {
     this.transitionalViewState = state;
+  }
+  setImageViewState(state: number) {
+    this.imageViewState = state;
   }
   setLinkState(state: 'frozen' | 'available') {
     this.linkState = state;
   }
   getViewState(): number {return this.viewState}
   getTransitionalViewState(): number {return this.transitionalViewState}
+  getImageViewState(): number {return this.imageViewState}
   getLinkState() {return this.linkState}
 
   z = 5;
@@ -101,64 +111,70 @@ export class ViewSwitcherService {
     }
   }
 
-  switchView(viewNumber: number, viewState?: number): void {
+  destroyDisconnectedSequences(view: number, tl: any, duration: number, ease: string) {
+    if (view == 1) {
+      this.headingMove('out', tl);
+      gsap.to('.column-background div', {
+        duration: duration*0.7,
+        ease: ease,
+        height: 0,
+        stagger: 0.075,
+        // display: 'none',
+      })
+      tl.set('.heading h1', {display: 'none'});
+      tl.set('.cell', {display: 'none'})
+    }
+    else if (view == 2) {
+      tl.to('app-collection-view .column-text-inner', {
+        duration: 1.1,
+        y: '-101%',
+        stagger: -0.01,
+        ease: "power2.out",
+        display: 'none'
+      })
+      tl.set('.view02-container', {display: 'none'});
+      tl.set('app-collection-view .column-text-inner', {y: '101%'})
+      // tl.set('.column-text-inner', {}, "<+=0.2")
+    }
+    else if (view == 3) {
+      tl.to('.arrows-container .arrows', {
+        duration: 0.25,
+        opacity: 0
+      }, "<")
+      gsap.to('.nav a', {
+        duration: 0.5,
+        color: 'black',
+      })
+      tl.set('.view03-container', {display: 'none'});
+      tl.set('.bottom-bar', {display: 'none'});
+      tl.set('.arrows-container .arrows', {opacity: 1})
+    }
+  }
+
+  switchView(viewNumber: number, bypass?: boolean): void {
     // console.log(`Current state: ${this.viewState}, Attempted call on: ${viewNumber}`)
 
     document.addEventListener('switchView', () => {return null})
 
-    if (this.linkState != 'frozen' && this.viewState !== viewNumber) {
+    if ((this.linkState != 'frozen' && this.viewState !== viewNumber) || bypass == true) {
 
       let tl = gsap.timeline();
       this.setLinkState('frozen');
-
       this.switchedOnce = true;
 
       let duration = 1.4, ease ="expo.out", stagger = 0.03;
-            
-      const destroyDisconnectedSequences = (view: number) => {
-
-        if (view == 1) {
-          this.headingMove('out', tl);
-          gsap.to('.column-background div', {
-            duration: duration*0.7,
-            ease: ease,
-            height: 0,
-            stagger: 0.075,
-            // display: 'none',
-          })
-          tl.set('.heading h1', {display: 'none'});
-        }
-        else if (view == 2) {
-          tl.to('app-collection-view .column-text-inner', {
-            duration: 1.1,
-            y: '-101%',
-            stagger: -0.01,
-            ease: "power2.out",
-          })
-          tl.set('.view02-container', {display: 'none'});
-          tl.set('app-collection-view .column-text-inner', {y: '101%'})
-          // tl.set('.column-text-inner', {}, "<+=0.2")
-        }
-        else if (view == 3) {
-          tl.to('.arrows-container .arrows', {
-            duration: 0.25,
-            opacity: 0
-          }, "<")
-          tl.set('.view03-container', {display: 'none'});
-          tl.set('.bottom-bar', {display: 'none'});
-          tl.set('.arrows-container .arrows', {opacity: 1})
-        }
-      }
 
       // destroy disconnected sequences to make space clean for new view
       const currentView = this.getViewState();
-      destroyDisconnectedSequences(currentView);
+      this.destroyDisconnectedSequences(currentView, tl, duration, ease)
       
       if (viewNumber == 1) {
 
         this.setTransitionalViewState(1);
+
+        (document.querySelectorAll('.cell') as NodeListOf<HTMLElement>).forEach((cell) => {cell.style.display = 'block'})
         
-        const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
+        const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
         imageCells = document.querySelectorAll('.image-cell') as NodeListOf<HTMLElement>;
 
         const state = Flip.getState(images, {props: "padding,filter"})
@@ -220,11 +236,12 @@ export class ViewSwitcherService {
         this.setTransitionalViewState(2);
 
 
-        const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
+        const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
         imageContainer = document.querySelector('#image-container') as HTMLElement,
         view02container = document.querySelector('.view02-container') as HTMLElement;
 
         view02container.style.display = 'block';
+        (document.querySelectorAll('app-collection-view .column-text-inner') as NodeListOf<HTMLElement>).forEach((li) => {li.style.display = 'block'})
 
         // let tl = gsap.timeline();
 
@@ -262,12 +279,12 @@ export class ViewSwitcherService {
         (document.querySelector('.view03-container') as HTMLElement).style.display = 'flex';
         (document.querySelector('.bottom-bar') as HTMLElement).style.display = 'flex';
 
-        const images = document.querySelectorAll('.collection img') as NodeListOf<HTMLElement>,
+        const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
         bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
 
         // bottomBar.classList.remove('scrollable');
 
-        const state = Flip.getState('.collection img', {props: "padding,filter"});
+        const state = Flip.getState('.collection .thumbnail', {props: "padding,filter"});
         images.forEach((image) => {
           bottomBar.appendChild(image)
         })
@@ -286,13 +303,68 @@ export class ViewSwitcherService {
             this.setViewState(3);
             this.setLinkState('available');
           }
-        })       
+        }) 
+        
+        gsap.to('.nav a', {
+          duration: 0.5,
+          color: 'white',
+          delay: 0.3
+        })
         //0.230, 0.545, 0.085, 0.995
       }
     }
 
     return
 
+  }
+
+  route(url: string) {
+    if (this.linkState) {
+      const tl = gsap.timeline();
+      if (this.getViewState() !== 4) {
+        const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
+        detailBar = document.querySelector('.detail-bar') as HTMLElement;
+  
+        this.setLinkState('frozen');
+        
+        detailBar.style.zIndex = '3';
+        let duration = 1.4, ease ="expo.out", stagger = 0.03;
+        
+        this.destroyDisconnectedSequences(this.getTransitionalViewState(), tl, duration, ease)
+        
+        this.setTransitionalViewState(4);
+  
+        const state = Flip.getState(images, {props: "padding,filter"})
+        images.forEach((img) => {
+          detailBar.appendChild(img)
+        })
+        Flip.from(state, {
+          duration: duration,
+          ease: ease,
+          stagger: stagger,
+          absolute: true,
+          delay: 0.05,
+          onComplete: () => {
+            this.setViewState(4);
+            this.setLinkState('available');
+          }
+        })
+  
+        gsap.to('.route-filler', {
+          onStart: () => {
+            this.ngZone.run(() => {
+              this.router.navigate(['collection', url])
+            })
+          },
+          delay: duration
+        })
+      }
+      else {
+        this.ngZone.run(() => {
+          this.router.navigate(['collection', url])
+        })
+      }
+    }
   }
 
   getTranslateValues (element: HTMLElement): any {
@@ -341,7 +413,7 @@ export class ViewSwitcherService {
     
     const scrollTransform = (deltaX: any, deltaY: any, target: HTMLElement): void => {
       const scrollableWidth = target.scrollWidth - target.clientWidth;
-      let scroll = (deltaX + deltaY) * 0.15;
+      let scroll = (deltaX + deltaY) * 0.25;
       let translateX = this.getTranslateValues(target).x;
 
       if (translateX >= 0 && scroll > 0) 

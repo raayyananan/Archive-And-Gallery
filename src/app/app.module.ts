@@ -11,6 +11,7 @@ import { DetailViewComponent } from './detail-view/detail-view.component';
 import { MobileComponent } from './mobile/mobile.component';
 import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { EmptyComponent } from './empty/empty.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     CollectionViewComponent,
     DetailViewComponent,
     MobileComponent,
+    EmptyComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { Observable, filter } from 'rxjs';
 import { collections, Collection } from '../collectionOrder';
 import { gsap } from 'gsap';
 import { LoaderService } from '../loader.service';
@@ -12,8 +13,13 @@ import { LoaderService } from '../loader.service';
 export class DetailViewComponent implements AfterViewInit {
 
   collection!: Collection;
+  // navStart: Observable<NavigationStart>;
 
-  constructor(private activatedRoute: ActivatedRoute, private loaderService: LoaderService) {
+  constructor(private activatedRoute: ActivatedRoute, private loaderService: LoaderService, private router: Router) {
+    // Create a new Observable that publishes only the NavigationStart event
+    // this.navStart = router.events.pipe(
+    //   filter(evt => evt instanceof NavigationStart)
+    // ) as Observable<NavigationStart>;
     this.getImages(); // generally its not recommended to put initialization logic in the constructor for optimization purposes
   }
 
@@ -22,6 +28,17 @@ export class DetailViewComponent implements AfterViewInit {
     const collection = collections.find(imageCollection => imageCollection.url == urlname);
     this.collection = collection as Collection;
   }
+
+  // ngOnInit(): void {
+  //   this.navStart.subscribe((event) => {
+  //     if (event.url == '/') {
+  //       // pass
+  //     } 
+  //     else if (event.url.includes('collection')) {
+  //       this.getImages()
+  //     }
+  //   })
+  // }
 
   ngAfterViewInit(): void {
     this.loadImages()
@@ -46,19 +63,32 @@ export class DetailViewComponent implements AfterViewInit {
 
   loadImages(): void {
     const images = document.querySelectorAll('.images img');
+    // images.forEach(image => {
+    //   image.addEventListener('load', () => {
+    //     gsap.to(image, {
+    //       duration: 0.75,
+    //       x: 0,
+    //       opacity: 1,
+    //       delay: 0.3
+    //     })
+    //   })
+    // })
+    let loaded: number = 0;
     images.forEach(image => {
       image.addEventListener('load', () => {
-        gsap.to(image, {
-          duration: 0.75,
-          y: 0,
-          x: 0,
-          opacity: 1,
-        })
+        loaded += 1;
+        if (loaded > 2) {
+          gsap.to(images, {
+            duration: 1.5,
+            x: 0,
+            opacity: 1,
+            ease: "expo.out",
+            stagger: 0.1,
+            delay: 0.1
+          })
+        }
       })
     })
   }
 
-  loaded() {
-
-  }
 }

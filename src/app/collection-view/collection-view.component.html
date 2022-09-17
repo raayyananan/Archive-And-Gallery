@@ -1,7 +1,7 @@
 <main class="collection" (panleft)="onPan($event, 'forwards')" (panright)="onPan($event, 'backwards')">
 
     <div *ngFor="let image of collection, let i = index" class="cell" [ngClass]="{'image-cell': image.src}" #images>
-            <img *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
+            <img class="thumbnail" *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
             (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, image.id, parseInt(image.number))"  [attr.data-srno]="image.id">
     </div>
     <section class="heading">
@@ -39,7 +39,7 @@
 
     <!-- View 3 -->
     <section class="view03-container">
-        <div class="content">
+        <!-- <div class="content">
             <div class="filler"></div>
             <div class="arrows-container">
                 <div style="flex: auto"></div>
@@ -49,9 +49,17 @@
                 </div>
             </div>
         </div>
-        <div class="bottom-bar-filler"></div>
+        <div class="bottom-bar-filler"></div> -->
     </section>
     <section class="bottom-bar"></section>
+
+    <section class="detail-view">
+        <div class="route-filler">
+            <router-outlet></router-outlet>
+        </div>
+        <div class="detail-bar-filler"></div>
+    </section>
+    <section class="detail-bar"></section>
 </main>
 
 <section class="column-background">

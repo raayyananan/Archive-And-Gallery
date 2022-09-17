@@ -51,18 +51,18 @@ export class NavComponent implements OnInit {
         this.detailView = true;
         this.routeMenu('open')
       }
-
-      gsap.registerPlugin(CustomEase);
-      CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
-
-      setTimeout(() => {
-        gsap.to('.loader .column-text-inner', {
-          duration: 1,
-          y: 0,
-          ease: "expo.out"
-        })
-      }, 750)
     })
+
+    gsap.registerPlugin(CustomEase);
+    CustomEase.create("cubic", "0.180, 0.480, 0.115, 1.000");
+
+    setTimeout(() => {
+      gsap.to('.loader .column-text-inner', {
+        duration: 1,
+        y: 0,
+        ease: "expo.out"
+      })
+    }, 750)
 
     this.loaderService.loaded.subscribe(value => {
       this.removeLoader()
@@ -222,7 +222,7 @@ export class NavComponent implements OnInit {
   }
 
   switchView(viewNumber: number): void {
-    this.viewSwitcherService.switchView(viewNumber, this.viewState);
+    this.viewSwitcherService.switchView(viewNumber);
     // this.viewSwitcherService.setViewState(viewNumber); // not needed for now as viewState is checked within switchView()
     // viewState MUST be set after calling switchView() as switchView() checks for viewState before running
   }
@@ -232,11 +232,18 @@ export class NavComponent implements OnInit {
     // if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) {
     //   this.mobile = true;
     // }
-    if(window.location.search.substring(1) !== "full=true") { // do not redirect if querystring is ?full=true
-      if (!this.mobile) { // detect mobile browser
-        path = '';
-        this.router.navigate([path])
-      }
+    // if(window.location.search.substring(1) !== "full=true") { // do not redirect if querystring is ?full=true
+    //   if (!this.mobile) { // detect mobile browser
+    //     path = '';
+    //     this.router.navigate([path])
+    //     this.viewSwitcherService.switchView(1);
+    //   }
+    // }
+    if (!this.mobile) { // detect mobile browser
+      path = '';
+      this.router.navigate([path])
+      const state = this.viewSwitcherService.getImageViewState();
+      this.viewSwitcherService.switchView(state);
     }
     if (this.mobile) {
       path = 'mobile';
