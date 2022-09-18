@@ -52,6 +52,9 @@ export class DetailViewComponent implements AfterViewInit {
     const tl = gsap.timeline();
     const collection = collections.find(imageCollection => imageCollection.url == name);
     // let images = document.querySelectorAll('.detail-view-images img') as NodeListOf<HTMLElement>;
+    let x, y;
+    if (window.innerWidth >= 650) {x = -30, y = 0;}
+    else {x = 0, y = 30;}
 
     if (this.initializationCount == 1) {
       this.collection = collection!;
@@ -59,6 +62,7 @@ export class DetailViewComponent implements AfterViewInit {
         tl.to('.detail-view-images img', {
           duration: 0.75,
           x: 0,
+          y: 0,
           opacity: 1,
           ease: "power3.out",
           stagger: 0.05,
@@ -68,7 +72,8 @@ export class DetailViewComponent implements AfterViewInit {
     else {
       tl.to('.detail-view-images img', {
         duration: 0.4,
-        x: -30,
+        x: x,
+        y: y,
         opacity: 0,
         ease: "sine.in",
         onComplete: () => {

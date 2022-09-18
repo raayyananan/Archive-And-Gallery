@@ -301,7 +301,7 @@ export class CollectionViewComponent implements OnInit {
 
   widthHeightCheck() {
     const rotate = document.querySelector('.please-rotate') as HTMLElement;
-    if (window.innerHeight > window.innerWidth) {
+    if (window.innerHeight > window.innerWidth || window.innerWidth < 650) {
       rotate.style.display = 'flex';
     }
     else {

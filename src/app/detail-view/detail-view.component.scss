@@ -1,9 +1,6 @@
-// main {
-//     // height: 100%;
-//     // width: 100%;
-//     display: flex;
-//     flex-flow: row nowrap;
-// }
+main {
+    height: 100%;
+}
 .images {
     display: flex;
     align-items: center;
@@ -56,31 +53,36 @@
 
 
 
-// @media only screen and (max-width: 650px) {
-//     main {
-//         flex-flow: column nowrap;
-//         position: absolute;
-//         top: 0;
+@media only screen and (max-width: 650px) {
+    main {
+        flex-flow: column nowrap;
+        position: absolute;
+        top: 0;
 
-//         .images {
-//             display: flex;
-//             flex-flow: column nowrap;
-//             overflow-x: hidden;
-//             overflow-y: scroll;
-//             padding: 45px 0;
+        .images {
+            display: flex;
+            flex-flow: column nowrap;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            padding: 45px 0;
             
-//             img {
-//                 display: block;
-//                 height: auto;
-//                 width: 100%;
-//                 box-sizing: border-box;
+            div {
+                img {
+                    display: block;
+                    height: auto;
+                    width: 100%;
+                    box-sizing: border-box;
 
-//                 &.right {padding-right: 20vw; text-align: right;}
-//                 &.left {padding-left: 20vw; text-align: left;}
-//             }
-//         }
-//     }
-// }
+                    transform: translate(0, 30px);
+
+    
+                    &.right {padding-right: 20vw; text-align: right;}
+                    &.left {padding-left: 20vw; text-align: left;}
+                }
+            }
+        }
+    }
+}
 
 
 

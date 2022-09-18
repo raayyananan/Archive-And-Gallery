@@ -3,6 +3,7 @@ import { imageList } from '../collectionOrder';
 import { LoaderService } from '../loader.service';
 import { Router } from '@angular/router';
 import {gsap, CustomEase} from 'gsap/all';
+import { MobileService } from '../mobile.service';
 
 @Component({
   selector: 'app-mobile',
@@ -24,7 +25,7 @@ export class MobileComponent implements AfterViewInit {
   tl = gsap.timeline();
 
 
-  constructor(private loaderService: LoaderService, private router: Router, private ngZone: NgZone) { }
+  constructor(private loaderService: LoaderService, private router: Router, private ngZone: NgZone, private mobileService: MobileService) { }
 
   ngAfterViewInit(): void {
     this.loaderService.loaded.subscribe(value => {
@@ -130,32 +131,7 @@ export class MobileComponent implements AfterViewInit {
     })
   }
 
-  navigate(src: string | undefined, id: number): void {
-    const nl = gsap.timeline();
-    console.log(src, id)
-    nl.to('.line', {
-      duration: 0.2,
-      opacity: 0
-    })
-    nl.to('.image-list img', {
-      duration: 0.5,
-      ease: 'power2.in',
-      stagger: {
-        each: 0.025,
-        from: id-1
-      },
-      y: 80,
-      opacity: 0,
-      onComplete: () => {
-        this.ngZone.run(() => {
-          this.router.navigate(['collection', src])
-        })
-      }
-    }, "<")
-    nl.to(this.heading.nativeElement, {
-      duration: 0.4,
-      display: 'none',
-      y: '-100%'
-    }, "<+=0.1")
+  navigate(direction: 'in' | 'out', src: string | undefined, id: number): void {
+    this.mobileService.mobileRoute(direction, src, id)
   }
 }

@@ -6,6 +6,7 @@ import { Observable, filter } from 'rxjs';
 import { names } from '../collectionOrder';
 import { ViewSwitcherService } from '../view-switcher.service';
 import { LoaderService } from '../loader.service';
+import { MobileService } from '../mobile.service';
 
 @Component({
   selector: 'app-nav',
@@ -28,7 +29,7 @@ export class NavComponent implements OnInit {
   detailView: boolean = false;
   mobile!: boolean;
 
-  constructor(private router: Router, public viewSwitcherService: ViewSwitcherService, private ngZone: NgZone, private loaderService: LoaderService) {
+  constructor(private router: Router, public viewSwitcherService: ViewSwitcherService, private ngZone: NgZone, private loaderService: LoaderService, private mobileService: MobileService) {
     // Create a new Observable that publishes only the NavigationStart event
     this.navStart = router.events.pipe(
       filter(evt => evt instanceof NavigationStart)
@@ -202,6 +203,7 @@ export class NavComponent implements OnInit {
           duration: this.duration + 0.3,
           y: "101%",
           ease: "cubic",
+          delay: 0.1
         }, "<")
         this.abtl.to('.nav-area .image img', {
           duration: this.duration*0.5,
@@ -246,7 +248,7 @@ export class NavComponent implements OnInit {
       this.viewSwitcherService.switchView(state);
     }
     if (this.mobile) {
-      path = 'mobile';
+      path = '';
       if (this.detailView) {
         gsap.to('.detail-view-images img', {
           duration: 0.2,
@@ -254,6 +256,7 @@ export class NavComponent implements OnInit {
           // y: -15,
           onComplete: () => { this.ngZone.run(() => {
             this.router.navigate([path])
+            this.mobileService.mobileRoute('in')
           }) }
         })
       }

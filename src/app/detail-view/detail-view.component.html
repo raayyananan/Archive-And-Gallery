@@ -6,8 +6,10 @@
         </div>
     </section>
 </main> -->
-<section #detailViewSection class="images detail-view-images">
-    <div *ngFor="let src of collection.sources, let i = index">
-        <img src="{{src}}" [ngClass]="{'right': i % 2 === 0, 'left' : i % 2 !== 0 }" alt="Archive and Gallery image">
-    </div>
-</section>
+<main>
+    <section #detailViewSection class="images detail-view-images">
+        <div *ngFor="let src of collection.sources, let i = index">
+            <img src="{{src}}" [ngClass]="{'right': i % 2 === 0, 'left' : i % 2 !== 0 }" alt="Archive and Gallery image">
+        </div>
+    </section>
+</main>
