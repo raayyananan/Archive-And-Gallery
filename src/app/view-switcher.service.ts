@@ -144,7 +144,7 @@ export class ViewSwitcherService {
         duration: 0.25,
         opacity: 0
       }, "<")
-      gsap.to('.nav a', {
+      gsap.to('.nav .inner-link', {
         duration: 0.5,
         color: 'black',
       })
@@ -311,7 +311,7 @@ export class ViewSwitcherService {
           }
         }) 
         
-        gsap.to('.nav a', {
+        gsap.to('.nav .inner-link', {
           duration: 0.5,
           color: 'white',
           delay: 0.3

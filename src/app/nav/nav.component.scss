@@ -22,18 +22,17 @@
         .column {
             // background: rgb(220, 220, 220);
             text-align: left;
-    
-            a {
-                font-weight: 700;
-                font-size: 13px;
-                text-transform: uppercase;
-                &:hover {
-                    cursor: pointer;
-                }
-                &.italic {
-                    font-style: italic; 
-                    text-decoration: line-through;
-                }
+        }
+        .inner-link {
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            &:hover {
+                cursor: pointer;
+            }
+            &.italic {
+                font-style: italic; 
+                text-decoration: line-through;
             }
         }
     
@@ -43,7 +42,7 @@
             min-width: 0;
         }
     
-        a {
+        .inner-link {
             transition: opacity 0.75s color 0.75s;
             display: block;
             opacity: 1;

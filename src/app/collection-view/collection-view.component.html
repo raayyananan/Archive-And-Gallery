@@ -21,7 +21,7 @@
             <div class="flex-container left">
                 <ul *ngFor="let i of [1,2]">
                     <li *ngFor="let name of names; let i = index" class="column-text-outer">
-                        <div class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (mouseenter)="topImage(i)">{{name}}</a></div>
+                        <div class="column-text-inner"><span (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (mouseenter)="topImage(i)">{{name}}</span></div>
                     </li>
                 </ul>
             </div>
@@ -30,7 +30,7 @@
             <div class="flex-container">
                 <ul *ngFor="let i of [1,2]">
                     <li *ngFor="let name of names; let i = index" class="column-text-outer">
-                        <div class="column-text-inner"><a (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (mouseenter)="topImage(i)">{{name}}</a></div>
+                        <div class="column-text-inner"><span (click)="view02Navigate(URLify(name))" [class.tab]="i % 2 === 1 && i !== 0" (mouseenter)="topImage(i)">{{name}}</span></div>
                     </li>
                 </ul>
             </div>

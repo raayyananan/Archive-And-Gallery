@@ -44,13 +44,19 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {
     this.navStart.subscribe((event) => {
-      if (event.url == '/') {
-        this.detailView = false;
+      if (event.url == '/' || event.url == '') {
         this.routeMenu('close')
+        if (this.mobile) {
+          this.navigateHome()
+        }
+        this.detailView = false;
       } 
       else if (event.url.includes('collection') || event.url.includes('about')) {
-        this.detailView = true;
         this.routeMenu('open')
+        if (this.mobile) {
+          this.mobileService.mobileRoute('out')
+        }
+        this.detailView = true;
       }
     })
 
@@ -138,14 +144,14 @@ export class NavComponent implements OnInit {
           y: 0,
       })
       // this.abtl.set('.image-container img', {opacity: 1})
-      this.abtl.to('.nav a', {
+      this.abtl.to('.nav .inner-link', {
           duration: this.duration*1.25,
           y: -45,
           ease: "expo.out",
           // stagger: 0.035
           delay: 0.08,
       }, "<")
-      this.abtl.to('.about-nav a', {
+      this.abtl.to('.about-nav .inner-link', {
           duration: this.duration*1.25,
           y: -45,
           ease: "expo.out",
@@ -183,13 +189,13 @@ export class NavComponent implements OnInit {
       // (document.querySelector('.image-container img') as HTMLElement).classList.add('faded');
       this.abtl.clear();
       this.abtl.play();
-      this.abtl.to('.about-nav a', {
+      this.abtl.to('.about-nav .inner-link', {
         duration: this.duration*1.25,
         y: 0,
         ease: "power3.out",
         // stagger: 0.035,
       }, '<')
-      this.abtl.to('.nav a', {
+      this.abtl.to('.nav .inner-link', {
         duration: this.duration*1.25,
         y: 0,
         ease: "power3.out",

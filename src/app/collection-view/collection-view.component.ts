@@ -44,15 +44,23 @@ export class CollectionViewComponent implements OnInit {
 
     this.loaderService.loaded.subscribe(value => {
       setTimeout(() => {this.initialAnimations(0.85);})
+      removeHref()
     })
 
     if (this.loaderService.loadedStatus == true) {
       setTimeout(() => {
         this.initialAnimations(0.2);
+        removeHref()
       })
     }
 
     this.viewSwitcherService.initializeScrollTransform();
+
+    function removeHref() {
+      (document.querySelectorAll('.remove-href') as NodeListOf<HTMLElement>).forEach((link) => {
+        link.removeAttribute('href');
+      })
+    }
 
     document.addEventListener("keydown", (e) => {
       if (this.viewSwitcherService.getTransitionalViewState() == 3) {

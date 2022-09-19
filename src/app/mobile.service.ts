@@ -12,7 +12,6 @@ export class MobileService {
   mobileRoute(direction: 'in' | 'out', src?: string, id?: number) {
     if (direction == 'out') {
       const nl = gsap.timeline();
-      console.log(src, id)
       nl.to('.line', {
         duration: 0.2,
         opacity: 0
@@ -28,7 +27,12 @@ export class MobileService {
         opacity: 0,
         onComplete: () => {
           this.ngZone.run(() => {
-            this.router.navigate(['collection', src])
+            try {
+              this.router.navigate(['collection', src])
+            }
+            catch(err) {
+              // do nothing, this prevents logging of error to console
+            }
           })
         }
       }, "<")
