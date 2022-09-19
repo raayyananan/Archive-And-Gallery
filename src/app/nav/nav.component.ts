@@ -137,14 +137,14 @@ export class NavComponent implements OnInit {
           y: 0,
       })
       // this.abtl.set('.image-container img', {opacity: 1})
-      this.abtl.to('.nav a', {
+      this.abtl.to('.nav span', {
           duration: this.duration*1.25,
           y: -45,
           ease: "expo.out",
           // stagger: 0.035
           delay: 0.08,
       }, "<")
-      this.abtl.to('.about-nav a', {
+      this.abtl.to('.about-nav span', {
           duration: this.duration*1.25,
           y: -45,
           ease: "expo.out",
@@ -182,13 +182,13 @@ export class NavComponent implements OnInit {
       // (document.querySelector('.image-container img') as HTMLElement).classList.add('faded');
       this.abtl.clear();
       this.abtl.play();
-      this.abtl.to('.about-nav a', {
+      this.abtl.to('.about-nav span', {
         duration: this.duration*1.25,
         y: 0,
         ease: "power3.out",
         // stagger: 0.035,
       }, '<')
-      this.abtl.to('.nav a', {
+      this.abtl.to('.nav span', {
         duration: this.duration*1.25,
         y: 0,
         ease: "power3.out",
@@ -202,6 +202,7 @@ export class NavComponent implements OnInit {
           duration: this.duration + 0.3,
           y: "101%",
           ease: "cubic",
+          delay: 0.1
         }, "<")
         this.abtl.to('.nav-area .image img', {
           duration: this.duration*0.5,

@@ -23,7 +23,7 @@
             // background: rgb(220, 220, 220);
             text-align: left;
     
-            a {
+            .inner-link {
                 font-weight: 700;
                 font-size: 13px;
                 text-transform: uppercase;
@@ -43,7 +43,7 @@
             min-width: 0;
         }
     
-        a {
+        .inner-link {
             transition: opacity 0.75s color 0.75s;
             display: block;
             opacity: 1;
