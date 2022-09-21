@@ -49,12 +49,18 @@ export class NavComponent implements OnInit {
         if (this.mobile) {
           this.navigateHome()
         }
+        else {
+          this.viewSwitcherService.switchView(this.viewSwitcherService.getImageViewState());
+        }
         this.detailView = false;
       } 
       else if (event.url.includes('collection') || event.url.includes('about')) {
         this.routeMenu('open')
         if (this.mobile) {
           this.mobileService.mobileRoute('out')
+        }
+        else {
+          this.viewSwitcherService.route();
         }
         this.detailView = true;
       }
@@ -237,16 +243,6 @@ export class NavComponent implements OnInit {
 
   navigateHome() {
     let path: string;
-    // if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) {
-    //   this.mobile = true;
-    // }
-    // if(window.location.search.substring(1) !== "full=true") { // do not redirect if querystring is ?full=true
-    //   if (!this.mobile) { // detect mobile browser
-    //     path = '';
-    //     this.router.navigate([path])
-    //     this.viewSwitcherService.switchView(1);
-    //   }
-    // }
     if (!this.mobile) { // detect mobile browser
       path = '';
       this.router.navigate([path])

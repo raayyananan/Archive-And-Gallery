@@ -91,92 +91,8 @@ export class CollectionViewComponent implements OnInit {
     }
   }
 
-  navigate(url: string, id: number, number: number) {
-    // if (this.viewSwitcherService.getViewState() === 1) {
-    //       // first make all images disappear, then navigate to route
-    // const images = document.querySelectorAll('.collection .image-cell img') as NodeListOf<HTMLElement>;
-    // let imagesBelow: HTMLElement[] = [], imagesAbove: HTMLElement[] = []
-    // images.forEach(image => {
-    //   if (image.dataset != undefined) {
-    //     if (Number(image.dataset['srno']) > id) {imagesBelow.push(image)}
-    //     else if (Number(image.dataset['srno']) <= id) {imagesAbove.push(image)}
-    //   }
-    // })
-
-    // const cs = gsap.timeline()
-    // cs.to(imagesAbove, {
-    //       duration: 0.9,
-    //       stagger: {
-    //           from: id,
-    //           amount: 0.2125 // 1.7
-    //       }, 
-    //       delay: 0,
-    //       ease: "power1.inOut",
-          
-    //       y: -window.innerHeight/1.4 - 10,
-    //       opacity: -1,
-    //       onComplete: function() {
-    //           // tl.clear()
-    //       }
-    //   }) 
-    //   cs.to(imagesBelow, {
-    //       duration: 0.9,
-    //       stagger: {
-    //           from: id,
-    //           amount: 0.2125 // 1.7
-    //       }, 
-    //       delay: 0,
-    //       ease: "power1.inOut",
-          
-    //       y: window.innerHeight/1.4 + 10,
-    //       opacity: -1,
-    //       onComplete: function() {
-    //           // tl.clear()
-    //       }
-    //   }, "<")
-      
-    //   // animate heading to disappear
-    //   cs.to('.heading .left',
-    //   {
-    //     duration: 0.7,
-    //     y: +this.rightHeading.nativeElement.clientHeight + 0,
-    //     ease: "power2.out",
-    //   }, "<")
-    //   cs.to('.heading .right', // navigate at the end of this one 
-    //   {
-    //     duration: 0.7,
-    //     y: -this.rightHeading.nativeElement.clientHeight - 0,
-    //     ease: "power2.out",
-    //     onComplete: () => this.ngZone.run(() => {
-    //       this.router.navigate(['collection', url])
-    //     })
-    //   },
-    //   "<")
-    //   cs.to('.column-background', {duration: 0.35, opacity: 0}, "<+=0.35")
-    //   cs.set('.heading .left, .heading .right', {opacity: 0, onComplete: () => {}})
-      
-    //   // now navigate to the given route
-    //   // this.router.navigate(['collection', url])
-    // }
-    // else if (this.viewSwitcherService.getViewState() === 3) {
-    //   const tl = gsap.timeline();
-    //   const images = (document.querySelectorAll('.bottom-bar img') as NodeListOf<HTMLElement>);
-    //   tl.to('.bottom-bar img', {
-    //     duration: 0.5,
-    //     ease: "power2.in",
-    //     stagger: {
-    //       each: 0.02,
-    //       from: number
-    //     },
-    //     opacity: -0.1,
-    //     y: '110%',
-    //     delay: 0.04,
-    //     onComplete: () => this.ngZone.run(() => {
-    //       this.router.navigate(['collection', url])
-    //     })
-    //   })
-    // }
-      this.viewSwitcherService.route(url)
+  navigate(url: string,  number: number) {
+      this.viewSwitcherService.route(url, number)
   }
 
   initialAnimations(delay: number): void {
@@ -283,23 +199,6 @@ export class CollectionViewComponent implements OnInit {
   }
 
   view02Navigate(url: string) {
-    // let v2n = gsap.timeline();
-    // this.topImage(13, true); // make the last image come out on top and reset order of all images
-    // v2n.to('.column-text-inner', {
-    //   duration: 1.1,
-    //   y: '-100%',
-    //   stagger: -0.015,
-    //   ease: "power2.out",
-    // })
-    // v2n.to('.collection img', {
-    //   duration: 0.07,
-    //   stagger: -0.07,
-    //   opacity: 0,
-    //   display: 'none',
-    //   onComplete: () => this.ngZone.run(() => {
-    //     this.router.navigate(['collection', url])
-    //   })
-    // }, '<')
     this.viewSwitcherService.route(url)
   }
 

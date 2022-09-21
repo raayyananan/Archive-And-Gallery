@@ -38,52 +38,16 @@ export class LoaderService {
       this.loadedStatus = true;
       bothComplete()
 
-      collections.forEach((collection) => {
-        collection.sources.forEach((src) => {
+      collections.forEach((collection, i) => {
+        // collection.sources.forEach((src, i) => {
+
+        // })
+        for (let x = 0; x < 4; x++) {
           let img = new Image();
-          img.src=src;
+          img.src = collection.sources[x];
           img.onload = () => {console.log('loaded')}
-        })
+        }
       })
     })
-
   }
-
-
-  // waitForLoad() {
-
-  //   // const thumbnails = document.querySelectorAll('img') as NodeListOf<HTMLImageElement>;
-  //   // let loaderPercentage = 0;
-  //   // let thumbnailCount = thumbnails.length, loadedCounter = 0;
-  //   // let percentageIncrease = (100 / thumbnailCount);
-  //   // let percentage = 0;
-
-  //   // let incrementCounter = () => {
-  //   //   loadedCounter++
-          
-  //   //   percentage += percentageIncrease;
-  //   //   (document.querySelector('#percentage') as HTMLElement).innerHTML = `${Math.floor(percentage) + 1}%`;
-  //   //   loaderPercentage = Math.floor(percentage) + 1
-  
-  //   //   if (loadedCounter >= thumbnailCount) {
-  //   //       // remove loader
-  //   //       console.log(`${loadedCounter} out of ${thumbnailCount} images loaded`);
-  //   //       gsap.to('#loader', {
-  //   //         duration: 0.3,
-  //   //         opacity: 0,
-  //   //         display: 'none',
-  //   //         onComplete: () => {
-  //   //           this.loadedStatus = true;
-  //   //           this.loaded.next(this.loadedStatus)
-  //   //         }
-  //   //       })
-  //   //   }
-  //   // }
-
-  //   // thumbnails.forEach(function(thumbnail, index){
-  //   //   if (thumbnail.complete) {incrementCounter()}
-  //   //   else {thumbnail.addEventListener( 'load', incrementCounter, false );}
-  //   // })
-  // }
-
 }

@@ -324,8 +324,11 @@ export class ViewSwitcherService {
 
   }
 
-  route(url: string) {
+  route(url?: string, staggerFrom?: any) {
     if (this.initialAnimationsComplete) {
+      let firstElem = 'start';
+      if (staggerFrom) {firstElem = staggerFrom}
+
       const tl = gsap.timeline();
       if (this.getTransitionalViewState() !== 4) {
         const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
@@ -334,7 +337,7 @@ export class ViewSwitcherService {
         this.setLinkState('frozen');
         
         detailBar.style.zIndex = '3';
-        let duration = 1.4, ease ="expo.out", stagger = 0.03;
+        let duration = 1.4, ease ="expo.out", stagger = 0.02;
         
         this.destroyDisconnectedSequences(this.getTransitionalViewState(), tl, duration, ease)
         
@@ -347,7 +350,10 @@ export class ViewSwitcherService {
         Flip.from(state, {
           duration: duration,
           ease: ease,
-          stagger: stagger,
+          stagger: {
+            each: stagger,
+            from: staggerFrom
+          },
           absolute: true,
           delay: 0.05,
           onComplete: () => {
@@ -360,9 +366,11 @@ export class ViewSwitcherService {
   
         gsap.to('.route-filler', {
           onStart: () => {
-            this.ngZone.run(() => {
-              this.router.navigate(['collection', url])
-            })
+            if (url) {
+              this.ngZone.run(() => {
+                this.router.navigate(['collection', url])
+              })
+            }
           },
           delay: duration - 0 //0.4
         })

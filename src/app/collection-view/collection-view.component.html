@@ -2,7 +2,7 @@
 
     <div *ngFor="let image of collection, let i = index" class="cell" [ngClass]="{'image-cell': image.src}" #images>
             <img class="thumbnail" *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
-            (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, image.id, parseInt(image.number))"  [attr.data-srno]="image.id" alt="{{image.alt}}">
+            (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, parseInt(image.number))"  [attr.data-srno]="image.id" alt="{{image.alt}}">
     </div>
     <section class="heading">
         <div class="text-container">
