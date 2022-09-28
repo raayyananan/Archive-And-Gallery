@@ -117,21 +117,21 @@ export class ViewSwitcherService {
   destroyDisconnectedSequences(view: number, tl: any, duration: number, ease: string) {
     if (view == 1) {
       this.headingMove('out', tl);
-      gsap.to('.column-background div', {
-        duration: duration*0.7,
-        ease: "expo.out",
-        height: 0,
-        stagger: 0.075,
-        // display: 'none',
-      })
+      // gsap.to('.column-background div', {
+      //   duration: duration*0.7,
+      //   ease: "expo.out",
+      //   height: 0,
+      //   stagger: 0.075,
+      //   // display: 'none',
+      // })
       tl.set('.heading h1', {display: 'none'});
       tl.set('.cell', {display: 'none'})
     }
     else if (view == 2) {
       tl.to('app-collection-view .column-text-inner', {
-        duration: 1.1,
+        duration: 0.9,
         y: '-101%',
-        stagger: -0.01,
+        stagger: -0.008,
         ease: "power2.out",
         display: 'none'
       })
@@ -268,7 +268,7 @@ export class ViewSwitcherService {
         tl.to('.view02-container .column-text-inner', {
           duration: 1,
           y: 0,
-          stagger: 0.025,
+          stagger: 0.02,
           ease: "power3.out",
           onComplete: () => {
             this.setViewState(2);
