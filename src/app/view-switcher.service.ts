@@ -148,10 +148,19 @@ export class ViewSwitcherService {
         duration: 0.5,
         color: 'black',
       })
+      gsap.to('html', {
+        duration: 0.5,
+        background: 'rgb(250,250,250)',
+      })
       tl.set('.view03-container', {display: 'none'});
       tl.set('.bottom-bar', {display: 'none'});
       tl.set('.arrows-container .arrows', {opacity: 1})
     }
+    else if (view == 4) {
+      let detailBar = document.querySelector('.detail-bar') as HTMLElement;
+      detailBar.style.zIndex = '0';
+    }
+
   }
 
   switchView(viewNumber: number, bypass?: boolean): void {
@@ -314,6 +323,11 @@ export class ViewSwitcherService {
         gsap.to('.nav .inner-link', {
           duration: 0.5,
           color: 'white',
+          delay: 0.3
+        })
+        gsap.to('html', {
+          duration: 0.5,
+          background: 'black',
           delay: 0.3
         })
         //0.230, 0.545, 0.085, 0.995
