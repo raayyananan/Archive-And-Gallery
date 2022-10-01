@@ -49,11 +49,12 @@
 
 
 :root {
-    --background: rgb(250,250,250);
+    --background: rgb(245,245,245);
     --background-text: black;
     --column-background: var(--background);
     --about-background: black;
     --about-background-text: white;
+    --text-strikethrough: black;
     font-size: 0.9375rem;
 }
 

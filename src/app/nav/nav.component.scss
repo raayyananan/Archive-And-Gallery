@@ -24,18 +24,84 @@
             text-align: left;
         }
         .inner-link {
+            font: inherit;
             font-weight: 700;
             font-size: 13px;
             padding: 0 7%;
             box-sizing: border-box;
+            position: relative;
+            display: inline-block;
+
+            background: none;
+            color: inherit;
+            border: inherit;
+            cursor: pointer;
+            // outline: inherit;
+        
             // text-transform: uppercase;
+
             &:hover {
                 cursor: pointer;
-                text-decoration: underline;
+
+                &::before {
+                    transform-origin: left;
+                    transform: scaleX(1);
+                }
             }
             &.italic {
                 font-style: italic; 
-                text-decoration: line-through;
+
+                &::before {
+                    transform: scaleX(1);
+                }
+            }
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 80%;
+                margin-left: 10%;
+                height: 1px;
+                background-color: var(--text-strikethrough);
+                bottom: 0;
+                left: 0;
+                transform-origin: right;
+                transform: scaleX(0);
+                transition: transform 1s;
+                transition-timing-function:cubic-bezier(0.19, 1, 0.22, 1);
+            }
+        }
+
+        .emphasized {
+            animation: emphasis 2s 10s infinite alternate linear;
+            @keyframes emphasis {
+                100%,0%{
+                    color: rgb(78, 0, 38);
+                }
+                8%{
+                    color: rgb(127, 64, 0);
+                }
+                16%{
+                    color: rgb(132, 0, 0);
+                }
+                41%{
+                    color: rgb(0, 148, 123);
+                }
+                50%{
+                    color: rgb(0, 150, 150);
+                }
+                58%{
+                    color: rgb(80, 0, 160);
+                }
+                75%{
+                    color: rgb(0, 74, 148);
+                }
+                83%{
+                    color: rgb(155, 0, 119);
+                }
+                91%{
+                    color: rgb(172, 0, 100);
+                }
             }
         }
     
@@ -47,7 +113,7 @@
     
         .inner-link {
             transition: opacity 0.75s color 0.75s;
-            display: block;
+            // display: block;
             opacity: 1;
 
             &:active {background: transparent;}

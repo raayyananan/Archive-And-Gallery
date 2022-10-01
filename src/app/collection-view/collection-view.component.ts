@@ -130,6 +130,9 @@ export class CollectionViewComponent implements OnInit {
           onComplete: () => {
             this.viewSwitcherService.setLinkState('available');
             this.viewSwitcherService.initialAnimationsComplete = true;
+            this.ngZone.run(() => {
+              this.viewSwitcherService.switchOnce();
+            })
           }
       }, "<")
     

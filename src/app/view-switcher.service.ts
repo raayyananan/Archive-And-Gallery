@@ -114,16 +114,29 @@ export class ViewSwitcherService {
     }
   }
 
+  switchOnce() {
+    setTimeout(() => {
+      if (this.switchedOnce == false) {
+        (document.querySelector('#v003') as HTMLElement).classList.add('emphasized');
+
+        (document.querySelector('#v003') as HTMLElement).addEventListener('mouseenter', () => {
+          this.switchedOnce = true;
+          (document.querySelector('#v003') as HTMLElement).classList.remove('emphasized');
+        })
+      }
+    }, 1000);
+  }
+
   destroyDisconnectedSequences(view: number, tl: any, duration: number, ease: string) {
     if (view == 1) {
       this.headingMove('out', tl);
-      // gsap.to('.column-background div', {
-      //   duration: duration*0.7,
-      //   ease: "expo.out",
-      //   height: 0,
-      //   stagger: 0.075,
-      //   // display: 'none',
-      // })
+      gsap.to('.column-background div', {
+        duration: duration*0.7,
+        ease: "expo.out",
+        height: 0,
+        stagger: 0.075,
+        // display: 'none',
+      })
       tl.set('.heading h1', {display: 'none'});
       tl.set('.cell', {display: 'none'})
     }
@@ -147,10 +160,15 @@ export class ViewSwitcherService {
       gsap.to('.nav .inner-link', {
         duration: 0.5,
         color: 'black',
+        delay: 0.2,
+        onStart: () => {
+          document.documentElement.style.setProperty('--text-strikethrough', 'black');
+        }
       })
       gsap.to('html', {
         duration: 0.5,
-        background: 'rgb(250,250,250)',
+        background: 'rgb(245,245,245)',
+        delay: 0.2
       })
       tl.set('.view03-container', {display: 'none'});
       tl.set('.bottom-bar', {display: 'none'});
@@ -173,12 +191,19 @@ export class ViewSwitcherService {
 
       const tl = gsap.timeline();
       this.setLinkState('frozen');
-      this.switchedOnce = true;
 
       let duration = 1.4, ease ="expo.out", stagger = 0.03;
 
       // destroy disconnected sequences to make space clean for new view
       const currentView = this.getViewState();
+      if (currentView != 4) {
+        if (this.switchedOnce == false) {
+          this.ngZone.run(() => {
+            this.switchedOnce = true;
+            (document.querySelector('#v003') as HTMLElement).classList.remove('emphasized');
+          });
+        }
+      }
       this.destroyDisconnectedSequences(currentView, tl, duration, ease)
       
       if (viewNumber == 1) {
@@ -323,12 +348,15 @@ export class ViewSwitcherService {
         gsap.to('.nav .inner-link', {
           duration: 0.5,
           color: 'white',
-          delay: 0.3
+          delay: 0.2,
+          onStart: () => {
+            document.documentElement.style.setProperty('--text-strikethrough', 'white');
+          }
         })
         gsap.to('html', {
           duration: 0.5,
           background: 'black',
-          delay: 0.3
+          delay: 0.2
         })
         //0.230, 0.545, 0.085, 0.995
       }
