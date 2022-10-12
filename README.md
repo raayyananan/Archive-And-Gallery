@@ -1,6 +1,6 @@
 # Archive & Gallery
 
-An interactive portfolio of my best pictures
+An interactive photography portfolio of Rayyan Tariq
 
 
 ## This project is built on:
