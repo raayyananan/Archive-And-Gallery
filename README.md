@@ -1,6 +1,6 @@
 # Archive & Gallery
 
-A portfolio of my best pictures
+An interactive portfolio of my best pictures
 
 
 ## This project is built on:
