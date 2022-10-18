@@ -47,14 +47,14 @@
 //     font-style: normal;
 // }
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;650;700&display=swap');
 
 :root {
-    --background: rgb(250,250,250);
+    --background: rgb(245,245,245);
     --background-text: black;
     --column-background: var(--background);
     --about-background: black;
     --about-background-text: white;
+    --text-strikethrough: black;
     font-size: 0.9375rem;
 }
 
@@ -75,7 +75,7 @@ html, body {
     width: 100%;
     padding: 0;
     margin: 0;
-    font-family: 'Raleway', 'Urbanist', sans-serif;
+    font-family: 'Raleway', sans-serif;
     color: var(--background-text);
     overflow: hidden;
     overscroll-behavior-y:none;

@@ -4,28 +4,28 @@
 <nav class="nav-container">
     <nav class="nav">
         <div class="edge-margin"></div>
-        <div class="column title"><span class="inner-link"><span class="hide-small-screen">Rayyan's&nbsp;</span>Archive&nbsp;and&nbsp;Gallery</span></div>
+        <div class="column title"><span class="inner-link" style="display: block">Archive&nbsp;and&nbsp;Gallery</span></div>
         <div class="column"></div>
+        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v001" name="View Grid Mode" (click)="switchView(1)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 1}"><span>View Grid</span></button></div> <!--View&hairsp;001-->
+        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v003" name="View Filmstrip Mode" (click)="switchView(3)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 3}"><span>View Film</span></button></div>
+        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v002" name="View List Mode" (click)="switchView(2)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 2}"><span>View List</span></button></div>
         <div class="column"></div>
-        <div class="column hide-small-screen"><span class="inner-link main-link link" (click)="switchView(1)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 1}">Scatter</span></div> <!--View&hairsp;001-->
-        <div class="column hide-small-screen"><span class="inner-link main-link link" (click)="switchView(2)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 2}">Stack</span></div>
-        <div class="column hide-small-screen"><span class="inner-link main-link link" (click)="switchView(3)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 3}">Sequence</span></div>
-        <div class="column"></div>
-        <div class="column menu"><span class="inner-link link" (click)="routeMenu('open', true)">About</span></div>
-        <div class="column hide-small-screen"><span class="inner-link link" (click)="viewSwitcherService.toggleGrid()">Grid</span></div>
+        <div class="column menu"><button class="inner-link link" (click)="routeMenu('open', true)">About</button></div>
+        <div class="column"><!-- <button class="inner-link link material-symbols-outlined" style="font-size: 18px;"></button> --></div>
+        <div class="column hide-small-screen"><button class="inner-link link" (click)="viewSwitcherService.toggleGrid()">||||</button></div>
         <div class="edge-margin">
         </div>
     </nav>
     <nav class="about-nav">
         <div class="edge-margin"></div>
-        <div class="column title"><span class="inner-link"><span class="hide-small-screen">Rayyan's&nbsp;</span>Archive&nbsp;and&nbsp;Gallery</span></div>
+        <div class="column title"><span class="inner-link" style="display: block">Archive&nbsp;and&nbsp;Gallery</span></div>
         <div class="column hide-small-screen"></div>
         <div class="column hide-small-screen"></div>
         <div class="column hide-small-screen"></div>
         <div class="column"></div>
         <div class="column"></div>
+        <div class="column menu"><button class="inner-link" id="close-link" (click)="navigateHome()" (click)="routeMenu('close')">Close</button></div>
         <div class="column"></div>
-        <div class="column menu"><span class="inner-link" id="close-link" (click)="navigateHome()" (click)="routeMenu('close')">Close</span></div>
         <div class="column hide-small-screen"></div>
         <div class="edge-margin">
         </div>

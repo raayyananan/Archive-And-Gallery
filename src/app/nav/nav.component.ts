@@ -130,15 +130,16 @@ export class NavComponent implements OnInit {
     }, "<")
     let nav;
     if (!this.detailView) {
-      nav = '.nav'
+      nav = '.nav .inner-link'
     } else {
       nav = '.about-nav'
     }
     tl.from(nav, {
       duration: 1.6,
       ease: 'expo.inOut',
-      y: '-100%',
-    }, "<+=0.3")
+      y: -45,
+      stagger: 0.07
+    }, "<+=0.5")
   }
 
   routeMenu(menuAction: 'open' | 'close', openMenu?: boolean): void {
