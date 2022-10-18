@@ -6,9 +6,9 @@
         <div class="edge-margin"></div>
         <div class="column title"><span class="inner-link" style="display: block">Archive&nbsp;and&nbsp;Gallery</span></div>
         <div class="column"></div>
-        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v001" name="View Grid Mode" (click)="switchView(1)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 1}">View Grid</button></div> <!--View&hairsp;001-->
-        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v003" name="View Filmstrip Mode" (click)="switchView(3)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 3}">View Film</button></div>
-        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v002" name="View List Mode" (click)="switchView(2)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 2}">View List</button></div>
+        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v001" name="View Grid Mode" (click)="switchView(1)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 1}"><span>View Grid</span></button></div> <!--View&hairsp;001-->
+        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v003" name="View Filmstrip Mode" (click)="switchView(3)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 3}"><span>View Film</span></button></div>
+        <div class="column hide-small-screen"><button class="inner-link main-link link" id="v002" name="View List Mode" (click)="switchView(2)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 2}"><span>View List</span></button></div>
         <div class="column"></div>
         <div class="column menu"><button class="inner-link link" (click)="routeMenu('open', true)">About</button></div>
         <div class="column"><!-- <button class="inner-link link material-symbols-outlined" style="font-size: 18px;"></button> --></div>

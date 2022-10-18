@@ -1,4 +1,4 @@
-<main class="collection" (panleft)="onPan($event, 'forwards')" (panright)="onPan($event, 'backwards')">
+<main class="collection">
 
     <div *ngFor="let image of collection, let i = index" class="cell" [ngClass]="{'image-cell': image.src}" #images>
             <img class="thumbnail" *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
@@ -67,19 +67,15 @@
 
     <!-- View 3 -->
     <section class="view03-container">
-        <!-- <div class="content">
-            <div class="filler"></div>
-            <div class="arrows-container">
-                <div style="flex: auto"></div>
-                <div class="arrows">
-                    <a (click)="viewSwitcherService.buttonMoveX('backwards', true)"><svg id="arrow_1" data-name="Arrow 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50" style="transform: scale(0.9)"><defs><style>.cls-1{fill:none;stroke:#231f20;stroke-miterlimit:10;stroke-width:2px;}</style></defs><polyline class="cls-1 svg-elem-1" points="47 25 3 25 10.45 31.98 3 25 10.45 18.02"></polyline></svg><style>@-webkit-keyframes animate-svg-stroke-1{0%{stroke-dashoffset:76.62688446044922px;stroke-dasharray:76.62688446044922px}100%{stroke-dashoffset:0;stroke-dasharray:76.62688446044922px}}@keyframes animate-svg-stroke-1{0%{stroke-dashoffset:76.62688446044922px;stroke-dasharray:76.62688446044922px}100%{stroke-dashoffset:0;stroke-dasharray:76.62688446044922px}}.svg-elem-1{-webkit-animation:animate-svg-stroke-1 0.75s cubic-bezier(0.455,0.03,0.515,0.955) 0.85s both;animation:animate-svg-stroke-1 0.75s cubic-bezier(0.455,0.03,0.515,0.955) 0.85s both}</style></a>
-                    <a (click)="viewSwitcherService.buttonMoveX('forwards', true)"><svg id="arrow_2" data-name="Arrow 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50" style="transform: scale(0.9)"><defs><style>.cls-1{fill:none;stroke:#231f20;stroke-miterlimit:10;stroke-width:2px;}</style></defs><polyline class="cls-1 svg-elem-1" points="3 25 47 25 39.55 31.98 47 25 39.55 18.02"></polyline></svg><style>@-webkit-keyframes animate-svg-stroke-1{0%{stroke-dashoffset:76.62688446044922px;stroke-dasharray:76.62688446044922px}100%{stroke-dashoffset:0;stroke-dasharray:76.62688446044922px}}@keyframes animate-svg-stroke-1{0%{stroke-dashoffset:76.62688446044922px;stroke-dasharray:76.62688446044922px}100%{stroke-dashoffset:0;stroke-dasharray:76.62688446044922px}}.svg-elem-1{-webkit-animation:animate-svg-stroke-1 0.75s cubic-bezier(0.455,0.03,0.515,0.955) 0.85s both;animation:animate-svg-stroke-1 0.75s cubic-bezier(0.455,0.03,0.515,0.955) 0.85s both}</style></a>
-                </div>
-            </div>
-        </div>
-        <div class="bottom-bar-filler"></div> -->
+        <div class="top-filler"></div>
+        <div class="image-bar"></div>
+        <div class="bottom-filler"></div>
+        <div class="line" style="height: 0"></div>
     </section>
-    <section class="bottom-bar"></section>
+
+    <section class="view003-container">
+        <div class="bottom-bar"></div>
+    </section>
 
     <section class="detail-view">
         <div class="route-filler">

@@ -137,10 +137,12 @@ export class ViewSwitcherService {
         stagger: 0.075,
         // display: 'none',
       })
+      gsap.to('#v001 span', {duration: 0.9, skewX: 0})
       tl.set('.heading h1', {display: 'none'});
-      tl.set('.cell', {display: 'none'})
+      tl.set('.cell', {display: 'none'});
     }
     else if (view == 2) {
+      gsap.to('#v002 span', {duration: 0.9, skewX: 0})
       tl.to('app-collection-view .column-text-inner', {
         duration: 0.9,
         y: '-101%',
@@ -151,12 +153,9 @@ export class ViewSwitcherService {
       tl.set('.view02-container', {display: 'none'});
       tl.set('app-collection-view .column-text-inner', {y: '101%'})
       // tl.set('.column-text-inner', {}, "<+=0.2")
+
     }
     else if (view == 3) {
-      tl.to('.arrows-container .arrows', {
-        duration: 0.25,
-        opacity: 0
-      }, "<")
       gsap.to('.nav .inner-link', {
         duration: 0.5,
         color: 'black',
@@ -170,13 +169,18 @@ export class ViewSwitcherService {
         background: 'rgb(245,245,245)',
         delay: 0.2
       })
+      gsap.to('#v003 span', {duration: 0.9, skewX: 0})
+      tl.to('.view03-container .line', {
+        ease: "expo.out",
+        duration: 1.1,
+        height: 0,
+      })
       tl.set('.view03-container', {display: 'none'});
-      tl.set('.bottom-bar', {display: 'none'});
-      tl.set('.arrows-container .arrows', {opacity: 1})
     }
     else if (view == 4) {
       let detailBar = document.querySelector('.detail-bar') as HTMLElement;
       detailBar.style.zIndex = '0';
+      gsap.to('#v003 span, #v002 span, #v001 span', {duration: 0.9, skewX: 0})
     }
 
   }
@@ -209,7 +213,9 @@ export class ViewSwitcherService {
       if (viewNumber == 1) {
 
         this.setTransitionalViewState(1);
-
+        gsap.to('#v001 span', {duration: 0.9, skewX: "-15px"});
+        
+        
         (document.querySelectorAll('.cell') as NodeListOf<HTMLElement>).forEach((cell) => {cell.style.display = 'block'});
         (document.querySelectorAll('.heading .right, .heading .left') as NodeListOf<HTMLElement>).forEach((heading) => {heading.innerHTML = 'Archive & Gallery';})
         
@@ -274,6 +280,7 @@ export class ViewSwitcherService {
       else if (viewNumber == 2) {
 
         this.setTransitionalViewState(2);
+        gsap.to('#v002 span', {duration: 0.9, skewX: "-15px"});
 
 
         const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
@@ -315,12 +322,13 @@ export class ViewSwitcherService {
       else if (viewNumber == 3) {
 
         this.setTransitionalViewState(3);
+        gsap.to('#v003 span', {duration: 0.9, skewX: "-15px"});
 
         (document.querySelector('.view03-container') as HTMLElement).style.display = 'flex';
-        (document.querySelector('.bottom-bar') as HTMLElement).style.display = 'flex';
+        (document.querySelector('.image-bar') as HTMLElement).style.display = 'flex';
 
         const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
-        bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
+        bottomBar = document.querySelector('.image-bar') as HTMLElement;
 
         // bottomBar.classList.remove('scrollable');
 
@@ -339,25 +347,30 @@ export class ViewSwitcherService {
           delay: 0.12,
           onComplete: () => {
             // bottomBar.classList.add('scrollable');
-            bottomBar.focus();
+            (document.querySelector('.view03-container') as HTMLElement).focus();
             this.setViewState(3);
             this.setLinkState('available');
           }
         }) 
         
-        gsap.to('.nav .inner-link', {
+        tl.to('.nav .inner-link', {
           duration: 0.5,
           color: 'white',
           delay: 0.2,
           onStart: () => {
             document.documentElement.style.setProperty('--text-strikethrough', 'white');
           }
-        })
-        gsap.to('html', {
+        }, 0)
+        tl.to('html', {
           duration: 0.5,
           background: 'black',
           delay: 0.2
-        })
+        }, 0)
+        tl.to('.view03-container .line', {
+          duration: 2.2,
+          ease: "expo.inOut",
+          height: '100%'
+        }, ">-=0.7")
         //0.230, 0.545, 0.085, 0.995
       }
     }
@@ -464,107 +477,130 @@ export class ViewSwitcherService {
     }
   }
 
+  scrolled: number = 0;
   initializeScrollTransform(): any { // for scrolling in view03
 
-    // bottomBars translateX cannot be higher than 0, nor lower than -width of bottomBar
-    const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
-    
-    const scrollTransform = (deltaX: any, deltaY: any, target: HTMLElement): void => {
-      const scrollableWidth = target.scrollWidth - target.clientWidth;
-      let scroll = (deltaX + deltaY) * 0.25;
-      let translateX = this.getTranslateValues(target).x;
+    const view03con = (document.querySelector('.view03-container') as HTMLElement)
+    gsap.set('.image-bar', {position: 'relative'})
 
-      if (translateX >= 0 && scroll > 0) 
-      {
-        // allows only positive scroll
-        // target.style.transform += `translateX(${-scroll}px)`;
-        gsap.set(target, {x: "+="+(-scroll)})
-      }
-      else if (translateX < 0 && Number(-translateX) <= scrollableWidth) {
-        // allows scrolling in any direction
-        // target.style.transform += `translateX(${-scroll}px)`;
-        gsap.set(target, {x: "+="+(-scroll)})
-      }
-      else if (Number(-translateX) > scrollableWidth && scroll < 0) {
-        // allows only negative scroll
-        // target.style.transform += `translateX(${-scroll}px)`;
-        gsap.set(target, {x: "+="+(-scroll)})
-      }
-      // console.log(typeof(Number(-translateX)))
-      // console.log(-translateX, scrollableWidth)
+    const transformScroll = (event: any) => {
 
-      return 
+      if (!event.deltaY) {
+        return;
+      }
+      event.currentTarget.scrollLeft += (event.deltaY + event.deltaX) / 4;
+      // let newScroll = event.currentTarget.scrollLeft + (event.deltaY + event.deltaX);
+
+      // gsap.to(event.currentTarget, {
+      //   scrollLeft: newScroll,
+      //   ease: "power3.out",
+      //   duration: 1.5
+      // })
+
+      event.preventDefault();
     }
+    view03con.addEventListener('wheel', transformScroll)
+    return
 
-    window.addEventListener('wheel', (event) => {
-      if (this.getTransitionalViewState() === 3) {
-        scrollTransform(event.deltaX, event.deltaY, bottomBar);
-      }
-    });
+    // bottomBars translateX cannot be higher than 0, nor lower than -width of bottomBar
+    // const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
+    
+    // const scrollTransform = (deltaX: any, deltaY: any, target: HTMLElement): void => {
+    //   const scrollableWidth = target.scrollWidth - target.clientWidth;
+    //   let scroll = (deltaX + deltaY) * 0.25;
+    //   let translateX = this.getTranslateValues(target).x;
+
+    //   if (translateX >= 0 && scroll > 0) 
+    //   {
+    //     // allows only positive scroll
+    //     // target.style.transform += `translateX(${-scroll}px)`;
+    //     gsap.set(target, {x: "+="+(-scroll)})
+    //   }
+    //   else if (translateX < 0 && Number(-translateX) <= scrollableWidth) {
+    //     // allows scrolling in any direction
+    //     // target.style.transform += `translateX(${-scroll}px)`;
+    //     gsap.set(target, {x: "+="+(-scroll)})
+    //   }
+    //   else if (Number(-translateX) > scrollableWidth && scroll < 0) {
+    //     // allows only negative scroll
+    //     // target.style.transform += `translateX(${-scroll}px)`;
+    //     gsap.set(target, {x: "+="+(-scroll)})
+    //   }
+    //   // console.log(typeof(Number(-translateX)))
+    //   // console.log(-translateX, scrollableWidth)
+
+    //   return 
+    // }
+
+    // window.addEventListener('wheel', (event) => {
+    //   if (this.getTransitionalViewState() === 3) {
+    //     scrollTransform(event.deltaX, event.deltaY, bottomBar);
+    //   }
+    // });
   }
 
   buttonMoveX(direction: 'forwards' | 'backwards', button?: boolean, target?: HTMLElement) {
-    const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
-    target = bottomBar;
-    const scrollableWidth = target.scrollWidth - target.clientWidth;
-    let translateX = Number(this.getTranslateValues(target).x);
-    let ease = "cubic", dr = 1.5, factor = 1.5;
-    let movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
+    // const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
+    // target = bottomBar;
+    // const scrollableWidth = target.scrollWidth - target.clientWidth;
+    // let translateX = Number(this.getTranslateValues(target).x);
+    // let ease = "cubic", dr = 1.5, factor = 1.5;
+    // let movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
 
-    if (button == true) {
-      dr = 1, factor = 2;
-      movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
-    }
+    // if (button == true) {
+    //   dr = 1, factor = 2;
+    //   movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
+    // }
 
-    const tl = gsap.timeline()
+    // const tl = gsap.timeline()
 
-    if (translateX >= 0 && direction == 'forwards') {
-      tl.to(bottomBar, {
-        duration: dr,
-        ease: ease,
-        x: "-="+movement
-      })
-    }
-    else if (translateX < 0 && (-translateX + movement) <= scrollableWidth) {
-      if (direction == 'forwards') {
-        tl.to(bottomBar, {
-          duration: dr,
-          ease: ease,
-          x: "-="+movement
-        })
-      }
-      else if (direction == 'backwards') {
-        if ((translateX + movement) >= 0) {
-          tl.to(bottomBar, {
-            duration: dr,
-            ease: ease,
-            x: 0
-          })
-        }
-        else {
-          tl.to(bottomBar, {
-            duration: dr,
-            ease: ease,
-            x: "+="+movement
-          })
-        }
-      }
-    }
-    else if ((-translateX + movement) >= scrollableWidth && direction == 'backwards') {
-      tl.to(bottomBar, {
-        duration: dr,
-        ease: ease,
-        x: "+="+movement
-      })
-    }
-    //edge cases
-    else if ((-translateX + movement) >= scrollableWidth && direction == 'forwards') {
-      tl.to(bottomBar, {
-        duration: dr,
-        ease: ease,
-        x: -scrollableWidth
-      })
-    }
+    // if (translateX >= 0 && direction == 'forwards') {
+    //   tl.to(bottomBar, {
+    //     duration: dr,
+    //     ease: ease,
+    //     x: "-="+movement
+    //   })
+    // }
+    // else if (translateX < 0 && (-translateX + movement) <= scrollableWidth) {
+    //   if (direction == 'forwards') {
+    //     tl.to(bottomBar, {
+    //       duration: dr,
+    //       ease: ease,
+    //       x: "-="+movement
+    //     })
+    //   }
+    //   else if (direction == 'backwards') {
+    //     if ((translateX + movement) >= 0) {
+    //       tl.to(bottomBar, {
+    //         duration: dr,
+    //         ease: ease,
+    //         x: 0
+    //       })
+    //     }
+    //     else {
+    //       tl.to(bottomBar, {
+    //         duration: dr,
+    //         ease: ease,
+    //         x: "+="+movement
+    //       })
+    //     }
+    //   }
+    // }
+    // else if ((-translateX + movement) >= scrollableWidth && direction == 'backwards') {
+    //   tl.to(bottomBar, {
+    //     duration: dr,
+    //     ease: ease,
+    //     x: "+="+movement
+    //   })
+    // }
+    // //edge cases
+    // else if ((-translateX + movement) >= scrollableWidth && direction == 'forwards') {
+    //   tl.to(bottomBar, {
+    //     duration: dr,
+    //     ease: ease,
+    //     x: -scrollableWidth
+    //   })
+    // }
 
       
   }

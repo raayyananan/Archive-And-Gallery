@@ -37,6 +37,7 @@
             border: inherit;
             cursor: pointer;
             // outline: inherit;
+
         
             // text-transform: uppercase;
 
@@ -49,7 +50,7 @@
                 }
             }
             &.italic {
-                font-style: italic; 
+                // font-style: italic; 
 
                 &::before {
                     transform: scaleX(1);
@@ -67,41 +68,49 @@
                 left: 0;
                 transform-origin: right;
                 transform: scaleX(0);
-                transition: transform 1s;
+                transition: transform 0.9s;
                 transition-timing-function:cubic-bezier(0.19, 1, 0.22, 1);
             }
+            span {position: relative; display: inline-block}
         }
+        #v001 span {transform: skewX(-15deg);}
 
         .emphasized {
-            animation: emphasis 2s 10s infinite alternate linear;
+            animation: emphasis 1.1s 10s infinite alternate linear;
             @keyframes emphasis {
-                100%,0%{
-                    color: rgb(78, 0, 38);
+                // 100%,0%{
+                //     color: rgb(78, 0, 38);
+                // }
+                // 8%{
+                //     color: rgb(127, 64, 0);
+                // }
+                // 16%{
+                //     color: rgb(132, 0, 0);
+                // }
+                // 41%{
+                //     color: rgb(0, 148, 123);
+                // }
+                // 50%{
+                //     color: rgb(0, 150, 150);
+                // }
+                // 58%{
+                //     color: rgb(80, 0, 160);
+                // }
+                // 75%{
+                //     color: rgb(0, 74, 148);
+                // }
+                // 83%{
+                //     color: rgb(155, 0, 119);
+                // }
+                // 91%{
+                //     color: rgb(172, 0, 100);
+                // }
+                0%, 100% {
+                    color: black;
                 }
-                8%{
-                    color: rgb(127, 64, 0);
-                }
-                16%{
-                    color: rgb(132, 0, 0);
-                }
-                41%{
-                    color: rgb(0, 148, 123);
-                }
-                50%{
-                    color: rgb(0, 150, 150);
-                }
-                58%{
-                    color: rgb(80, 0, 160);
-                }
-                75%{
-                    color: rgb(0, 74, 148);
-                }
-                83%{
-                    color: rgb(155, 0, 119);
-                }
-                91%{
-                    color: rgb(172, 0, 100);
-                }
+                45%, 55% {
+                    color: rgb(245,245,245);
+                } 
             }
         }
     

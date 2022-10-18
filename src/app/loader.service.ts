@@ -32,7 +32,7 @@ export class LoaderService {
     setTimeout(() => {
       this.animationComplete = true;
       bothComplete()
-    }, 2200) //2200
+    }, 0) //2200
 
     window.addEventListener('load', () => {
       this.loadedStatus = true;
@@ -43,9 +43,9 @@ export class LoaderService {
 
         // })
         for (let x = 0; x < 4; x++) {
-          let img = new Image();
-          img.src = collection.sources[x];
-          img.onload = () => {console.log('loaded')}
+          // let img = new Image();
+          // img.src = collection.sources[x];
+          // img.onload = () => {console.log('loaded')}
         }
       })
     })
