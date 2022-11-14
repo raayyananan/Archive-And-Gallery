@@ -88,3 +88,15 @@ main {
     width: 100%;
     height: 100%;
 }
+
+@media only screen and (min-width: 800px) {
+    .cover {
+        position: fixed;
+        background: var(--background);
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        z-index: 100000000;
+    }
+}

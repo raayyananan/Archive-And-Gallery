@@ -303,7 +303,7 @@ export const collections: Collection[] = [
             'assets/images/Editorial Mimicry/4.webp',
             'assets/images/Editorial Mimicry/5.webp',
             'assets/images/Editorial Mimicry/6.webp',
-            'assets/images/Editorial Mimicry/7.webp',
+            // 'assets/images/Editorial Mimicry/7.webp',
             'assets/images/Editorial Mimicry/8.webp',
             'assets/images/Editorial Mimicry/9.webp',
             'assets/images/Editorial Mimicry/10.webp',

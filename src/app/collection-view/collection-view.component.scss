@@ -109,10 +109,9 @@
 #image-container {
     img {
         position: absolute;
-        left: calc(50% - 16vh);
-        top: calc(50% - 20vh); // 4:5 aspect ratio images
-        // width: 20vw;
-        height: 40vh;
+        left: calc(50% - 9vw);
+        top: calc(50% - 11.25vw); // 4:5 aspect ratio images
+        width: 18vw;
         filter: grayscale(0.75);
         box-sizing: border-box;
     }
@@ -284,9 +283,10 @@ img {
     overflow-y: hidden;
 
     .image-bar {
-        height: 40%;
+        height: 36%;
         display: flex;
         flex-flow: row nowrap;
+        padding-left: 1vw;
 
         img {
             height: 100%;
@@ -306,16 +306,30 @@ img {
         }
     }
     .top-filler, .bottom-filler {
-        height: 30%;
+        height: 32%;
+    }
+    .line-wrapper {
+        mix-blend-mode: difference;
+        position: absolute;
+        z-index: 90000;
+    }
+    .line, .horizontal-line {
+        position: fixed;
+        z-index: 100000;
+        transform: translate(-50%, -50%);
+        background-color: hsl(0, 0%, 100%);
     }
     .line {
-        position: fixed;
-        z-index: -1;
-        height: 100%;
-        top: 0;
+        height: 35px;
+        top: 50%;
         left: 50%;
-        width: 2px;
-        background-color: rgba(255,255,255,0.12);
+        width: 1px;
+    }
+    .horizontal-line {
+        width: 35px;
+        height: 1px;
+        top: 50%;
+        left: 50%;
     }
 }
 .view03-container::-webkit-scrollbar {
@@ -325,6 +339,45 @@ img {
 .view03-container::-webkit-scrollbar-thumb {
     width: 0;
     height: 0;
+}
+.view03-text {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 32%;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+
+    // flex-flow: column nowrap;
+    align-items: flex-end;
+    grid-template-columns: 0 repeat(9, 1fr) 0;
+    grid-auto-flow: column;
+    grid-gap: 1.5vw;
+    animation: fade-in 300ms;
+
+    .column {
+        // background: rgb(220, 220, 220);
+        text-align: left;
+    }
+    .inner-link {
+        font-weight: 600;
+        font-size: 13px;
+        padding: 0 7%;
+        font-family: 'Rosarivo';
+        box-sizing: border-box;
+        position: relative;
+        display: inline-block;
+
+        background: none;
+        color: inherit;
+        border: inherit;
+    }
+    .title {
+        text-align: left;
+        text-transform: uppercase;
+        min-width: 0;
+    }
 }
 
 

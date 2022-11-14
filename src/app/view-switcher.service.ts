@@ -156,26 +156,34 @@ export class ViewSwitcherService {
 
     }
     else if (view == 3) {
-      gsap.to('.nav .inner-link', {
-        duration: 0.5,
-        color: 'black',
-        delay: 0.2,
-        onStart: () => {
-          document.documentElement.style.setProperty('--text-strikethrough', 'black');
-        }
-      })
-      gsap.to('html', {
-        duration: 0.5,
-        background: 'rgb(245,245,245)',
-        delay: 0.2
+      // gsap.to('.nav .inner-link', {
+      //   duration: 0.5,
+      //   color: 'black',
+      //   delay: 0.2,
+      //   onStart: () => {
+      //     document.documentElement.style.setProperty('--text-strikethrough', 'black');
+      //   }
+      // })
+      // gsap.to('html', {
+      //   duration: 0.5,
+      //   background: 'rgb(245,245,245)',
+      //   delay: 0.2
+      // })
+      tl.to('.view03-text', {
+        
       })
       gsap.to('#v003 span', {duration: 0.9, skewX: 0})
       tl.to('.view03-container .line', {
-        ease: "expo.out",
-        duration: 1.1,
+        ease: "power3.out",
+        duration: 0.75,
         height: 0,
-      })
-      tl.set('.view03-container', {display: 'none'});
+      }, 0)
+      tl.to('.view03-container .horizontal-line', {
+        ease: "power3.out",
+        duration: 0.75,
+        width: 0,
+      }, 0)
+      tl.set('.view03-container, .view03-text', {display: 'none'});
     }
     else if (view == 4) {
       let detailBar = document.querySelector('.detail-bar') as HTMLElement;
@@ -236,7 +244,7 @@ export class ViewSwitcherService {
               each: stagger,
               from: "start",
             }, // 0.017
-            delay: 0.075,
+            delay: 0.04,
             onComplete: () => {
               this.setViewState(1);
               this.setLinkState('available');
@@ -252,7 +260,7 @@ export class ViewSwitcherService {
               each: stagger,
               from: "end",
             }, // 0.017
-            delay: 0.12,
+            delay: 0.04,
             onComplete: () => {
               this.setViewState(1);
               this.setLinkState('available');
@@ -303,7 +311,7 @@ export class ViewSwitcherService {
           stagger: {
             each: stagger, //0.015
           },
-          delay: 0.1,
+          delay: 0.04,
         })
 
         tl.to('.view02-container .column-text-inner', {
@@ -325,6 +333,7 @@ export class ViewSwitcherService {
         gsap.to('#v003 span', {duration: 0.9, skewX: "-15px"});
 
         (document.querySelector('.view03-container') as HTMLElement).style.display = 'flex';
+        (document.querySelector('.view03-text') as HTMLElement).style.display = 'grid';
         (document.querySelector('.image-bar') as HTMLElement).style.display = 'flex';
 
         const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
@@ -333,9 +342,12 @@ export class ViewSwitcherService {
         // bottomBar.classList.remove('scrollable');
 
         const state = Flip.getState('.collection .thumbnail', {props: "padding,filter"});
-        images.forEach((image) => {
-          bottomBar.appendChild(image)
-        })
+        Array.from(images)
+          .slice()
+          .reverse()
+          .forEach((image) => {
+            bottomBar.prepend(image)
+          });
         Flip.from(state, {
           duration: duration, //1.75
           ease: ease, //power4.out
@@ -344,33 +356,38 @@ export class ViewSwitcherService {
             each: stagger, //0.017 
             from: "start"
           },
-          delay: 0.12,
+          delay: 0.04,
           onComplete: () => {
             // bottomBar.classList.add('scrollable');
-            (document.querySelector('.view03-container') as HTMLElement).focus();
             this.setViewState(3);
             this.setLinkState('available');
+            (document.querySelector('.image-bar') as HTMLElement).focus();
           }
         }) 
         
-        tl.to('.nav .inner-link', {
-          duration: 0.5,
-          color: 'white',
-          delay: 0.2,
-          onStart: () => {
-            document.documentElement.style.setProperty('--text-strikethrough', 'white');
-          }
-        }, 0)
-        tl.to('html', {
-          duration: 0.5,
-          background: 'black',
-          delay: 0.2
-        }, 0)
+        // tl.to('.nav .inner-link', {
+        //   duration: 0.5,
+        //   color: 'white',
+        //   delay: 0.2,
+        //   onStart: () => {
+        //     document.documentElement.style.setProperty('--text-strikethrough', 'white');
+        //   }
+        // }, 0)
+        // tl.to('html', {
+        //   duration: 0.5,
+        //   background: 'black',
+        //   delay: 0.2
+        // }, 0)
         tl.to('.view03-container .line', {
-          duration: 2.2,
+          duration: 2,
           ease: "expo.inOut",
-          height: '100%'
-        }, ">-=0.7")
+          height: '30px'
+        }, ">-=0.4")
+        tl.to('.view03-container .horizontal-line', {
+          duration: 2,
+          ease: "expo.inOut",
+          width: '30px'
+        }, "<")
         //0.230, 0.545, 0.085, 0.995
       }
     }
@@ -481,23 +498,53 @@ export class ViewSwitcherService {
   initializeScrollTransform(): any { // for scrolling in view03
 
     const view03con = (document.querySelector('.view03-container') as HTMLElement)
-    gsap.set('.image-bar', {position: 'relative'})
+    gsap.set('.image-bar', {position: 'relative'});
+
+    let flag = true, timer: any = null;
 
     const transformScroll = (event: any) => {
 
-      if (!event.deltaY) {
-        return;
+      // if (!event.deltaY) {
+      //   return;
+      // }
+      if (!event.shiftKey) {
+        event.currentTarget.scrollLeft += (event.deltaY + event.deltaX) / 4;
+        event.preventDefault();
       }
-      event.currentTarget.scrollLeft += (event.deltaY + event.deltaX) / 4;
-      // let newScroll = event.currentTarget.scrollLeft + (event.deltaY + event.deltaX);
 
-      // gsap.to(event.currentTarget, {
-      //   scrollLeft: newScroll,
-      //   ease: "power3.out",
-      //   duration: 1.5
-      // })
+      if (flag == true) {
+        // animate to large
+        gsap.to('.view03-container .line', {
+          duration: 1,
+          ease: "expo.out",
+          height: 43
+        })
+        gsap.to('.view03-container .horizontal-line', {
+          duration: 1,
+          ease: "expo.out",
+          width: 43
+        })
+        flag = false;
+      }
 
-      event.preventDefault();
+      if(timer !== null) {
+        clearTimeout(timer);        
+      }
+      timer = setTimeout(() => {
+        // animate to small
+        gsap.to('.view03-container .line', {
+          duration: 1,
+          ease: "expo.out",
+          height: 32
+        })
+        gsap.to('.view03-container .horizontal-line', {
+          duration: 1,
+          ease: "expo.out",
+          width: 32
+        })
+        flag = true;
+      }, 50);
+
     }
     view03con.addEventListener('wheel', transformScroll)
     return

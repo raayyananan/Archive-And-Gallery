@@ -2,7 +2,7 @@
  but this button will be a route for the homepage -->
 
 <nav class="nav-container">
-    <nav class="nav">
+    <nav class="nav" *ngIf="!this.mobile">
         <div class="edge-margin"></div>
         <div class="column title"><span class="inner-link" style="display: block">Archive&nbsp;and&nbsp;Gallery</span></div>
         <div class="column"></div>
@@ -10,13 +10,13 @@
         <div class="column hide-small-screen"><button class="inner-link main-link link" id="v003" name="View Filmstrip Mode" (click)="switchView(3)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 3}"><span>View Film</span></button></div>
         <div class="column hide-small-screen"><button class="inner-link main-link link" id="v002" name="View List Mode" (click)="switchView(2)" [ngClass]="{'italic': viewSwitcherService.getTransitionalViewState() === 2}"><span>View List</span></button></div>
         <div class="column"></div>
-        <div class="column menu"><button class="inner-link link" (click)="routeMenu('open', true)">About</button></div>
-        <div class="column"><!-- <button class="inner-link link material-symbols-outlined" style="font-size: 18px;"></button> --></div>
+        <div class="column menu"><button class="inner-link link about" (click)="routeMenu('open', true)">About</button></div>
+        <div class="column hide-small-screen"><!-- <button class="inner-link link material-symbols-outlined" style="font-size: 18px;"></button> --></div>
         <div class="column hide-small-screen"><button class="inner-link link" (click)="viewSwitcherService.toggleGrid()">||||</button></div>
-        <div class="edge-margin">
+        <div class="edge-margin hide-small-screen">
         </div>
     </nav>
-    <nav class="about-nav">
+    <nav class="about-nav" *ngIf="!this.mobile">
         <div class="edge-margin"></div>
         <div class="column title"><span class="inner-link" style="display: block">Archive&nbsp;and&nbsp;Gallery</span></div>
         <div class="column hide-small-screen"></div>
@@ -24,15 +24,43 @@
         <div class="column hide-small-screen"></div>
         <div class="column"></div>
         <div class="column"></div>
-        <div class="column menu"><button class="inner-link" id="close-link" (click)="navigateHome()" (click)="routeMenu('close')">Close</button></div>
-        <div class="column"></div>
+        <div class="column menu"><button class="inner-link close" id="close-link" (click)="navigateHome()" (click)="routeMenu('close')">Close</button></div>
         <div class="column hide-small-screen"></div>
-        <div class="edge-margin">
+        <div class="column hide-small-screen"></div>
+        <div class="edge-margin hide-small-screen">
         </div>
     </nav>
     <div class="transition" style="background: rgb(225,225,225)"></div>
     <div class="transition" style="background: rgb(240,240,240)"></div>
 
+    <nav class="nav" *ngIf="this.mobile">
+        <div class="edge-margin"></div>
+        <div class="column title"><span class="inner-link" style="display: block">Archive&nbsp;and&nbsp;Gallery</span></div>
+        <div class="column"></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column"></div>
+        <div class="column menu"><button class="inner-link link about" (click)="routeMenu('open', true)">About</button></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column hide-small-screen"></div>
+        <div class="edge-margin hide-small-screen">
+        </div>
+    </nav>
+    <nav class="about-nav" *ngIf="this.mobile">
+        <div class="edge-margin"></div>
+        <div class="column title"><span class="inner-link" style="display: block">Archive&nbsp;and&nbsp;Gallery</span></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column menu"><button class="inner-link close" id="close-link" (click)="navigateHome()" (click)="routeMenu('close')">Close</button></div>
+        <div class="column hide-small-screen"></div>
+        <div class="column hide-small-screen"></div>
+        <div class="edge-margin hide-small-screen">
+        </div>
+    </nav>
 </nav>
 <div class="nav-filler"></div>
 
@@ -51,10 +79,9 @@
 </div>
 
 <section class="nav-area">
-    <section class="desktop" *ngIf="!this.mobile">
+    <!-- <section class="desktop" *ngIf="!this.mobile">
         <div class="image large">
             <div class="img column-text-outer"><img src="../../assets/images/Editorial Mimicry/1.webp" alt="Picture of Rayyan Tariq, @raayyananan"></div>
-            <!-- <div class="whitespace"></div> -->
         </div>
         <div class="remaining-layout">
             <div class="aboutheading">
@@ -152,6 +179,85 @@
                 </div>
             </div>
         </div>
+    </section> -->
+    <section class="mobile" *ngIf="this.mobile">
+        <div class="wrapper">
+            <div class="semibold" style="margin-bottom: 3px">About me</div>
+            <p>Rayyan Tariq is a creative developer specializing in front-end and interaction. He make small and medium-sized websites that are distinct in design and animation.</p>
+            <p>Archive & Gallery is a web portfolio of my photography projects.</p>
+            <p>Currently available for work.</p>
+            <br>
+            <ul>
+                <li class="semibold">Collections:</li>
+                <li *ngFor="let name of names">{{name}}</li>
+                <br>
+                <li class="semibold">Tools:</li>
+                <li>Html, css, js</li>
+                <li>Typescript</li>
+                <li>Angular</li>
+                <li>GSAP</li>
+                <li>Figma</li>
+                <li>Illustrator</li>
+                <li>Raleway (font)</li>
+                <li>Bigilla (font)</li>
+                <br>
+                <li class="semibold">Contact: </li>
+                <li><a href="https://www.upwork.com/freelancers/~01ba051af719a3a1d4" target="_blank">Upwork: Rayyan Tariq <span>&#8599;</span></a></li>
+                <li><a href="mailto:raytariq93@gmail.com">raytariq93@gmail.com <span>&#8599;</span></a></li>
+                <li><a href="https://www.instagram.com/rayyananan" target="_blank">Instagram: @rayyananan <span>&#8599;</span></a></li>
+                <li><a href="https://twitter.com/raayyananan" target="_blank">Twitter: @rayyananan <span>&#8599;</span></a></li>
+                <li>Phone: +92 3219944952</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="desktop" *ngIf="!this.mobile">
+        <div class="column"><div class="center column-text-outer"><div class="i">About Archive & Gallery</div></div></div> <!--edge-->
+        <div class="column image">
+            <div class="filler"></div>
+            <div class="portrait-container">
+                <img src="../../assets/images/Editorial Mimicry/portrait.webp">
+            </div>
+        </div>
+        <div class="column contact">
+            <div class="filler"></div>
+            <div class="bottom">
+                <ul>
+                    <li class="semibold">Contact: </li>
+                    <li><a href="https://www.upwork.com/freelancers/~01ba051af719a3a1d4" target="_blank">Upwork: Rayyan Tariq <span>&#8599;</span></a></li>
+                    <li><a href="mailto:raytariq93@gmail.com">raytariq93@gmail.com <span>&#8599;</span></a></li>
+                    <li><a href="https://www.instagram.com/rayyananan" target="_blank">Instagram: @rayyananan <span>&#8599;</span></a></li>
+                    <li><a href="https://twitter.com/raayyananan" target="_blank">Twitter: @rayyananan <span>&#8599;</span></a></li>
+                    <li>Phone: +92 3219944952</li>
+                </ul>
+            </div>
+        </div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column text">
+             <div class="semibold" style="margin-bottom: 3px">About me</div>
+             <p>Rayyan Tariq is a creative developer specializing in front-end and interaction. He make small and medium-sized websites that are distinct in design and animation.</p>
+             <p>Archive & Gallery is a web portfolio of my photography projects.</p>
+             <p>Currently available for work.</p>
+        </div>
+        <div class="column text">
+            <ul>
+                <li class="semibold">Collections:</li>
+                <li *ngFor="let name of names">{{name}}</li>
+                <br>
+                <li class="semibold">Tools:</li>
+                <li>Html, css, js</li>
+                <li>Typescript</li>
+                <li>Angular</li>
+                <li>GSAP</li>
+                <li>Figma</li>
+                <li>Illustrator</li>
+                <li>Raleway (font)</li>
+                <li>Bigilla (font)</li>
+            </ul>
+        </div>
+        <div class="column"></div> <!--edge-->
     </section>
 </section>
 

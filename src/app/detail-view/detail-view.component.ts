@@ -38,9 +38,10 @@ export class DetailViewComponent implements AfterViewInit {
       if (!event.deltaY) {
         return;
       }
-    
-      event.currentTarget.scrollLeft += event.deltaY + event.deltaX;
-      event.preventDefault();
+      if (!event.shiftKey) {
+        event.currentTarget.scrollLeft += (event.deltaY + event.deltaX)/2;
+        event.preventDefault();
+      }
     }
     imagesSection.addEventListener('wheel', transformScroll);
 

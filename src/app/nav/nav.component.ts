@@ -89,26 +89,26 @@ export class NavComponent implements OnInit {
 
     this.menuState = 'closed';
 
-    document.addEventListener('keydown', (e) => {
-      if (e.code == 'Digit1') {this.switchView(1)}
-      else if (e.code == 'Digit2') {this.switchView(2)}
-      else if (e.code == 'Digit3') {this.switchView(3)}
-    })
+    // document.addEventListener('keydown', (e) => {
+    //   if (e.code == 'Digit1') {this.switchView(1)}
+    //   else if (e.code == 'Digit2') {this.switchView(2)}
+    //   else if (e.code == 'Digit3') {this.switchView(3)}
+    // })
   }
 
   ngAfterViewInit() {
-    const divs = (document.querySelectorAll(".aboutheading h1 div, .aboutheading h2, .bio div, .collections li, .tools li, .contact li") as NodeListOf<HTMLElement>);
-    divs.forEach((div) => {spanify(div)})
-    function spanify(element: HTMLElement): void {
-      const words = element.outerText.split(" ");
-      const wordsDiv = element
+    // const divs = (document.querySelectorAll(".aboutheading h1 div, .aboutheading h2, .bio div, .collections li, .tools li, .contact li") as NodeListOf<HTMLElement>);
+    // divs.forEach((div) => {spanify(div)})
+    // function spanify(element: HTMLElement): void {
+    //   const words = element.outerText.split(" ");
+    //   const wordsDiv = element
   
-      wordsDiv.innerHTML = ""
-      words.map((el) => {
-        wordsDiv.innerHTML += `<div class="column-text-outer" style="display: inline-block"><div class="column-text-inner">${el}</div></div> `
-      })
-      return
-    }
+    //   wordsDiv.innerHTML = ""
+    //   words.map((el) => {
+    //     wordsDiv.innerHTML += `<div class="column-text-outer" style="display: inline-block"><div class="column-text-inner">${el}</div></div> `
+    //   })
+    //   return
+    // }
   }
 
   abtl = gsap.timeline();
@@ -144,7 +144,6 @@ export class NavComponent implements OnInit {
 
   routeMenu(menuAction: 'open' | 'close', openMenu?: boolean): void {
     if (menuAction == 'open') {
-        
       this.abtl.clear();
       this.abtl.play();
       this.abtl.set('.nav-area .column-text-inner', {
@@ -166,30 +165,42 @@ export class NavComponent implements OnInit {
           // delay: 0.035
       }, "<")
 
-      if (openMenu) {
+      if (openMenu) { //&& this.viewSwitcherService.getLinkState() == 'available'
         // open menu
         this.menuState = 'open';
         this.abtl.set('.nav-area', {display: 'grid'}, "<");
+        this.abtl.set('.column .center .i', {y: '101%'}, "<")
         this.abtl.to('.nav-area', {
-          duration: this.duration,
+          duration: 0.4,
           opacity: 1,
-        }, "<")   
-        this.abtl.from('.nav-area .aboutheading .column-text-inner', {
-          duration: this.duration + 0.4,
-          y: '101%',
-          stagger: 0.045,
-          ease: "cubic",
-        }, "<+=0.1")
-        this.abtl.to('.nav-area .image img', {
-          duration: this.duration,
+        }, "<") 
+        this.abtl.fromTo('.nav-area .column', {
+          opacity: 0,
+        }, {
           opacity: 1,
-        }, "<+=0.35") 
-        this.abtl.from('.nav-area .text-container .column-text-inner', {
-          duration: this.duration + 0.4,
-          y: '101%',
-          stagger: 0.008,
-          ease: "cubic",
-        }, "<+=0.1")    
+          duration: 0.8,
+        }, "<+=0.3")  
+        this.abtl.to('.column .center .i', {
+          y: 0,
+          duration: 1.3,
+          ease: "expo.out"
+        }, "<+=0.5")
+        // this.abtl.from('.nav-area .aboutheading .column-text-inner', {
+        //   duration: this.duration + 0.4,
+        //   y: '101%',
+        //   stagger: 0.045,
+        //   ease: "cubic",
+        // }, "<+=0.1")
+        // this.abtl.to('.nav-area .image img', {
+        //   duration: this.duration,
+        //   opacity: 1,
+        // }, "<+=0.35") 
+        // this.abtl.from('.nav-area .text-container .column-text-inner', {
+        //   duration: this.duration + 0.4,
+        //   y: '101%',
+        //   stagger: 0.008,
+        //   ease: "cubic",
+        // }, "<+=0.1")    
       }
     }
     else if (menuAction == 'close') {
@@ -212,17 +223,21 @@ export class NavComponent implements OnInit {
   
       if (this.menuState == 'open') {
         // close menu
-        this.abtl.to('.nav-area .column-text-inner', {
-          duration: this.duration + 0.3,
-          y: "101%",
-          ease: "cubic",
-          delay: 0.1
-        }, "<")
-        this.abtl.to('.nav-area .image img', {
-          duration: this.duration*0.5,
-          opacity: 0,
-        }, "<")   
+        // this.abtl.to('.nav-area .column-text-inner', {
+        //   duration: this.duration + 0.3,
+        //   y: "101%",
+        //   ease: "cubic",
+        //   delay: 0.1
+        // }, "<")
+        // this.abtl.to('.nav-area .image img', {
+        //   duration: this.duration*0.5,
+        //   opacity: 0,
+        // }, "<")   
   
+        this.abtl.to('.nav-area .column', {
+          opacity: 0,
+          duration: 0.3
+        }, "<")
         this.abtl.to('.nav-area', {
           duration: this.duration-0.2,
           opacity: 0,
@@ -230,7 +245,7 @@ export class NavComponent implements OnInit {
         }, "<+=0.25")
   
         this.abtl.set('.nav-area', {});
-        this.abtl.set('.nav-area .column-text-inner', {y: 0});
+        // this.abtl.set('.nav-area .column-text-inner', {y: 0});
         this.menuState = 'closed';
       }
     }
