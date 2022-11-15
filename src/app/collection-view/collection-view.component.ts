@@ -34,7 +34,6 @@ export class CollectionViewComponent implements OnInit {
   // Typescript thinks heading is undefined - use ! to tell typescript that you are sure heading is not null or undefined
   @ViewChildren('images') images!: QueryList<any>;
 
-  totalScrolled = 0;
 
   ngAfterViewInit(): void {
     this.widthHeightCheck();
@@ -44,34 +43,15 @@ export class CollectionViewComponent implements OnInit {
 
     this.loaderService.loaded.subscribe(value => {
       setTimeout(() => {this.initialAnimations(0.85);})
-      removeHref()
     })
 
     if (this.loaderService.loadedStatus == true) {
       setTimeout(() => {
         this.initialAnimations(0.2);
-        removeHref()
       })
     }
 
     this.viewSwitcherService.initializeScrollTransform();
-
-    function removeHref() {
-      (document.querySelectorAll('.remove-href') as NodeListOf<HTMLElement>).forEach((link) => {
-        link.removeAttribute('href');
-      })
-    }
-
-    document.addEventListener("keydown", (e) => {
-      if (this.viewSwitcherService.getTransitionalViewState() == 3) {
-        if (e.code == 'ArrowRight') {
-          this.viewSwitcherService.buttonMoveX('forwards', true);
-        }
-        else if (e.code == 'ArrowLeft') {
-          this.viewSwitcherService.buttonMoveX('backwards', true);
-        }
-      }
-    })
 
     window.addEventListener('resize', this.widthHeightCheck)
   }
@@ -80,16 +60,16 @@ export class CollectionViewComponent implements OnInit {
     return parseInt(data);
   }
 
-  onPan(e: any, direction: 'forwards' | 'backwards') {
-    if (this.viewSwitcherService.getTransitionalViewState() == 3) {
-      if (direction == 'forwards') {
-        this.viewSwitcherService.buttonMoveX('forwards');
-      }
-      else if (direction == 'backwards') {
-        this.viewSwitcherService.buttonMoveX('backwards');
-      }
-    }
-  }
+  // onPan(e: any, direction: 'forwards' | 'backwards') {
+  //   if (this.viewSwitcherService.getTransitionalViewState() == 3) {
+  //     if (direction == 'forwards') {
+  //       this.viewSwitcherService.buttonMoveX('forwards');
+  //     }
+  //     else if (direction == 'backwards') {
+  //       this.viewSwitcherService.buttonMoveX('backwards');
+  //     }
+  //   }
+  // }
 
   navigate(url: string,  number: number) {
       this.viewSwitcherService.route(url, number)
