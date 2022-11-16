@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { Flip, CustomEase } from 'gsap/all';
 import { delay } from 'rxjs';
 import { thumbnailNumbers } from './collectionOrder';
+import LocomotiveScroll from 'locomotive-scroll';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,8 @@ export class ViewSwitcherService {
   private switchedOnce: boolean = false;
   
   initialAnimationsComplete: boolean = false;
+  scroll: any;
+
 
   setViewState(state: number) {
     this.viewState = state;
@@ -143,13 +146,26 @@ export class ViewSwitcherService {
     }
     else if (view == 2) {
       gsap.to('#v002 span', {duration: 0.9, skewX: 0})
-      tl.to('app-collection-view .column-text-inner', {
-        duration: 0.9,
+      tl.to('.collectionList.right .column-text-inner', {
+        duration: 0.75,
         y: '-101%',
-        stagger: -0.008,
+        stagger: {
+          each: 0.006,
+          from: 'start'
+        },
         ease: "power2.out",
         display: 'none'
       })
+      tl.to('.collectionList.left .column-text-inner', {
+        duration: 0.75,
+        y: '-101%',
+        stagger: {
+          each: 0.006,
+          from: 'start'
+        },
+        ease: "power2.out",
+        display: 'none'
+      }, "<")
       tl.set('.view02-container', {display: 'none'});
       tl.set('app-collection-view .column-text-inner', {y: '101%'})
       // tl.set('.column-text-inner', {}, "<+=0.2")
@@ -169,9 +185,6 @@ export class ViewSwitcherService {
       //   background: 'rgb(245,245,245)',
       //   delay: 0.2
       // })
-      tl.to('.view03-text', {
-        
-      })
       gsap.to('#v003 span', {duration: 0.9, skewX: 0})
       tl.to('.view03-container .line', {
         ease: "power3.out",
@@ -334,7 +347,7 @@ export class ViewSwitcherService {
 
         (document.querySelector('.view03-container') as HTMLElement).style.display = 'flex';
         (document.querySelector('.view03-text') as HTMLElement).style.display = 'grid';
-        (document.querySelector('.image-bar') as HTMLElement).style.display = 'flex';
+        (document.querySelector('.image-bar') as HTMLElement).style.display = 'block';
 
         const images = document.querySelectorAll('.collection .thumbnail') as NodeListOf<HTMLElement>,
         bottomBar = document.querySelector('.image-bar') as HTMLElement;
@@ -361,9 +374,15 @@ export class ViewSwitcherService {
             // bottomBar.classList.add('scrollable');
             this.setViewState(3);
             this.setLinkState('available');
-            (document.querySelector('.image-bar') as HTMLElement).focus();
+            this.scroll.start();
+            if ((document.querySelector('#delete-on-view03') as HTMLElement)) {
+              (document.querySelector('#delete-on-view03') as HTMLElement).remove();
+            }
+            this.scroll.update();
+            // this.scroll.scrollTo(-42.5 / 100 *document.documentElement.offsetWidth, {duration: 0})
           }
         }) 
+
         
         // tl.to('.nav .inner-link', {
         //   duration: 0.5,
@@ -378,16 +397,25 @@ export class ViewSwitcherService {
         //   background: 'black',
         //   delay: 0.2
         // }, 0)
+        tl.set('.view03-container .line', {display: 'block', height: 0}, ">-=0.4")
+        tl.set('.view03-container .horizontal-line', {display: 'block', width: 0}, "<")
         tl.to('.view03-container .line', {
           duration: 2,
           ease: "expo.inOut",
           height: '30px'
-        }, ">-=0.4")
+        }, "<")
         tl.to('.view03-container .horizontal-line', {
           duration: 2,
           ease: "expo.inOut",
           width: '30px'
         }, "<")
+        tl.fromTo('#view03-title', {
+          y: '101%'
+        }, {
+          y: 0,
+          duration: 1.1,
+          ease: "custom"
+        })
         //0.230, 0.545, 0.085, 0.995
       }
     }
@@ -494,24 +522,28 @@ export class ViewSwitcherService {
     }
   }
 
-  scrolled: number = 0;
   initializeScrollTransform(): any { // for scrolling in view03
 
-    const view03con = (document.querySelector('.view03-container') as HTMLElement)
+    // const view03con = (document.querySelector('.view03-container') as HTMLElement)
     gsap.set('.image-bar', {position: 'relative'});
-
+    this.scroll = new LocomotiveScroll({
+      el: document.querySelector('.image-bar') as HTMLElement,
+              direction: 'horizontal',
+              smooth: true,
+              multiplier: 0.6,
+              touchMultiplier: 3,
+              gestureDirection: 'both',
+              smartphone: {smooth: true},
+              tablet: {breakpoint: 1}
+            });
+    this.scroll.update()
+    this.scroll.scrollTo(42.5 / 100 * window.innerWidth, {duration: 0, disableLerp: true})
+    this.scroll.update()
+    this.scroll.stop();
+    
+    let stl = gsap.timeline();
     let flag = true, timer: any = null;
-
-    const transformScroll = (event: any) => {
-
-      // if (!event.deltaY) {
-      //   return;
-      // }
-      if (!event.shiftKey) {
-        event.currentTarget.scrollLeft += (event.deltaY + event.deltaX) / 4;
-        event.preventDefault();
-      }
-
+    this.scroll.on('scroll', () => {
       if (flag == true) {
         // animate to large
         gsap.to('.view03-container .line', {
@@ -523,6 +555,10 @@ export class ViewSwitcherService {
           duration: 1,
           ease: "expo.out",
           width: 43
+        })
+        stl.to('#view03-title', {
+          y: '-105%',
+          duration: 0.4
         })
         flag = false;
       }
@@ -542,12 +578,67 @@ export class ViewSwitcherService {
           ease: "expo.out",
           width: 32
         })
+        stl.fromTo('#view03-title', {
+          y: '101%'
+        }, {
+          y: 0,
+          duration: 1,
+          ease: "custom"
+        })
         flag = true;
       }, 50);
+  })
 
-    }
-    view03con.addEventListener('wheel', transformScroll)
-    return
+  window.addEventListener('resize', () => {this.scroll.update()})
+  
+
+    // 
+    // const transformScroll = (event: any) => {
+
+    //   // if (!event.deltaY) {
+    //   //   return;
+    //   // }
+    //   if (!event.shiftKey) {
+    //     event.currentTarget.scrollLeft += (event.deltaY + event.deltaX) / 4;
+    //     event.preventDefault();
+    //   }
+
+    //   if (flag == true) {
+    //     // animate to large
+    //     gsap.to('.view03-container .line', {
+    //       duration: 1,
+    //       ease: "expo.out",
+    //       height: 43
+    //     })
+    //     gsap.to('.view03-container .horizontal-line', {
+    //       duration: 1,
+    //       ease: "expo.out",
+    //       width: 43
+    //     })
+    //     flag = false;
+    //   }
+
+    //   if(timer !== null) {
+    //     clearTimeout(timer);        
+    //   }
+    //   timer = setTimeout(() => {
+    //     // animate to small
+    //     gsap.to('.view03-container .line', {
+    //       duration: 1,
+    //       ease: "expo.out",
+    //       height: 32
+    //     })
+    //     gsap.to('.view03-container .horizontal-line', {
+    //       duration: 1,
+    //       ease: "expo.out",
+    //       width: 32
+    //     })
+    //     flag = true;
+    //   }, 50);
+
+    // }
+    // view03con.addEventListener('wheel', transformScroll)
+    // return
 
     // bottomBars translateX cannot be higher than 0, nor lower than -width of bottomBar
     // const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
@@ -586,71 +677,6 @@ export class ViewSwitcherService {
     // });
   }
 
-  buttonMoveX(direction: 'forwards' | 'backwards', button?: boolean, target?: HTMLElement) {
-    // const bottomBar = document.querySelector('.bottom-bar') as HTMLElement;
-    // target = bottomBar;
-    // const scrollableWidth = target.scrollWidth - target.clientWidth;
-    // let translateX = Number(this.getTranslateValues(target).x);
-    // let ease = "cubic", dr = 1.5, factor = 1.5;
-    // let movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
-
-    // if (button == true) {
-    //   dr = 1, factor = 2;
-    //   movement = (document.querySelector('.bottom-bar img') as HTMLElement).offsetWidth * factor;
-    // }
-
-    // const tl = gsap.timeline()
-
-    // if (translateX >= 0 && direction == 'forwards') {
-    //   tl.to(bottomBar, {
-    //     duration: dr,
-    //     ease: ease,
-    //     x: "-="+movement
-    //   })
-    // }
-    // else if (translateX < 0 && (-translateX + movement) <= scrollableWidth) {
-    //   if (direction == 'forwards') {
-    //     tl.to(bottomBar, {
-    //       duration: dr,
-    //       ease: ease,
-    //       x: "-="+movement
-    //     })
-    //   }
-    //   else if (direction == 'backwards') {
-    //     if ((translateX + movement) >= 0) {
-    //       tl.to(bottomBar, {
-    //         duration: dr,
-    //         ease: ease,
-    //         x: 0
-    //       })
-    //     }
-    //     else {
-    //       tl.to(bottomBar, {
-    //         duration: dr,
-    //         ease: ease,
-    //         x: "+="+movement
-    //       })
-    //     }
-    //   }
-    // }
-    // else if ((-translateX + movement) >= scrollableWidth && direction == 'backwards') {
-    //   tl.to(bottomBar, {
-    //     duration: dr,
-    //     ease: ease,
-    //     x: "+="+movement
-    //   })
-    // }
-    // //edge cases
-    // else if ((-translateX + movement) >= scrollableWidth && direction == 'forwards') {
-    //   tl.to(bottomBar, {
-    //     duration: dr,
-    //     ease: ease,
-    //     x: -scrollableWidth
-    //   })
-    // }
-
-      
-  }
 
   gridState: 1 | 2 | 3 = 2;
   getGridState(): number {return this.gridState}

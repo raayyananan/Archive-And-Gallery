@@ -50,9 +50,6 @@ export class CollectionViewComponent implements OnInit {
         this.initialAnimations(0.2);
       })
     }
-
-    this.viewSwitcherService.initializeScrollTransform();
-
     window.addEventListener('resize', this.widthHeightCheck)
   }
   
@@ -113,6 +110,7 @@ export class CollectionViewComponent implements OnInit {
             this.ngZone.run(() => {
               this.viewSwitcherService.switchOnce();
             })
+            this.viewSwitcherService.initializeScrollTransform();
           }
       }, "<")
     
