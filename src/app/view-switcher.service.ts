@@ -244,7 +244,7 @@ export class ViewSwitcherService {
               each: stagger,
               from: "start",
             }, // 0.017
-            delay: 0.04,
+            delay: 0.08,
             onComplete: () => {
               this.setViewState(1);
               this.setLinkState('available');
@@ -260,7 +260,7 @@ export class ViewSwitcherService {
               each: stagger,
               from: "end",
             }, // 0.017
-            delay: 0.04,
+            delay: 0.08,
             onComplete: () => {
               this.setViewState(1);
               this.setLinkState('available');
@@ -311,7 +311,7 @@ export class ViewSwitcherService {
           stagger: {
             each: stagger, //0.015
           },
-          delay: 0.04,
+          delay: 0.08,
         })
 
         tl.to('.view02-container .column-text-inner', {
@@ -356,7 +356,7 @@ export class ViewSwitcherService {
             each: stagger, //0.017 
             from: "start"
           },
-          delay: 0.04,
+          delay: 0.08,
           onComplete: () => {
             // bottomBar.classList.add('scrollable');
             this.setViewState(3);
@@ -427,7 +427,7 @@ export class ViewSwitcherService {
             from: staggerFrom
           },
           absolute: true,
-          delay: 0.05,
+          delay: 0.08,
           onComplete: () => {
             this.setViewState(4);
             this.setLinkState('available');

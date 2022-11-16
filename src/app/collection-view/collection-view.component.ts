@@ -121,7 +121,7 @@ export class CollectionViewComponent implements OnInit {
   changeHeading(direction: 'in' | 'out', name?: string): void {
     const permanentTitle = 'Archive & Gallery';
 
-    if (this.viewSwitcherService.getViewState() == 1) { //&& this.viewSwitcherService.getLinkState() == 'available'
+    if (this.viewSwitcherService.getViewState() == 1 && this.viewSwitcherService.getLinkState() == 'available') { //&& this.viewSwitcherService.getLinkState() == 'available'
       let htl = gsap.timeline();
       let headingHeight = this.rightHeading.nativeElement.clientHeight
       // let headingHeight = (document.querySelector('.heading h1') as HTMLElement).clientHeight

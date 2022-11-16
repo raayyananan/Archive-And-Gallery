@@ -76,7 +76,7 @@
         #v001 span {transform: skewX(-15deg);}
 
         .emphasized {
-            animation: emphasis 1.1s 10s infinite alternate linear;
+            animation: emphasis 1.1s 15s infinite alternate linear;
             @keyframes emphasis {
                 // 100%,0%{
                 //     color: rgb(78, 0, 38);
@@ -188,14 +188,15 @@
     font-size: 13px;
 
     .mobile {
-        width: 50%;
+        width: 63%;
         display: flex;
         flex-flow: column nowrap;
-        justify-content: flex-end;
+        // justify-content: flex-end;
         height: 100%;
+        box-sizing: border-box;
 
         .wrapper {
-            padding: 15px 0 15px 15px;
+            padding: 85px 12% 15px calc(15px + 1%);
         }
     }
 
