@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { collections, Collection } from '../collectionOrder';
 import { gsap } from 'gsap';
 import { LoaderService } from '../loader.service';
+import LocomotiveScroll from 'locomotive-scroll';
 
 @Component({
   selector: 'app-detail-view',
@@ -26,6 +27,7 @@ export class DetailViewComponent implements AfterViewInit {
     })
   }
 
+  detailScroll: any;
   ngAfterViewInit(): void {
 
     const imagesSection = document.querySelector('section.images') as HTMLElement;
@@ -44,6 +46,8 @@ export class DetailViewComponent implements AfterViewInit {
       }
     }
     imagesSection.addEventListener('wheel', transformScroll);
+
+
 
   }
 

@@ -146,9 +146,9 @@ export class NavComponent implements OnInit {
     if (menuAction == 'open') {
       this.abtl.clear();
       this.abtl.play();
-      this.abtl.set('.nav-area .column-text-inner', {
-          y: 0,
-      })
+      // this.abtl.set('.nav-area .column-text-inner', {
+      //     y: 0,
+      // })
       // this.abtl.set('.image-container img', {opacity: 1})
       this.abtl.to('.nav .inner-link', {
           duration: this.duration*1.25,
@@ -165,7 +165,7 @@ export class NavComponent implements OnInit {
           // delay: 0.035
       }, "<")
 
-      if (openMenu) { //&& this.viewSwitcherService.getLinkState() == 'available'
+      if (openMenu && (this.viewSwitcherService.getLinkState() == 'available' || this.viewSwitcherService.getTransitionalViewState() != 4)) { //&& this.viewSwitcherService.getLinkState() == 'available'
         // open menu
         this.menuState = 'open';
         this.abtl.set('.nav-area', {display: 'grid'}, "<");

@@ -80,6 +80,8 @@ html, body {
     overflow: hidden;
     overscroll-behavior-y:none;
     user-select: none; /* Standard */
+    overscroll-behavior-x: none;
+
 }
 
 // img {filter: grayscale(1)}
