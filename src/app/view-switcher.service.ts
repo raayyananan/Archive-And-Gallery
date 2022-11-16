@@ -132,6 +132,7 @@ export class ViewSwitcherService {
 
   destroyDisconnectedSequences(view: number, tl: any, duration: number, ease: string) {
     if (view == 1) {
+      gsap.set('.view03-container', {zIndex: -2})
       this.headingMove('out', tl);
       gsap.to('.column-background div', {
         duration: duration*0.7,
@@ -145,6 +146,7 @@ export class ViewSwitcherService {
       tl.set('.cell', {display: 'none'});
     }
     else if (view == 2) {
+      gsap.set('.view03-container', {zIndex: -2})
       gsap.to('#v002 span', {duration: 0.9, skewX: 0})
       tl.to('.collectionList.right .column-text-inner', {
         duration: 0.75,
@@ -185,6 +187,7 @@ export class ViewSwitcherService {
       //   background: 'rgb(245,245,245)',
       //   delay: 0.2
       // })
+      gsap.set('.view03-container', {zIndex: -2})
       gsap.to('#v003 span', {duration: 0.9, skewX: 0})
       tl.to('.view03-container .line', {
         ease: "power3.out",
@@ -196,9 +199,16 @@ export class ViewSwitcherService {
         duration: 0.75,
         width: 0,
       }, 0)
+      tl.to('#view03-title', {
+        y: '-105%',
+        duration: 0.4,
+        ease: 'sine.in',
+        display: 'none',
+      }, "<")
       tl.set('.view03-container, .view03-text', {display: 'none'});
     }
     else if (view == 4) {
+      gsap.set('.view03-container', {zIndex: -2})
       let detailBar = document.querySelector('.detail-bar') as HTMLElement;
       detailBar.style.zIndex = '0';
       gsap.to('#v003 span, #v002 span, #v001 span', {duration: 0.9, skewX: 0})
@@ -343,6 +353,7 @@ export class ViewSwitcherService {
       else if (viewNumber == 3) {
 
         this.setTransitionalViewState(3);
+        gsap.set('.view03-container', {zIndex: 3})
         gsap.to('#v003 span', {duration: 0.9, skewX: "-15px"});
 
         (document.querySelector('.view03-container') as HTMLElement).style.display = 'flex';
@@ -402,19 +413,18 @@ export class ViewSwitcherService {
         tl.to('.view03-container .line', {
           duration: 2,
           ease: "expo.inOut",
-          height: '30px'
+          height: 32
         }, "<")
         tl.to('.view03-container .horizontal-line', {
           duration: 2,
           ease: "expo.inOut",
-          width: '30px'
+          width: 32
         }, "<")
-        tl.fromTo('#view03-title', {
-          y: '101%'
-        }, {
+        tl.set('#view03-title', {display: 'block', y: '101%', opacity: 1}, "<")
+        tl.to('#view03-title', {
           y: 0,
           duration: 1.1,
-          ease: "custom"
+          ease: "cubic",
         })
         //0.230, 0.545, 0.085, 0.995
       }
@@ -537,56 +547,78 @@ export class ViewSwitcherService {
               tablet: {breakpoint: 1}
             });
     this.scroll.update()
-    this.scroll.scrollTo(42.5 / 100 * window.innerWidth, {duration: 0, disableLerp: true})
+    let midpoint = window.innerWidth/2 - 14.4/100*window.innerHeight - 8;
+    this.scroll.scrollTo(midpoint, {duration: 0, disableLerp: true})
     this.scroll.update()
     this.scroll.stop();
     
     let stl = gsap.timeline();
     let flag = true, timer: any = null;
-    this.scroll.on('scroll', () => {
-      if (flag == true) {
-        // animate to large
-        gsap.to('.view03-container .line', {
-          duration: 1,
-          ease: "expo.out",
-          height: 43
-        })
-        gsap.to('.view03-container .horizontal-line', {
-          duration: 1,
-          ease: "expo.out",
-          width: 43
-        })
-        stl.to('#view03-title', {
-          y: '-105%',
-          duration: 0.4
-        })
-        flag = false;
-      }
+    let c = 0;
+    this.scroll.on('scroll', (data: any) => {
+      if (this.getViewState() == 3) {
+        c++;
+        if (c > 1) {
+          if (flag == true) {
+            // animate to large
+            gsap.to('.view03-container .line', {
+              duration: 1,
+              ease: "expo.out",
+              height: 43
+            })
+            gsap.to('.view03-container .horizontal-line', {
+              duration: 1,
+              ease: "expo.out",
+              width: 43
+            })
+            stl.to('#view03-title', {
+              y: '-105%',
+              duration: 0.4,
+              ease: 'sine.in'
+            })
+            stl.set('#view03-title', {opacity: 0})
+            flag = false;
+          }
+    
+          if(timer !== null) {
+            clearTimeout(timer);        
+          }
+          timer = setTimeout(() => {
+            // animate to small
+            const images = document.querySelectorAll('.thumbnail') as NodeListOf<HTMLElement>;
+            let delta = (window.innerWidth/2 - 4) + data.delta.x, name: string | undefined = 'Archive & Gallery';
 
-      if(timer !== null) {
-        clearTimeout(timer);        
+            for (let i = 0; i <= images.length - 2; i++) {
+              if (images[i].offsetLeft < delta && images[i + 1].offsetLeft > delta) {
+                name = images[i].dataset.name;
+              }
+              else if (images[i + 1].offsetLeft < delta) {
+                name = images[i+1].dataset.name;
+              }
+            }
+            console.log(delta)
+            gsap.to('.view03-container .line', {
+              duration: 1,
+              ease: "expo.out",
+              height: 32
+            })
+            gsap.to('.view03-container .horizontal-line', {
+              duration: 1,
+              ease: "expo.out",
+              width: 32
+            })
+            stl.set('#view03-title', {y: '101%', opacity: 1, onComplete: () => {
+              (document.querySelector('#view03-title') as HTMLElement).innerHTML = name as string;
+            }})
+            stl.to('#view03-title', {
+              y: 0,
+              duration: 0.9,
+              ease: "cubic",
+            })
+            flag = true;
+          }, 50);
+        }
       }
-      timer = setTimeout(() => {
-        // animate to small
-        gsap.to('.view03-container .line', {
-          duration: 1,
-          ease: "expo.out",
-          height: 32
-        })
-        gsap.to('.view03-container .horizontal-line', {
-          duration: 1,
-          ease: "expo.out",
-          width: 32
-        })
-        stl.fromTo('#view03-title', {
-          y: '101%'
-        }, {
-          y: 0,
-          duration: 1,
-          ease: "custom"
-        })
-        flag = true;
-      }, 50);
   })
 
   window.addEventListener('resize', () => {this.scroll.update()})

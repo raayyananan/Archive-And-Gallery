@@ -119,7 +119,7 @@ export class CollectionViewComponent implements OnInit {
   changeHeading(direction: 'in' | 'out', name?: string): void {
     const permanentTitle = 'Archive & Gallery';
 
-    if (this.viewSwitcherService.getViewState() == 1) { //&& this.viewSwitcherService.getLinkState() == 'available'
+    if (this.viewSwitcherService.getViewState() == 1 && this.viewSwitcherService.getLinkState() == 'available') { //
       let htl = gsap.timeline();
       let headingHeight = this.rightHeading.nativeElement.clientHeight
       // let headingHeight = (document.querySelector('.heading h1') as HTMLElement).clientHeight
@@ -197,5 +197,10 @@ export class CollectionViewComponent implements OnInit {
         rotate.style.display = 'none';
       }
     }
+
+    let desiredHeight = 5/4 * (window.innerWidth * 0.95 / 14 - 8);
+    gsap.set('.route-filler', {height: window.innerHeight - desiredHeight})
+    gsap.set('.detail-bar-filler', {height: desiredHeight})
+    gsap.set('.detail-bar', {height: desiredHeight})
   }
 }
