@@ -174,19 +174,19 @@ export class ViewSwitcherService {
 
     }
     else if (view == 3) {
-      // gsap.to('.nav .inner-link', {
-      //   duration: 0.5,
-      //   color: 'black',
-      //   delay: 0.2,
-      //   onStart: () => {
-      //     document.documentElement.style.setProperty('--text-strikethrough', 'black');
-      //   }
-      // })
-      // gsap.to('html', {
-      //   duration: 0.5,
-      //   background: 'rgb(245,245,245)',
-      //   delay: 0.2
-      // })
+      gsap.to('.nav .inner-link', {
+        duration: 0.5,
+        color: 'black',
+        delay: 0.2,
+        onStart: () => {
+          document.documentElement.style.setProperty('--text-strikethrough', 'black');
+        }
+      })
+      gsap.to('html', {
+        duration: 0.5,
+        background: 'rgb(245,245,245)',
+        delay: 0.2
+      })
       gsap.set('.view03-container', {zIndex: -2})
       gsap.to('#v003 span', {duration: 0.9, skewX: 0})
       tl.to('.view03-container .line', {
@@ -395,19 +395,19 @@ export class ViewSwitcherService {
         }) 
 
         
-        // tl.to('.nav .inner-link', {
-        //   duration: 0.5,
-        //   color: 'white',
-        //   delay: 0.2,
-        //   onStart: () => {
-        //     document.documentElement.style.setProperty('--text-strikethrough', 'white');
-        //   }
-        // }, 0)
-        // tl.to('html', {
-        //   duration: 0.5,
-        //   background: 'black',
-        //   delay: 0.2
-        // }, 0)
+        tl.to('.nav .inner-link', {
+          duration: 0.5,
+          color: 'white',
+          delay: 0.2,
+          onStart: () => {
+            document.documentElement.style.setProperty('--text-strikethrough', 'white');
+          }
+        }, 0)
+        tl.to('html', {
+          duration: 0.5,
+          background: 'black',
+          delay: 0.2
+        }, 0)
         tl.set('.view03-container .line', {display: 'block', height: 0}, ">-=0.4")
         tl.set('.view03-container .horizontal-line', {display: 'block', width: 0}, "<")
         tl.to('.view03-container .line', {
@@ -425,7 +425,7 @@ export class ViewSwitcherService {
           y: 0,
           duration: 1.1,
           ease: "cubic",
-        })
+        }, "<+=0.65")
         //0.230, 0.545, 0.085, 0.995
       }
     }
