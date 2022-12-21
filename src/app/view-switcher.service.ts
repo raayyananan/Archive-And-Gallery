@@ -493,45 +493,6 @@ export class ViewSwitcherService {
     }
   }
 
-  getTranslateValues (element: HTMLElement): any {
-    const style = window.getComputedStyle(element)
-    const matrix: any = style['transform'] || style.webkitTransform;
-
-    // No transform property. Simply return 0 values.
-    if (matrix === 'none' || typeof matrix === 'undefined') {
-      return {
-        x: 0,
-        y: 0,
-        z: 0
-      }
-    }
-
-    // Can either be 2d or 3d transform
-    const matrixType = matrix.includes('3d') ? '3d' : '2d'
-    const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ')
-
-    // 2d matrices have 6 values
-    // Last 2 values are X and Y.
-    // 2d matrices does not have Z value.
-    if (matrixType === '2d') {
-      return {
-        x: matrixValues[4],
-        y: matrixValues[5],
-        z: 0
-      }
-    }
-
-    // 3d matrices have 16 values
-    // The 13th, 14th, and 15th values are X, Y, and Z
-    if (matrixType === '3d') {
-      return {
-        x: matrixValues[12],
-        y: matrixValues[13],
-        z: matrixValues[14]
-      }
-    }
-  }
-
   initializeScrollTransform(): any { // for scrolling in view03
 
     // const view03con = (document.querySelector('.view03-container') as HTMLElement)
@@ -591,9 +552,12 @@ export class ViewSwitcherService {
             for (let i = 0; i <= images.length - 2; i++) {
               if (images[i].offsetLeft < delta && images[i + 1].offsetLeft > delta) {
                 name = images[i].dataset.name;
+                (document.querySelectorAll('.collection img')[i] as HTMLElement).style.zIndex = `${this.z + 1}`;
+      this.z += 1;
               }
               else if (images[i + 1].offsetLeft < delta) {
                 name = images[i+1].dataset.name;
+                (document.querySelectorAll('.collection img')[i+1] as HTMLElement).style.zIndex = `${this.z + 1}`;
               }
             }
             console.log(delta)
@@ -731,4 +695,43 @@ export class ViewSwitcherService {
     }
     return
   }
+
+  // getTranslateValues (element: HTMLElement): any {
+  //   const style = window.getComputedStyle(element)
+  //   const matrix: any = style['transform'] || style.webkitTransform;
+
+  //   // No transform property. Simply return 0 values.
+  //   if (matrix === 'none' || typeof matrix === 'undefined') {
+  //     return {
+  //       x: 0,
+  //       y: 0,
+  //       z: 0
+  //     }
+  //   }
+
+  //   // Can either be 2d or 3d transform
+  //   const matrixType = matrix.includes('3d') ? '3d' : '2d'
+  //   const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ')
+
+  //   // 2d matrices have 6 values
+  //   // Last 2 values are X and Y.
+  //   // 2d matrices does not have Z value.
+  //   if (matrixType === '2d') {
+  //     return {
+  //       x: matrixValues[4],
+  //       y: matrixValues[5],
+  //       z: 0
+  //     }
+  //   }
+
+  //   // 3d matrices have 16 values
+  //   // The 13th, 14th, and 15th values are X, Y, and Z
+  //   if (matrixType === '3d') {
+  //     return {
+  //       x: matrixValues[12],
+  //       y: matrixValues[13],
+  //       z: matrixValues[14]
+  //     }
+  //   }
+  // }
 }

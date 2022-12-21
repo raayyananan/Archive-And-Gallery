@@ -19,35 +19,6 @@ export const names: Array<string> = [
     'Insectified'
 ]
 
-// export const view3names: Array<string> = [
-//     'AromaticFragranceScents',
-//     'StuartLittleKittyKatStu',
-//     'BlossingBloomingFlowers',
-//     'OverwhelmedOverwhelmedO',
-//     'StationaryStudyStationa',
-//     'EditorialMimicryEditori',
-//     'ArchitecturalDesignArch',
-//     'InsectifiedInsectificat',
-// ]
-
-// export const view3names: Array<string> = [
-//     'AromaticFragranceSc',
-//     'StuartLittleKittyKa',
-//     'BlossingBloomingFlo',
-//     'OverwhelmedOverwhel',
-//     'StationaryStudyStat',
-//     'EditorialMimicryEdi',
-//     'ArchitecturalDesign',
-//     'InsectifiedInsectif',
-//     'AromaticFragranceSc',
-//     'StuartLittleKittyKa',
-//     'BlossingBloomingFlo',
-//     'OverwhelmedOverwhel',
-//     'StationaryStudyStat',
-//     'EditorialMimicryEdi',
-//     'ArchitecturalDesign',
-//     'InsectifiedInsectif',
-// ]
 
 // export const thumbnailNumbers = [11, 8, 1, 12, 6, 2, 7, 13];
 export const thumbnailNumbers = [11, 8, 9, 12, 6, 2, 7, 13];
