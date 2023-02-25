@@ -45,11 +45,11 @@ export class CollectionViewComponent implements OnInit {
       setTimeout(() => {this.initialAnimations(0.85);})
     })
 
-    if (this.loaderService.loadedStatus == true) {
-      setTimeout(() => {
-        this.initialAnimations(0.2);
-      })
-    }
+    // if (this.loaderService.loadedStatus == true) {
+    //   setTimeout(() => {
+    //     this.initialAnimations(0.2);
+    //   })
+    // }
     window.addEventListener('resize', this.widthHeightCheck)
   }
   

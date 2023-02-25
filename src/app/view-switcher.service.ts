@@ -434,7 +434,7 @@ export class ViewSwitcherService {
 
   }
 
-  route(url?: string, staggerFrom?: any) {
+  route(url?: string, staggerFrom?: any): void {
     if (this.initialAnimationsComplete) {
       let firstElem = 'start';
       if (staggerFrom) {firstElem = staggerFrom}
