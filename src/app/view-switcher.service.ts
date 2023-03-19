@@ -372,6 +372,8 @@ export class ViewSwitcherService {
           .forEach((image) => {
             bottomBar.prepend(image)
           });
+        this.scroll.update();
+        this.scroll.start();
         Flip.from(state, {
           duration: duration, //1.75
           ease: ease, //power4.out
@@ -385,7 +387,7 @@ export class ViewSwitcherService {
             // bottomBar.classList.add('scrollable');
             this.setViewState(3);
             this.setLinkState('available');
-            this.scroll.start();
+            // this.scroll.start();
             if ((document.querySelector('#delete-on-view03') as HTMLElement)) {
               (document.querySelector('#delete-on-view03') as HTMLElement).remove();
             }

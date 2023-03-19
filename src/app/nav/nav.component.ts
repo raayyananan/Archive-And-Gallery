@@ -75,7 +75,7 @@ export class NavComponent implements OnInit {
         y: 0,
         ease: "expo.out"
       })
-    }, 750)
+    }, 500)
 
     this.loaderService.loaded.subscribe(value => {
       this.removeLoader()
@@ -117,10 +117,15 @@ export class NavComponent implements OnInit {
   removeLoader() {
     const tl = gsap.timeline()
     tl.to('#loader', {
-      duration: 0.6,
+      duration: 0.75,
       opacity: 0,
-      display: 'none',
     })
+    tl.to('#loader', {
+      duration: 1.4,
+      height: 0,
+      ease: "expo.inOut",
+      display: 'none',
+    }, "<")
     tl.from('.transition', {
       duration: 1.4,
       stagger: -0.09,
@@ -135,10 +140,11 @@ export class NavComponent implements OnInit {
       nav = '.about-nav'
     }
     tl.from(nav, {
-      duration: 1.6,
-      ease: 'expo.inOut',
+      duration: 0.9, // 1.4
+      delay: 0.7,
+      ease: 'expo.out',
       y: -45,
-      stagger: 0.07
+      // stagger: 0.07 // this property is generally enabled
     }, "<+=0.5")
   }
 
