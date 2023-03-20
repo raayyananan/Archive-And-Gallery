@@ -11,15 +11,20 @@
 </main>
 
 <section class="heading">
+    <div class="filler"></div>
+    <div style="height: 30%;"></div>
     <div class="content">
         <div class="column-text-inner" (click)="navigate('out', 'collection/aromatic-fragrance', 0)">
             <h1 #heading style="transform: translate(0px, 100%)">{{name}}</h1>
         </div>
     </div>
-    <div class="filler"></div>
 </section>
 
-<div class="line" style="height: 0"></div>
+<!-- <div class="line" style="height: 0"></div> -->
+<div class="line-wrapper">        
+    <div class="line" style="height: 0"></div>
+    <div class="horizontal-line" style="width: 0"></div>
+</div>
 
 <section class="router-wrapper">
     <router-outlet></router-outlet>

@@ -1,6 +1,7 @@
 main {
     display: flex;
-    height: 100%;
+    height: calc(100% + 45px);
+    transform: translateY(-45px);
     flex-flow: row nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -14,10 +15,10 @@ main {
     flex-flow: column nowrap;
     justify-content: center;
 
-    .edge-top {flex: 77%}
-    .edge-bottom {flex: 6%}
+    .edge-top {flex: auto}
+    .edge-bottom {flex: auto}
     .image-list {
-        height: 17%;
+        height: 30%;
         display: flex;
         flex-flow: row nowrap;
 
@@ -66,18 +67,37 @@ main {
     }
 
     .filler {
-        height: 23%;
+        flex: auto;
     }
 
 }
 
-.line {
+.line-wrapper {
+    // mix-blend-mode: difference;
     position: fixed;
-    top: 0;
-    left: calc(50%);
-    z-index: -3;
-    height: 100%;
-    border-right: 1px solid rgba(0,0,0,0.15);
+    z-index: 90000;
+
+    .line, .horizontal-line {
+        position: fixed;
+        z-index: 100000;
+        transform: translate(-50%, -50%);
+        background-color: hsl(0, 0%, 100%);
+        // box-shadow: 0 0 5px rgba(0,0,0,0.2)
+    }
+    .line {
+        height: 0;
+        top: 50%;
+        left: 50%;
+        width: 1px;
+        // display: none;
+    }
+    .horizontal-line {
+        width: 0;
+        height: 1px;
+        top: 50%;
+        left: 50%;
+        // display: none;
+    }
 }
 
 .router-wrapper {

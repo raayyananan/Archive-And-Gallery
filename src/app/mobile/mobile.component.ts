@@ -66,8 +66,13 @@ export class MobileComponent implements AfterViewInit {
     }, delay);
     itl.to('.line', {
       duration: 1.5,
-      ease: 'expo.in',
-      height: '100%'
+      ease: 'expo.inOut',
+      height: 32
+    }, "<")
+    itl.to('.horizontal-line', {
+      duration: 1.5,
+      ease: 'expo.inOut',
+      width: 32
     }, "<")
     itl.to(this.heading.nativeElement, {
       duration: 0.9,

@@ -13,9 +13,15 @@ export class MobileService {
     if (direction == 'out') {
       const nl = gsap.timeline();
       nl.to('.line', {
-        duration: 0.2,
-        opacity: 0
-      })
+        duration: 1,
+        ease: 'expo.out',
+        height: 0
+      }, "<")
+      nl.to('.horizontal-line', {
+        duration: 1,
+        ease: 'expo.out',
+        width: 0
+      }, "<")
       nl.to('.image-list img', {
         duration: 0.5,
         ease: 'power2.in',
@@ -23,7 +29,7 @@ export class MobileService {
           each: 0.025,
           from: id!-1
         },
-        y: 80,
+        y: -80,
         opacity: 0,
         onComplete: () => {
           this.ngZone.run(() => {
@@ -46,9 +52,9 @@ export class MobileService {
     else if (direction == 'in') {
       const itl = gsap.timeline();
       itl.set('.router-wrapper', {zIndex: -1})
+      itl.set('.image-list img', {y: 80})
       itl.set('.heading h1', {y: '100%', display: 'block'})
-      itl.set('.line', {opacity: 1, height: 0})
-  
+      itl.set('.line', {height: 0})
       itl.to('.image-list img', {
         duration: 1.35,
         stagger: 0.07,
@@ -59,8 +65,13 @@ export class MobileService {
       });
       itl.to('.line', {
         duration: 1.5,
-        ease: 'expo.in',
-        height: '100%'
+        ease: 'expo.inOut',
+        height: 32
+      }, "<")
+      itl.to('.horizontal-line', {
+        duration: 1.5,
+        ease: 'expo.inOut',
+        width: 32
       }, "<")
       itl.to('.heading h1', {
         duration: 0.9,
