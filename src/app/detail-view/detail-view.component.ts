@@ -40,8 +40,35 @@ export class DetailViewComponent implements AfterViewInit {
       if (!event.deltaY) {
         return;
       }
-      if (!event.shiftKey) {
+      if (true) { // !event.shiftKey
         event.currentTarget.scrollLeft += (event.deltaY + event.deltaX)/2;
+
+        // let scrollAmount = {
+        //   e: Math.min(Math.max(event.currentTarget.scrollLeft, 0), event.currentTarget.scrollWidth)
+        // }
+        // gsap.to(scrollAmount, {
+        //   e: '+=' + (event.deltaY + event.deltaX) * 3,
+        //   duration: 1,
+        //   ease: "quint.out",
+        //   onUpdate: () => {
+        //     imagesSection.scrollLeft = scrollAmount.e;
+        //     console.log(scrollAmount.e)
+        //   }
+        // })
+        
+        // console.log(
+        //   // Math.max(Math.min(event.currentTarget. + (event.deltaY + event.deltaX), -event.currentTarget.offsetWidth), 0)
+        // )
+        // let translateX = +window.getComputedStyle(document.querySelector('section.images') as HTMLElement).getPropertyValue('transform').replace(/[^\d.]/g, '');
+        // let constrainedX = Math.max(Math.min(translateX + (event.deltaY + event.deltaX), -event.currentTarget.offsetWidth), 0);
+        // console.log(constrainedX, translateX)
+
+        // gsap.to('section.images', {
+        //   x: `${Math.max(Math.min(event.currentTarget.translateX + (event.deltaY + event.deltaX), -event.currentTarget.offsetWidth), 0)}`,
+        //   duration: 0.5,
+        //   ease: "quint.out"
+        // })
+
         event.preventDefault();
       }
     }

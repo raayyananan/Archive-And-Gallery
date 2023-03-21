@@ -4,7 +4,7 @@ main {
 .images {
     display: flex;
     align-items: center;
-    overflow-x: scroll;
+    overflow-x: visible;
     height: 100%;
 
     div {

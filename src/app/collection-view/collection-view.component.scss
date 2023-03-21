@@ -319,6 +319,7 @@ img {
         // mix-blend-mode: difference;
         position: fixed;
         z-index: 90000;
+        pointer-events: none;
     }
     .line, .horizontal-line {
         position: fixed;

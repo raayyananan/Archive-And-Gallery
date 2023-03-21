@@ -1,8 +1,9 @@
-<main class="collection">
+<main class="collection" (mouseleave)="viewSwitcherService.setView3MouseUp()">
 
     <div *ngFor="let image of collection, let i = index" class="cell" [ngClass]="{'image-cell': image.src}" #images>
             <img class="thumbnail" *ngIf="image.src" src="{{image.src}}" (mouseenter)="changeHeading('in', image.name)" 
-            (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, parseInt(image.number))"  [attr.data-srno]="image.id" alt="{{image.alt}}" [attr.data-name]="image.name">
+            (mouseleave)="changeHeading('out')" (click)="navigate(image.url!, parseInt(image.number))"  
+            [attr.data-srno]="image.id" alt="{{image.alt}}" [attr.data-name]="image.name" draggable="false">
     </div>
     <section class="heading">
         <div class="text-container">
@@ -68,7 +69,7 @@
     <!-- View 3 -->
     <section class="view03-container">
         <!-- <div class="top-filler"></div> -->
-        <div class="image-bar" data-scroll-container data-scroll-call="{y,o,l,o}">
+        <div class="image-bar" data-scroll-container data-scroll-call="{y,o,l,o}" (mousedown)="viewSwitcherService.setView3MouseDown($event)" (mouseup)="viewSwitcherService.setView3MouseUp()" (mousemove)="viewSwitcherService.drag($event)">
             <div style="width: calc(100vw - 28.8vh - 8px)"></div>
             <div style="width: 100vw" id="delete-on-view03"></div>
         </div>

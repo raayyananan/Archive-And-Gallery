@@ -495,6 +495,41 @@ export class ViewSwitcherService {
     }
   }
 
+  mousedown = false;
+  dragPosition: number = 0;
+  scrollStartPosition: number = 0;
+  setView3MouseUp() {this.mousedown = false}
+  setView3MouseDown(e: MouseEvent) {
+    this.mousedown = true;
+    this.dragPosition = e.clientX;
+    this.scrollStartPosition = this.scroll.scroll.instance.scroll.x;
+  }
+  drag(e: MouseEvent) {
+    if (this.mousedown) {
+      const diff = this.dragPosition - e.clientX;
+      // this.scroll.scroll.instance.scroll.x
+      // this.scroll.scrollTo(this.scrollStartPosition + diff*1.2 , 
+      //   {
+      //     duration: 1000,
+      //     easing: [0.22, 1, 0.36, 1],
+      //     disableLerp: true,
+      //   })
+
+        // transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -1736, 0, 0, 1);
+      // gsap.to('.image-bar', {
+      //   transform: `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, ${-(this.scrollStartPosition + diff*1.2)}, 0, 0, 1)`,
+      //   ease: "expo.out",
+      //   duration: 1,
+      //   onUpdate: () => {
+      //     // this.scroll.scroll.instance.scroll.x = (this.scrollStartPosition + diff*1.2)
+      //   },
+      //   onComplete: () => {
+      //     // this.scroll.scrollTo((this.scrollStartPosition + diff*1.2), {duration: 0, disableLerp: true})
+      //   }
+      // })
+    }
+  }
+
   initializeScrollTransform(): any { // for scrolling in view03
 
     // const view03con = (document.querySelector('.view03-container') as HTMLElement)
@@ -562,7 +597,7 @@ export class ViewSwitcherService {
                 (document.querySelectorAll('.collection img')[i+1] as HTMLElement).style.zIndex = `${this.z + 1}`;
               }
             }
-            console.log(delta)
+            // console.log(delta)
             gsap.to('.view03-container .line', {
               duration: 1,
               ease: "expo.out",
